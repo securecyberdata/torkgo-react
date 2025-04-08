@@ -132,6 +132,7 @@ function Header() {
                         </li>
                       </ul>
                     </li>
+                    {/* 
                     <li id="pr-3" className="menu-item-has-children">
                       <Link href="#" onClick={toggleActive}>Stacking</Link>
                       <ul className="submenu">
@@ -142,6 +143,7 @@ function Header() {
                         </li>
                       </ul>
                     </li>
+                    */}
                     <li id="pr-4" className="menu-item-has-children" >
                       <Link href="#" onClick={toggleActive}>Pages</Link>
                       <ul className="submenu">
@@ -153,9 +155,9 @@ function Header() {
                         <li  >
                           <Link href="/kyc">KYC</Link>
                         </li>
-                        <li  >
+                        {/* <li  >
                           <Link href="/tier">Tier</Link>
-                        </li>
+                        </li> */}
                         <li  >
                           <Link href="/faq">FAQ</Link>
                         </li>
@@ -187,14 +189,19 @@ function Header() {
                             </li>
                           </ul>
                         </li>
+                        {/* 
                         <li  >
                           <Link href="/404">404</Link>
                         </li>
+                        
                         <li  >
                           <Link href="/coming-soon">Coming Soon</Link>
                         </li>
+                        */}
                       </ul>
                     </li>
+
+                    {/*
                     <li id="pr-7" className="menu-item-has-children">
                       <Link href="#" onClick={toggleActive}>Blog</Link>
                       <ul className="submenu">
@@ -209,6 +216,7 @@ function Header() {
                         </li>
                       </ul>
                     </li>
+                    */}
                     <li  >
                       <Link href="/contact">Contact</Link>
                     </li>
