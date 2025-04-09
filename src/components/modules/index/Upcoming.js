@@ -6,7 +6,7 @@ import Link from "next/link";
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
-function Upcoming({ data }) {
+function Upcoming({ data = [] }) {
 
 
   return (
@@ -63,8 +63,8 @@ function Upcoming({ data }) {
                   },
                 }}
               >
-                {data.map((item) => {
-                  return (
+                {data && data.length > 0 ? (
+                  data.map((item) => (
                     <SwiperSlide key={item.id}>
                       <CustomSlider
                         img1Src={item.img1Src}
@@ -73,8 +73,14 @@ function Upcoming({ data }) {
                         title={item.title}
                       />
                     </SwiperSlide>
-                  );
-                })}
+                  ))
+                ) : (
+                  <SwiperSlide>
+                    <div className="text-center p-4">
+                      <p>No upcoming projects available</p>
+                    </div>
+                  </SwiperSlide>
+                )}
               </Swiper>
             </div>
             <div className="project__slider-pagination mt-4 text-center" />

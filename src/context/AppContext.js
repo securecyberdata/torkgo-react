@@ -4,10 +4,7 @@ export const AppContext = createContext();
 
 const { ethereum } = typeof window !== "undefined" ? window : {};
 
-
 const AppProvider = ({ children }) => {
-
-
    const [visibility, setVisibility] = useState(false);
    const [walletModalvisibility, setModalvisibility] = useState(false);
    const [shareModalVisibility, setShareModalvisibility] = useState(false);
@@ -15,30 +12,28 @@ const AppProvider = ({ children }) => {
    const [connectWalletModal, setConnectWalletModal] = useState(false);
    const [account, setAccount] = useState("");
 
-
    const isMetaMaskInstalled = () => {
       if (ethereum) {
          return true;
       }
-
       return false;
    }
 
    const isWalletConnected = () => {
-      if (localStorage.getItem('isWalletConnected') === 'true') {
+      if (typeof window !== 'undefined' && localStorage.getItem('isWalletConnected') === 'true') {
          return true
       }
-
       return false;
    }
-
 
    const mintModalHandle = () => {
       setVisibility(!visibility);
    };
+
    const walletModalHandle = () => {
       setModalvisibility(!walletModalvisibility);
    };
+
    const shareModalHandle = (e) => {
       e.preventDefault();
       setShareModalvisibility(!shareModalVisibility);
@@ -54,32 +49,56 @@ const AppProvider = ({ children }) => {
       }
    };
 
-   const connectWalletHandle = async () => {
-
-
+   const connectWallet = async () => {
       if (isMetaMaskInstalled()) {
-         const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-         setAccount(accounts);
-         setModalvisibility(!walletModalvisibility);
-         
+         try {
+            const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+            return accounts[0]; // Return only the first account
+         } catch (error) {
+            console.error("Error connecting wallet:", error);
+            return null;
+         }
       }
-
+      return null;
    };
 
+   const connectWalletHandle = async () => {
+      if (isMetaMaskInstalled()) {
+         try {
+            const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+            setAccount(accounts[0]); // Set only the first account
+            localStorage.setItem('isWalletConnected', 'true');
+            setModalvisibility(false);
+         } catch (error) {
+            console.error("Error connecting wallet:", error);
+         }
+      }
+   };
 
-
-
+   const disconnectWallet = () => {
+      setAccount("");
+      localStorage.removeItem('isWalletConnected');
+   };
 
    const isWalletAlreadyConnected = async () => {
       if (isWalletConnected()) {
-         const accounts = await connectWallet();
-         setAccount(accounts);
+         const account = await connectWallet();
+         if (account) {
+            setAccount(account);
+         } else {
+            disconnectWallet();
+         }
       }
    };
 
-   const setAccountAfterDisconnectWallet = async () => {
-      setAccount("");
+   const setAccountAfterDisconnectWallet = () => {
+      disconnectWallet();
    };
+
+   // Check wallet connection on mount
+   useEffect(() => {
+      isWalletAlreadyConnected();
+   }, []);
 
    return (
       <AppContext.Provider value={{

@@ -1,12 +1,15 @@
 import DefaultButton from "@/components/base/DefaultButton";
-
+import { useContext } from "react";
+import { ThemeContext } from "@/context/ThemeContext";
 
 const Hero = () => {
+  const { isDarkMode } = useContext(ThemeContext);
+  
   return (
     <section
-      className="banner"
+      className={`banner ${isDarkMode ? 'dark-theme' : 'light-theme'}`}
       id="home"
-      style={{ backgroundImage: "url(images/banner/bg.png)" }}
+      style={{ backgroundImage: `url(/images/banner/${isDarkMode ? 'bg-dark.png' : 'bg.png'})` }}
     >
       <div className="container">
         <div className="banner__wrapper">
@@ -35,16 +38,16 @@ const Hero = () => {
                 data-aos="fade-up"
                 data-aos-duration={1000}
               >
-                <img width="auto" src="/images/banner/banner-thumb/01.png"
+                <img width="auto" src={`/images/banner/banner-thumb/${isDarkMode ? '01-dark.png' : '01.png'}`}
                   alt="banner Image"
                 />
                 <div className="shape-2">
-                  <img width="auto" src="/images/banner/banner-thumb/shape3.png"
+                  <img width="auto" src={`/images/banner/banner-thumb/${isDarkMode ? 'shape3-dark.png' : 'shape3.png'}`}
                     alt="Banner Shape"
                   />
                 </div>
                 <div className="shape-3">
-                  <img width="auto" src="/images/banner/banner-thumb/shape1.png"
+                  <img width="auto" src={`/images/banner/banner-thumb/${isDarkMode ? 'shape1-dark.png' : 'shape1.png'}`}
                     alt="Banner Shape"
                   />
                 </div>

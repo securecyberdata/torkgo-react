@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { faWallet } from "@fortawesome/free-solid-svg-icons";
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useEffect, useContext } from "react";
 
 import Wallet from "./Wallet";
 import { AppContext } from "@/context/AppContext";
+import { ThemeContext } from "@/context/ThemeContext";
 import { useRouter } from 'next/router'
 import Image from 'next/image';
 
@@ -12,11 +14,9 @@ function Header() {
   const [menu, setMenu] = useState(false);
   const [show, setShow] = useState(false);
   const router = useRouter()
+  const { isDarkMode, toggleTheme } = useContext(ThemeContext);
 
-
-
-
-  // ........header Sticky..................
+  // ........header Sticky................
   useEffect(() => {
     window.addEventListener('scroll', isSticky);
     router.events.on('routeChangeStart', removeActive);
@@ -83,33 +83,46 @@ function Header() {
 
   const { account, isWalletConnected, connectWalletHandle, setAccountAfterDisconnectWallet } = useContext(AppContext);
 
-
   useEffect(() => {
-    if (isWalletConnected() === true) {
-      connectWalletHandle()
-    } else {
-      setAccountAfterDisconnectWallet();
-    }
-
-  })
+    const checkWalletConnection = () => {
+      if (isWalletConnected()) {
+        connectWalletHandle();
+      } else {
+        setAccountAfterDisconnectWallet();
+      }
+    };
+    
+    checkWalletConnection();
+  }, [isWalletConnected, connectWalletHandle, setAccountAfterDisconnectWallet]);
 
   return (
     <div>
-      <header className="header-section">
+      <header className={`header-section ${isDarkMode ? 'dark-theme' : 'light-theme'}`}>
         <div className="container">
           <div className="header-holder">
             <div className="header-primary d-flex flex-wrap justify-content-between align-items-center">
               <div className="brand-logo d-none d-lg-inline-block">
                 <div className="logo">
                   <Link href="/">
-                    <Image src="/images/logo/logo.png" width={150} height={55} alt="logo" />
+                    <Image 
+                      src={isDarkMode ? "/images/logo/logo_dark.png" : "/images/logo/logo_light.png"} 
+                      width={150} 
+                      height={55} 
+                      alt="logo" 
+                    />
                   </Link>
                 </div>
               </div>
               <div className="header-wrapper justify-content-lg-end">
-                <div className="mobile-logo d-lg-none"> <Link href="/">
-                  <Image src="/images/logo/logo.png" width={150} height={55} alt="logo" />
-                </Link>
+                <div className="mobile-logo d-lg-none"> 
+                  <Link href="/">
+                    <Image 
+                      src={isDarkMode ? "/images/logo/logo_dark.png" : "/images/logo/logo_light.png"} 
+                      width={150} 
+                      height={55} 
+                      alt="logo" 
+                    />
+                  </Link>
                 </div>
                 <div className="menu-area">
                   <ul id="menu" className={menu ? 'menu active' : 'menu'}>
@@ -223,11 +236,18 @@ function Header() {
                       <Link href="/contact">Contact</Link>
                     </li>
                   </ul>
-                  {isWalletConnected && account ? <Link onClick={() => handleShow()} className="wallet-btn custom-wallet-btn" href="#">
+                  {isWalletConnected() && account ? <Link onClick={() => handleShow()} className={`wallet-btn custom-wallet-btn ${isDarkMode ? 'dark-theme' : 'light-theme'}`} href="#">
                     {substr(account.toString(), 8)}
-                  </Link> : <Link onClick={() => handleShow()} className="wallet-btn" href="#">
+                  </Link> : <Link onClick={() => handleShow()} className={`wallet-btn ${isDarkMode ? 'dark-theme' : 'light-theme'}`} href="#">
                     <span>Connect </span> <FontAwesomeIcon icon={faWallet} />
                   </Link>}
+                  <button 
+                    onClick={toggleTheme} 
+                    className={`theme-toggle-btn ${isDarkMode ? 'dark-theme' : 'light-theme'}`}
+                    aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+                  >
+                    <FontAwesomeIcon icon={isDarkMode ? faSun : faMoon} />
+                  </button>
                   <div id="icon" onClick={() => toggleMenu()} className={menu ? 'header-bar d-lg-none active' : 'header-bar d-lg-none'}>
                     <span />
                     <span />

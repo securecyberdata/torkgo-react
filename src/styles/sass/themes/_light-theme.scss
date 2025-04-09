@@ -1,0 +1,722 @@
+// Light Theme Variables
+$light-primary-color: #ffffff;
+$light-secondary-color: #f8f9fa;
+$light-text-color: #333333;
+$light-title-color: #1a1a1a;
+$light-border-color: #e0e0e0;
+$light-theme-color: #6c5ce7;
+$light-accent-color: #666666;
+$light-success-color: #00b894;
+$light-warning-color: #fdcb6e;
+$light-danger-color: #ff7675;
+$light-info-color: #74b9ff;
+$light-card-bg: #ffffff;
+$light-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+$light-hover-bg: #f5f5f5;
+$light-gradient-start: #6c5ce7;
+$light-gradient-end: #a55eea;
+$light-card-border: 1px solid rgba(0, 0, 0, 0.05);
+$light-glow: 0 0 15px rgba(108, 92, 231, 0.3);
+
+// Light Theme Styles
+body.light-theme {
+  background-color: $light-primary-color;
+  color: $light-text-color;
+  
+  // Header Styles
+  .header-section {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-bottom: $light-card-border;
+    box-shadow: $light-shadow;
+    backdrop-filter: blur(10px);
+    
+    .menu {
+      li {
+        a {
+          color: $light-text-color;
+          transition: all 0.3s ease;
+          
+          &:hover {
+            color: $light-theme-color;
+          }
+        }
+        
+        &.active > a {
+          color: $light-theme-color;
+          font-weight: 600;
+          position: relative;
+          
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, $light-gradient-start, $light-gradient-end);
+            border-radius: 2px;
+          }
+        }
+      }
+      
+      .submenu {
+        background-color: rgba(255, 255, 255, 0.98);
+        border: $light-card-border;
+        box-shadow: $light-shadow;
+        backdrop-filter: blur(10px);
+        
+        li a {
+          &:hover {
+            background-color: $light-hover-bg;
+            color: $light-theme-color;
+          }
+        }
+      }
+    }
+    
+    .theme-toggle-btn {
+      color: $light-text-color;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        color: $light-theme-color;
+        transform: rotate(15deg);
+      }
+    }
+    
+    .wallet-btn {
+      background: linear-gradient(to right, $light-gradient-start, $light-gradient-end);
+      color: white;
+      transition: all 0.3s ease;
+      border: none;
+      box-shadow: $light-glow;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 20px rgba(108, 92, 231, 0.5);
+      }
+      
+      &.custom-wallet-btn {
+        background: linear-gradient(to right, $light-gradient-start, $light-gradient-end);
+      }
+    }
+    
+    .header-bar {
+      span {
+        background-color: $light-text-color;
+      }
+    }
+  }
+  
+  // Banner Styles
+  .banner {
+    background-color: $light-primary-color;
+    position: relative;
+    overflow: hidden;
+    
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at top right, rgba(108, 92, 231, 0.05), transparent 70%);
+      z-index: 0;
+    }
+    
+    .banner__content {
+      position: relative;
+      z-index: 1;
+      
+      h1 {
+        color: $light-title-color;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      
+      p {
+        color: $light-text-color;
+      }
+    }
+  }
+  
+  // Section Headers
+  .section-header__title {
+    color: $light-title-color;
+    position: relative;
+    display: inline-block;
+    
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(to right, $light-gradient-start, $light-gradient-end);
+      border-radius: 3px;
+    }
+  }
+  
+  .section-header__subtitle {
+    color: $light-text-color;
+  }
+  
+  // Buttons
+  .default-btn {
+    background: linear-gradient(to right, $light-gradient-start, $light-gradient-end);
+    color: white;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: $light-glow;
+    
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(108, 92, 231, 0.4);
+    }
+  }
+  
+  // Project Section Styles
+  .project {
+    &__item {
+      background: linear-gradient(145deg, rgba($light-secondary-color, 0.9), rgba($light-primary-color, 0.9));
+      border: $light-card-border;
+      border-radius: 15px;
+      box-shadow: $light-shadow;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+      
+      &-inner {
+        padding: 20px;
+      }
+      
+      &-thumb {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        
+        img {
+          transition: all 0.3s ease;
+        }
+        
+        .badge {
+          position: absolute;
+          top: 15px;
+          right: 15px;
+          background: rgba($light-secondary-color, 0.95);
+          backdrop-filter: blur(5px);
+          border-radius: 8px;
+          padding: 8px;
+        }
+      }
+      
+      &-content {
+        padding: 20px 0 0;
+      }
+      
+      &-author {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+        
+        img {
+          border-radius: 50%;
+          border: 2px solid $light-theme-color;
+        }
+        
+        h4 {
+          color: $light-title-color;
+          margin: 0;
+          font-size: 1.25rem;
+        }
+      }
+      
+      &-middle {
+        background: rgba($light-secondary-color, 0.6);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      
+      &-amount {
+        margin-top: 15px;
+        
+        p {
+          color: $light-accent-color;
+          margin-bottom: 8px;
+        }
+        
+        h6 {
+          color: $light-title-color;
+          margin-bottom: 12px;
+          
+          .color--theme-color {
+            color: $light-theme-color;
+          }
+        }
+        
+        .progress {
+          background: rgba($light-border-color, 0.2);
+          height: 8px;
+          border-radius: 4px;
+          overflow: hidden;
+          
+          &-bar {
+            background: linear-gradient(to right, $light-gradient-start, $light-gradient-end);
+          }
+        }
+      }
+    }
+    
+    &__infolist {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      
+      &-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba($light-border-color, 0.2);
+        
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+      
+      &-name {
+        color: $light-accent-color;
+        margin: 0;
+      }
+      
+      &-data {
+        color: $light-title-color;
+        margin: 0;
+        font-weight: 500;
+      }
+    }
+  }
+  
+  // Completed Projects Section
+  .bg--primary-color {
+    background: linear-gradient(135deg, rgba($light-primary-color, 0.95), rgba($light-secondary-color, 0.95));
+    position: relative;
+    overflow: hidden;
+    
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at top right, rgba($light-theme-color, 0.1), transparent 70%);
+      z-index: 0;
+    }
+    
+    .section-header {
+      position: relative;
+      z-index: 1;
+      
+      &__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      
+      &__titlebar {
+        .section-header__subtitle {
+          color: $light-theme-color;
+          font-weight: 600;
+          margin-bottom: 5px;
+        }
+        
+        .section__header__title {
+          color: $light-title-color;
+          margin-bottom: 0;
+          font-size: 2.5rem;
+          font-weight: 700;
+          background: linear-gradient(to right, $light-title-color, darken($light-title-color, 10%));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+    }
+    
+    .default-btn {
+      background: linear-gradient(to right, $light-gradient-start, $light-gradient-end);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: $light-glow;
+      
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 20px rgba(108, 92, 231, 0.3);
+      }
+    }
+  }
+  
+  // Tier Items
+  .tier__inner {
+    background-color: $light-card-bg;
+    border: $light-card-border;
+    box-shadow: $light-shadow;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border-color: rgba(108, 92, 231, 0.2);
+    }
+    
+    .tier__body {
+      h4 {
+        color: $light-theme-color;
+        background: linear-gradient(to right, $light-gradient-start, $light-gradient-end);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      
+      .tier__value {
+        color: $light-text-color;
+      }
+    }
+  }
+  
+  // Work Section
+  .work__item {
+    background-color: $light-card-bg;
+    border: $light-card-border;
+    box-shadow: $light-shadow;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border-color: rgba(108, 92, 231, 0.2);
+    }
+    
+    .work__content {
+      h3 {
+        color: $light-title-color;
+      }
+      
+      p {
+        color: $light-text-color;
+      }
+    }
+  }
+  
+  // Team Section
+  .team__item {
+    background-color: $light-card-bg;
+    border: $light-card-border;
+    box-shadow: $light-shadow;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border-color: rgba(108, 92, 231, 0.2);
+    }
+    
+    .team__content {
+      h3 {
+        color: $light-title-color;
+      }
+      
+      p {
+        color: $light-text-color;
+      }
+    }
+    
+    .team__social {
+      a {
+        color: $light-accent-color;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          color: $light-theme-color;
+          transform: translateY(-3px);
+        }
+      }
+    }
+  }
+  
+  // FAQ Section
+  .faq__item {
+    background-color: $light-card-bg;
+    border: $light-card-border;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      border-color: rgba(108, 92, 231, 0.2);
+    }
+    
+    .faq__header {
+      h3 {
+        color: $light-title-color;
+      }
+    }
+    
+    .faq__body {
+      p {
+        color: $light-text-color;
+      }
+    }
+  }
+  
+  // Roadmap Section
+  .roadmap {
+    &__wrapper2 {
+      &:after {
+        background-color: $light-theme-color;
+      }
+      
+      &:before {
+        background-color: $light-secondary-color;
+      }
+    }
+    
+    &__item2 {
+      background-color: $light-card-bg;
+      border: $light-card-border;
+      box-shadow: $light-shadow;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        border-color: rgba(108, 92, 231, 0.2);
+        
+        .roadmap__item2-header {
+          h4, p {
+            color: $light-theme-color;
+          }
+        }
+      }
+      
+      &-header {
+        h4 {
+          color: $light-title-color;
+        }
+        
+        p {
+          color: $light-theme-color;
+          font-weight: 700;
+        }
+      }
+      
+      &-content {
+        color: $light-text-color;
+      }
+    }
+  }
+  
+  // Footer
+  .footer {
+    background-color: $light-secondary-color;
+    color: $light-text-color;
+    border-top: $light-card-border;
+    position: relative;
+    
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, $light-theme-color, transparent);
+    }
+    
+    .footer__widget {
+      h3 {
+        color: $light-title-color;
+        position: relative;
+        display: inline-block;
+        
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          left: 0;
+          width: 30px;
+          height: 2px;
+          background: linear-gradient(to right, $light-gradient-start, $light-gradient-end);
+          border-radius: 2px;
+        }
+      }
+      
+      p {
+        color: $light-text-color;
+      }
+      
+      ul {
+        li {
+          a {
+            color: $light-text-color;
+            transition: all 0.3s ease;
+            
+            &:hover {
+              color: $light-theme-color;
+              padding-left: 5px;
+            }
+          }
+        }
+      }
+    }
+    
+    .footer__bottom {
+      border-top: $light-card-border;
+    }
+  }
+  
+  // Modal
+  .modal-content {
+    background-color: $light-card-bg;
+    border: $light-card-border;
+    box-shadow: $light-shadow;
+    
+    .modal-header {
+      border-bottom: $light-card-border;
+      
+      .modal-title {
+        color: $light-title-color;
+      }
+    }
+    
+    .modal-body {
+      color: $light-text-color;
+    }
+  }
+  
+  // Wallet Modal
+  .wallet-modal {
+    .modal-content {
+      background-color: $light-card-bg;
+      border: $light-card-border;
+      box-shadow: $light-shadow;
+      backdrop-filter: blur(10px);
+    }
+    
+    .modal-header {
+      border-bottom: $light-card-border;
+      
+      .modal-title {
+        color: $light-title-color;
+        font-weight: 600;
+        background: linear-gradient(to right, $light-gradient-start, $light-gradient-end);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+    
+    .modal-body {
+      color: $light-text-color;
+      
+      .wallet-btns {
+        .default-btn {
+          margin-right: 10px;
+          margin-bottom: 10px;
+        }
+      }
+      
+      .wallet__list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin: 20px 0;
+        
+        .wallet__list-item {
+          background-color: $light-hover-bg;
+          border: $light-card-border;
+          border-radius: 8px;
+          padding: 10px;
+          transition: all 0.3s ease;
+          
+          &:hover {
+            transform: translateY(-5px);
+            box-shadow: $light-glow;
+            border-color: $light-theme-color;
+          }
+          
+          a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
+      
+      a {
+        color: $light-theme-color;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          color: darken($light-theme-color, 10%);
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  
+  // Form Elements
+  input, textarea, select {
+    background-color: $light-hover-bg;
+    border: $light-card-border;
+    color: $light-text-color;
+    transition: all 0.3s ease;
+    
+    &:focus {
+      border-color: $light-theme-color;
+      box-shadow: 0 0 0 0.2rem rgba($light-theme-color, 0.15);
+    }
+  }
+  
+  // Tables
+  table {
+    background-color: $light-card-bg;
+    border: $light-card-border;
+    
+    th {
+      background-color: $light-secondary-color;
+      color: $light-title-color;
+    }
+    
+    td {
+      color: $light-text-color;
+    }
+  }
+  
+  // Custom Scrollbar
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: $light-secondary-color;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: $light-theme-color;
+    border-radius: 5px;
+    
+    &:hover {
+      background: darken($light-theme-color, 10%);
+    }
+  }
+} 

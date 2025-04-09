@@ -1,0 +1,722 @@
+// Dark Theme Variables
+$dark-primary-color: #0a0a0a;
+$dark-secondary-color: #121212;
+$dark-text-color: #e0e0e0;
+$dark-title-color: #ffffff;
+$dark-border-color: #2a2a2a;
+$dark-theme-color: #6c5ce7;
+$dark-accent-color: #a8a8a8;
+$dark-success-color: #00b894;
+$dark-warning-color: #fdcb6e;
+$dark-danger-color: #ff7675;
+$dark-info-color: #74b9ff;
+$dark-card-bg: #1a1a1a;
+$dark-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+$dark-hover-bg: #2d2d2d;
+$dark-gradient-start: #6c5ce7;
+$dark-gradient-end: #a55eea;
+$dark-card-border: 1px solid rgba(255, 255, 255, 0.05);
+$dark-glow: 0 0 15px rgba(108, 92, 231, 0.5);
+
+// Dark Theme Styles
+body.dark-theme {
+  background-color: $dark-primary-color;
+  color: $dark-text-color;
+  
+  // Header Styles
+  .header-section {
+    background-color: rgba(18, 18, 18, 0.95);
+    border-bottom: $dark-card-border;
+    box-shadow: $dark-shadow;
+    backdrop-filter: blur(10px);
+    
+    .menu {
+      li {
+        a {
+          color: $dark-text-color;
+          transition: all 0.3s ease;
+          
+          &:hover {
+            color: $dark-theme-color;
+          }
+        }
+        
+        &.active > a {
+          color: $dark-theme-color;
+          font-weight: 600;
+          position: relative;
+          
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, $dark-gradient-start, $dark-gradient-end);
+            border-radius: 2px;
+          }
+        }
+      }
+      
+      .submenu {
+        background-color: rgba(26, 26, 26, 0.98);
+        border: $dark-card-border;
+        box-shadow: $dark-shadow;
+        backdrop-filter: blur(10px);
+        
+        li a {
+          &:hover {
+            background-color: $dark-hover-bg;
+            color: $dark-theme-color;
+          }
+        }
+      }
+    }
+    
+    .theme-toggle-btn {
+      color: $dark-text-color;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        color: $dark-theme-color;
+        transform: rotate(15deg);
+      }
+    }
+    
+    .wallet-btn {
+      background: linear-gradient(to right, $dark-gradient-start, $dark-gradient-end);
+      color: white;
+      transition: all 0.3s ease;
+      border: none;
+      box-shadow: $dark-glow;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 20px rgba(108, 92, 231, 0.7);
+      }
+      
+      &.custom-wallet-btn {
+        background: linear-gradient(to right, $dark-gradient-start, $dark-gradient-end);
+      }
+    }
+    
+    .header-bar {
+      span {
+        background-color: $dark-text-color;
+      }
+    }
+  }
+  
+  // Banner Styles
+  .banner {
+    background-color: $dark-primary-color;
+    position: relative;
+    overflow: hidden;
+    
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at top right, rgba(108, 92, 231, 0.1), transparent 70%);
+      z-index: 0;
+    }
+    
+    .banner__content {
+      position: relative;
+      z-index: 1;
+      
+      h1 {
+        color: $dark-title-color;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+      
+      p {
+        color: $dark-text-color;
+      }
+    }
+  }
+  
+  // Section Headers
+  .section-header__title {
+    color: $dark-title-color;
+    position: relative;
+    display: inline-block;
+    
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(to right, $dark-gradient-start, $dark-gradient-end);
+      border-radius: 3px;
+    }
+  }
+  
+  .section-header__subtitle {
+    color: $dark-text-color;
+  }
+  
+  // Buttons
+  .default-btn {
+    background: linear-gradient(to right, $dark-gradient-start, $dark-gradient-end);
+    color: white;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: $dark-glow;
+    
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(108, 92, 231, 0.7);
+    }
+  }
+  
+  // Project Section Styles
+  .project {
+    &__item {
+      background: linear-gradient(145deg, rgba($dark-secondary-color, 0.9), rgba($dark-primary-color, 0.9));
+      border: $dark-card-border;
+      border-radius: 15px;
+      box-shadow: $dark-shadow;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+      }
+      
+      &-inner {
+        padding: 20px;
+      }
+      
+      &-thumb {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        
+        img {
+          transition: all 0.3s ease;
+        }
+        
+        .badge {
+          position: absolute;
+          top: 15px;
+          right: 15px;
+          background: rgba($dark-secondary-color, 0.85);
+          backdrop-filter: blur(5px);
+          border-radius: 8px;
+          padding: 8px;
+        }
+      }
+      
+      &-content {
+        padding: 20px 0 0;
+      }
+      
+      &-author {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+        
+        img {
+          border-radius: 50%;
+          border: 2px solid $dark-theme-color;
+        }
+        
+        h4 {
+          color: $dark-title-color;
+          margin: 0;
+          font-size: 1.25rem;
+        }
+      }
+      
+      &-middle {
+        background: rgba($dark-secondary-color, 0.4);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      
+      &-amount {
+        margin-top: 15px;
+        
+        p {
+          color: $dark-accent-color;
+          margin-bottom: 8px;
+        }
+        
+        h6 {
+          color: $dark-title-color;
+          margin-bottom: 12px;
+          
+          .color--theme-color {
+            color: $dark-theme-color;
+          }
+        }
+        
+        .progress {
+          background: rgba($dark-border-color, 0.3);
+          height: 8px;
+          border-radius: 4px;
+          overflow: hidden;
+          
+          &-bar {
+            background: linear-gradient(to right, $dark-gradient-start, $dark-gradient-end);
+          }
+        }
+      }
+    }
+    
+    &__infolist {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      
+      &-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba($dark-border-color, 0.2);
+        
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+      
+      &-name {
+        color: $dark-accent-color;
+        margin: 0;
+      }
+      
+      &-data {
+        color: $dark-title-color;
+        margin: 0;
+        font-weight: 500;
+      }
+    }
+  }
+  
+  // Completed Projects Section
+  .bg--primary-color {
+    background: linear-gradient(135deg, rgba($dark-primary-color, 0.95), rgba($dark-secondary-color, 0.95));
+    position: relative;
+    overflow: hidden;
+    
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at top right, rgba($dark-theme-color, 0.15), transparent 70%);
+      z-index: 0;
+    }
+    
+    .section-header {
+      position: relative;
+      z-index: 1;
+      
+      &__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      
+      &__titlebar {
+        .section-header__subtitle {
+          color: $dark-theme-color;
+          font-weight: 600;
+          margin-bottom: 5px;
+        }
+        
+        .section__header__title {
+          color: $dark-title-color;
+          margin-bottom: 0;
+          font-size: 2.5rem;
+          font-weight: 700;
+          background: linear-gradient(to right, $dark-title-color, lighten($dark-title-color, 20%));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+    }
+    
+    .default-btn {
+      background: linear-gradient(to right, $dark-gradient-start, $dark-gradient-end);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: $dark-glow;
+      
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 20px rgba(108, 92, 231, 0.7);
+      }
+    }
+  }
+  
+  // Tier Items
+  .tier__inner {
+    background-color: $dark-card-bg;
+    border: $dark-card-border;
+    box-shadow: $dark-shadow;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      border-color: rgba(108, 92, 231, 0.3);
+    }
+    
+    .tier__body {
+      h4 {
+        color: $dark-theme-color;
+        background: linear-gradient(to right, $dark-gradient-start, $dark-gradient-end);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      
+      .tier__value {
+        color: $dark-text-color;
+      }
+    }
+  }
+  
+  // Work Section
+  .work__item {
+    background-color: $dark-card-bg;
+    border: $dark-card-border;
+    box-shadow: $dark-shadow;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      border-color: rgba(108, 92, 231, 0.3);
+    }
+    
+    .work__content {
+      h3 {
+        color: $dark-title-color;
+      }
+      
+      p {
+        color: $dark-text-color;
+      }
+    }
+  }
+  
+  // Team Section
+  .team__item {
+    background-color: $dark-card-bg;
+    border: $dark-card-border;
+    box-shadow: $dark-shadow;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      border-color: rgba(108, 92, 231, 0.3);
+    }
+    
+    .team__content {
+      h3 {
+        color: $dark-title-color;
+      }
+      
+      p {
+        color: $dark-text-color;
+      }
+    }
+    
+    .team__social {
+      a {
+        color: $dark-accent-color;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          color: $dark-theme-color;
+          transform: translateY(-3px);
+        }
+      }
+    }
+  }
+  
+  // FAQ Section
+  .faq__item {
+    background-color: $dark-card-bg;
+    border: $dark-card-border;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      border-color: rgba(108, 92, 231, 0.3);
+    }
+    
+    .faq__header {
+      h3 {
+        color: $dark-title-color;
+      }
+    }
+    
+    .faq__body {
+      p {
+        color: $dark-text-color;
+      }
+    }
+  }
+  
+  // Roadmap Section
+  .roadmap {
+    &__wrapper2 {
+      &:after {
+        background-color: $dark-theme-color;
+      }
+      
+      &:before {
+        background-color: $dark-secondary-color;
+      }
+    }
+    
+    &__item2 {
+      background-color: $dark-card-bg;
+      border: $dark-card-border;
+      box-shadow: $dark-shadow;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        border-color: rgba(108, 92, 231, 0.3);
+        
+        .roadmap__item2-header {
+          h4, p {
+            color: $dark-theme-color;
+          }
+        }
+      }
+      
+      &-header {
+        h4 {
+          color: $dark-title-color;
+        }
+        
+        p {
+          color: $dark-theme-color;
+          font-weight: 700;
+        }
+      }
+      
+      &-content {
+        color: $dark-text-color;
+      }
+    }
+  }
+  
+  // Footer
+  .footer {
+    background-color: $dark-secondary-color;
+    color: $dark-text-color;
+    border-top: $dark-card-border;
+    position: relative;
+    
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, $dark-theme-color, transparent);
+    }
+    
+    .footer__widget {
+      h3 {
+        color: $dark-title-color;
+        position: relative;
+        display: inline-block;
+        
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          left: 0;
+          width: 30px;
+          height: 2px;
+          background: linear-gradient(to right, $dark-gradient-start, $dark-gradient-end);
+          border-radius: 2px;
+        }
+      }
+      
+      p {
+        color: $dark-text-color;
+      }
+      
+      ul {
+        li {
+          a {
+            color: $dark-text-color;
+            transition: all 0.3s ease;
+            
+            &:hover {
+              color: $dark-theme-color;
+              padding-left: 5px;
+            }
+          }
+        }
+      }
+    }
+    
+    .footer__bottom {
+      border-top: $dark-card-border;
+    }
+  }
+  
+  // Modal
+  .modal-content {
+    background-color: $dark-card-bg;
+    border: $dark-card-border;
+    box-shadow: $dark-shadow;
+    
+    .modal-header {
+      border-bottom: $dark-card-border;
+      
+      .modal-title {
+        color: $dark-title-color;
+      }
+    }
+    
+    .modal-body {
+      color: $dark-text-color;
+    }
+  }
+  
+  // Wallet Modal
+  .wallet-modal {
+    .modal-content {
+      background-color: $dark-card-bg;
+      border: $dark-card-border;
+      box-shadow: $dark-shadow;
+      backdrop-filter: blur(10px);
+    }
+    
+    .modal-header {
+      border-bottom: $dark-card-border;
+      
+      .modal-title {
+        color: $dark-title-color;
+        font-weight: 600;
+        background: linear-gradient(to right, $dark-gradient-start, $dark-gradient-end);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+    
+    .modal-body {
+      color: $dark-text-color;
+      
+      .wallet-btns {
+        .default-btn {
+          margin-right: 10px;
+          margin-bottom: 10px;
+        }
+      }
+      
+      .wallet__list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin: 20px 0;
+        
+        .wallet__list-item {
+          background-color: $dark-hover-bg;
+          border: $dark-card-border;
+          border-radius: 8px;
+          padding: 10px;
+          transition: all 0.3s ease;
+          
+          &:hover {
+            transform: translateY(-5px);
+            box-shadow: $dark-glow;
+            border-color: $dark-theme-color;
+          }
+          
+          a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
+      
+      a {
+        color: $dark-theme-color;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          color: lighten($dark-theme-color, 10%);
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  
+  // Form Elements
+  input, textarea, select {
+    background-color: $dark-hover-bg;
+    border: $dark-card-border;
+    color: $dark-text-color;
+    transition: all 0.3s ease;
+    
+    &:focus {
+      border-color: $dark-theme-color;
+      box-shadow: 0 0 0 0.2rem rgba($dark-theme-color, 0.25);
+    }
+  }
+  
+  // Tables
+  table {
+    background-color: $dark-card-bg;
+    border: $dark-card-border;
+    
+    th {
+      background-color: $dark-secondary-color;
+      color: $dark-title-color;
+    }
+    
+    td {
+      color: $dark-text-color;
+    }
+  }
+  
+  // Custom Scrollbar
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: $dark-secondary-color;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: $dark-theme-color;
+    border-radius: 5px;
+    
+    &:hover {
+      background: lighten($dark-theme-color, 10%);
+    }
+  }
+} 

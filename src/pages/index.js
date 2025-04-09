@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import Hero from "./../components/modules/index/Hero";
 import Work from "@/components/modules/index/Work";
 import Featured from "@/components/modules/index/Featured";
-import Upcoming from "@/components/modules/index/Upcoming";
-import Completed from "@/components/modules/index/Completed";
+import UpcommingTwo from "@/components/modules/project2/UpcommingTwo";
+import CompletedTwo from "@/components/modules/project2/CompletedTwo";
 import Benifits from "@/components/modules/index/Benifits";
 // import Tier from "@/components/modules/index/Tier";
 import Roadmap from "@/components/modules/index/Roadmap";
@@ -14,12 +14,13 @@ import { fetchData } from "@/apiConfig";
 import ApplyToLaunch from "@/components/common/ApplyToLaunch";
 
 
-
-
 export default function Home() {
   const [data, setData] = useState([]);
   const [team, setTeam] = useState([]);
+  const [showWallet, setShowWallet] = useState(false);
 
+  const handleCloseWallet = () => setShowWallet(false);
+  const handleShowWallet = () => setShowWallet(true);
 
   useEffect(() => {
     const getAllData = async () => {
@@ -47,12 +48,12 @@ export default function Home() {
 
   return (
     <>
-      <Wallet />
+      <Wallet show={showWallet} handleClose={handleCloseWallet} />
       <Hero />
       <Featured data={data} />
       <Work />
-      <Upcoming data={data} />
-      <Completed />
+      <UpcommingTwo />
+      <CompletedTwo />
       <Benifits />
       {/* <Tier /> */}
       <Roadmap />

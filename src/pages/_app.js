@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import Head from 'next/head';
 import { config } from "@fortawesome/fontawesome-svg-core";
@@ -9,6 +8,7 @@ import AOS from 'aos';
 import Layout from "@/components/layout/Layout";
 import ScrollToTop from "react-scroll-to-top";
 import AppProvider from "@/context/AppContext";
+import ThemeProvider from "@/context/ThemeContext";
 import 'aos/dist/aos.css';
 import "@/styles/css/swiper-bundle.min.css";
 import "@/styles/sass/style.scss";
@@ -47,25 +47,27 @@ export default function App({ Component, pageProps }) {
       </Head>
 
       <AppProvider>
-        <Layout>
-          {loading && (
-            <div className="preloader">
-              <div className="preloader__inner">
-                <div className="preloader__icon">
-                  <span></span>
-                  <span></span>
+        <ThemeProvider>
+          <Layout>
+            {loading && (
+              <div className="preloader">
+                <div className="preloader__inner">
+                  <div className="preloader__icon">
+                    <span></span>
+                    <span></span>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-          <Component {...pageProps} />
-        </Layout>
-        <ScrollToTop
-          className="scroll-to-top"
-          smooth
-          viewBox="0 0 448 512"
-          svgPath="M384 352v64c0 17.67-14.33 32-32 32H96c-17.67 0-32-14.33-32-32v-64c0-17.67-14.33-32-32-32s-32 14.33-32 32v64c0 53.02 42.98 96 96 96h256c53.02 0 96-42.98 96-96v-64c0-17.67-14.33-32-32-32S384 334.3 384 352zM201.4 9.375l-128 128c-12.51 12.51-12.49 32.76 0 45.25c12.5 12.5 32.75 12.5 45.25 0L192 109.3V320c0 17.69 14.31 32 32 32s32-14.31 32-32V109.3l73.38 73.38c12.5 12.5 32.75 12.5 45.25 0s12.5-32.75 0-45.25l-128-128C234.1-3.125 213.9-3.125 201.4 9.375z"
-        />
+            )}
+            <Component {...pageProps} />
+          </Layout>
+          <ScrollToTop
+            className="scroll-to-top"
+            smooth
+            viewBox="0 0 448 512"
+            svgPath="M384 352v64c0 17.67-14.33 32-32 32H96c-17.67 0-32-14.33-32-32v-64c0-17.67-14.33-32-32-32s-32 14.33-32 32v64c0 53.02 42.98 96 96 96h256c53.02 0 96-42.98 96-96v-64c0-17.67-14.33-32-32-32S384 334.3 384 352zM201.4 9.375l-128 128c-12.51 12.51-12.49 32.76 0 45.25c12.5 12.5 32.75 12.5 45.25 0L192 109.3V320c0 17.69 14.31 32 32 32s32-14.31 32-32V109.3l73.38 73.38c12.5 12.5 32.75 12.5 45.25 0s12.5-32.75 0-45.25l-128-128C234.1-3.125 213.9-3.125 201.4 9.375z"
+          />
+        </ThemeProvider>
       </AppProvider>
     </>
   );

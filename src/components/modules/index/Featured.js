@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
-function Featured({ data }) {
+function Featured({ data = [] }) {
   return (
     <section className="project project--featured padding-top padding-bottom">
       <div className="container">
@@ -59,8 +59,8 @@ function Featured({ data }) {
                   },
                 }}
               >
-                {data.map((item) => {
-                  return (
+                {data && data.length > 0 ? (
+                  data.map((item) => (
                     <SwiperSlide key={item.id}>
                       <CustomSlider
                         img1Src={item.img1Src}
@@ -69,8 +69,14 @@ function Featured({ data }) {
                         title={item.title}
                       />
                     </SwiperSlide>
-                  );
-                })}
+                  ))
+                ) : (
+                  <SwiperSlide>
+                    <div className="text-center p-4">
+                      <p>No featured projects available</p>
+                    </div>
+                  </SwiperSlide>
+                )}
               </Swiper>
             </div>
           </div>

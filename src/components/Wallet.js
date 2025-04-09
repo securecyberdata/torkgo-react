@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
-import { AppContext } from "../context/AppContext";
+import { AppContext } from "@/context/AppContext";
+import { ThemeContext } from "@/context/ThemeContext";
 
 import { Modal } from "react-bootstrap";
 import { faClone, faRightToBracket } from "@fortawesome/free-solid-svg-icons";
@@ -9,6 +10,7 @@ import Image from 'next/image';
 
 const Wallet = ({ show, handleClose }) => {
   const [copied, setIsCopied] = useState(false);
+  const { isDarkMode } = useContext(ThemeContext);
   // const [isWalletDisconnect, setIsWalletDisconnect] = useState(false);
 
 
@@ -22,7 +24,7 @@ const Wallet = ({ show, handleClose }) => {
 
   const disconnectWallet = async () => {
     setAccountAfterDisconnectWallet();
-    localStorage.setItem('isWalletConnected', false);
+    localStorage.setItem('isWalletConnected', 'false');
   }
 
 
@@ -30,7 +32,7 @@ const Wallet = ({ show, handleClose }) => {
 
     if (isMetaMaskInstalled()) {
       connectWalletHandle();
-      localStorage.setItem('isWalletConnected', true);
+      localStorage.setItem('isWalletConnected', 'true');
     } else {
 
       window.open('https://metamask.io/download/', '_blank');
@@ -50,19 +52,19 @@ const Wallet = ({ show, handleClose }) => {
 
 
   return (
-    <Modal className="wallet-modal" show={show} onHide={handleClose}>
+    <Modal className={`wallet-modal ${isDarkMode ? 'dark-theme' : 'light-theme'}`} show={show} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>Connect Your Wallet</Modal.Title>
       </Modal.Header>
 
 
-      {isWalletConnected && account ?
+      {isWalletConnected() && account ?
         <div className="modal-body">
           <div> Already Connected</div>
           <div className="wallet-btns" >
-            <button className="default-btn default-btn--small" onClick={() => copyToClipboard(account.toString())}>
+            <button className={`default-btn default-btn--small ${isDarkMode ? 'dark-theme' : 'light-theme'}`} onClick={() => copyToClipboard(account.toString())}>
               Copy Address <FontAwesomeIcon className="icon" icon={faClone} /></button>
-            <button className="default-btn default-btn--small" onClick={() => disconnectWallet()}>
+            <button className={`default-btn default-btn--small ${isDarkMode ? 'dark-theme' : 'light-theme'}`} onClick={() => disconnectWallet()}>
               Disconnect <FontAwesomeIcon className="icon" icon={faRightToBracket} /></button>
           </div>
           <div className="errors">
@@ -98,11 +100,10 @@ const Wallet = ({ show, handleClose }) => {
             <li className="wallet__list-item">
               <Link href="#">
                 <span>
-                  <Image src="/images/wallet/bitski.svg"
+                  <Image src="/images/wallet/wallet-connect.svg"
                     width={60}
                     height={60}
-                    alt="bitski"
-
+                    alt="wallet-connect"
                   />
                 </span>
               </Link>
@@ -113,8 +114,7 @@ const Wallet = ({ show, handleClose }) => {
                   <Image src="/images/wallet/venly.svg"
                     width={60}
                     height={60}
-                    alt="venly Wallet"
-
+                    alt="venly"
                   />
                 </span>
               </Link>
@@ -122,11 +122,10 @@ const Wallet = ({ show, handleClose }) => {
             <li className="wallet__list-item">
               <Link href="#">
                 <span>
-                  <Image src="/images/wallet/wallet-connect.svg"
+                  <Image src="/images/wallet/bitski.svg"
                     width={60}
                     height={60}
-                    alt=" Wallet connect"
-
+                    alt="bitski"
                   />
                 </span>
               </Link>
@@ -138,7 +137,7 @@ const Wallet = ({ show, handleClose }) => {
             <Link href="#">Privacy Policy</Link> .
           </div>
         </div>}
-    </Modal >
+    </Modal>
   );
 };
 
