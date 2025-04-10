@@ -168,12 +168,6 @@ function Header() {
                         <li  > <Link href="/roadmap2">Roadmap 2</Link>
                         </li>
                         <li  >
-                          <Link href="/kyc">KYC</Link>
-                        </li>
-                        {/* <li  >
-                          <Link href="/tier">Tier</Link>
-                        </li> */}
-                        <li  >
                           <Link href="/faq">FAQ</Link>
                         </li>
                         <li>
@@ -190,6 +184,12 @@ function Header() {
                             </li>
                           </ul>
                         </li>
+                        {/* KYC link commented out
+                        <li  >
+                          <Link href="/kyc">KYC</Link>
+                        </li>
+                        */}
+                        {/* Account section commented out
                         <li id="pr-6" className="menu-item-has-children" >
                           <Link href="#" onClick={toggleActive}>Account</Link>
                           <ul className="submenu">
@@ -198,12 +198,7 @@ function Header() {
                             </li>
                             <li  >
                               <Link href="/login">Log In</Link>
-                            </li>
-                            <li  >
-                              <Link href="/reset-password">Reset Pass</Link>
-                            </li>
-                          </ul>
-                        </li>
+                        */}
                         {/* 
                         <li  >
                           <Link href="/404">404</Link>

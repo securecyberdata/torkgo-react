@@ -1,11 +1,15 @@
 import Simple from "@/components/base/Simple";
 import DefaultButton from "@/components/base/DefaultButton";
 import { useRouter } from "next/router";
+import { useContext } from "react";
+import { ThemeContext } from "@/context/ThemeContext";
 
 function RoadmapTwo() {
-  const route = useRouter()
+  const route = useRouter();
+  const { isDarkMode } = useContext(ThemeContext);
+
   return (
-    <section className="roadmap padding-bottom padding-top" id="roadmap">
+    <section className={`roadmap padding-bottom padding-top ${isDarkMode ? 'dark-theme' : 'light-theme'}`} id="roadmap">
       <div className="container">
         <div className="section-header section-header--middle">
           <div className="section-header__content">
@@ -14,13 +18,13 @@ function RoadmapTwo() {
             </div>
           </div>
         </div>
+        
         <div className="roadmap__wrapper2">
           <div className="row gy-4 gy-md-0 gx-5">
             <div className="col-md-6 offset-md-6">
               <div
-                className="roadmap__item2 ms-md-4 aos-init aos-animate"
-                data-aos="fade-left"
-                data-aos-duration={800}
+                className="roadmap__item2 ms-md-4 roadmap-item-visible"
+                style={{ position: 'relative', zIndex: 6 }}
               >
                 <div className="roadmap__item2-inner">
                   <div className="roadmap__item2-content">
@@ -39,11 +43,11 @@ function RoadmapTwo() {
                 </div>
               </div>
             </div>
+            
             <div className="col-md-6">
               <div
-                className="roadmap__item2 ms-auto me-md-4 aos-init aos-animate"
-                data-aos="fade-right"
-                data-aos-duration={800}
+                className="roadmap__item2 ms-auto me-md-4 roadmap-item-visible"
+                style={{ position: 'relative', zIndex: 6 }}
               >
                 <div className="roadmap__item2-inner">
                   <div className="roadmap__item2-content">
@@ -62,16 +66,16 @@ function RoadmapTwo() {
                 </div>
               </div>
             </div>
+            
             <div className="col-md-6 offset-md-6">
               <div
-                className="roadmap__item2 ms-auto me-md-4 aos-init aos-animate"
-                data-aos="fade-left"
-                data-aos-duration={800}
+                className="roadmap__item2 ms-md-4 roadmap-item-visible"
+                style={{ position: 'relative', zIndex: 6 }}
               >
                 <div className="roadmap__item2-inner">
                   <div className="roadmap__item2-content">
                     <div className="roadmap__item2-header">
-                      <h4>Seed Sale</h4>
+                      <h4>Token Launch</h4>
                       <p>03</p>
                     </div>
                     <p>
@@ -85,11 +89,11 @@ function RoadmapTwo() {
                 </div>
               </div>
             </div>
+            
             <div className="col-md-6">
               <div
-                className="roadmap__item2 ms-auto me-md-4 aos-init aos-animate"
-                data-aos="fade-right"
-                data-aos-duration={800}
+                className="roadmap__item2 ms-auto me-md-4 roadmap-item-visible"
+                style={{ position: 'relative', zIndex: 6 }}
               >
                 <div className="roadmap__item2-inner">
                   <div className="roadmap__item2-content">
@@ -108,11 +112,11 @@ function RoadmapTwo() {
                 </div>
               </div>
             </div>
+            
             <div className="col-md-6 offset-md-6">
               <div
-                className="roadmap__item2 ms-auto me-md-4 aos-init aos-animate"
-                data-aos="fade-left"
-                data-aos-duration={800}
+                className="roadmap__item2 ms-md-4 roadmap-item-visible"
+                style={{ position: 'relative', zIndex: 6 }}
               >
                 <div className="roadmap__item2-inner">
                   <div className="roadmap__item2-content">
@@ -131,11 +135,11 @@ function RoadmapTwo() {
                 </div>
               </div>
             </div>
+            
             <div className="col-md-6">
               <div
-                className="roadmap__item2 ms-auto me-md-4 aos-init aos-animate"
-                data-aos="fade-right"
-                data-aos-duration={800}
+                className="roadmap__item2 ms-auto me-md-4 roadmap-item-visible"
+                style={{ position: 'relative', zIndex: 6 }}
               >
                 <div className="roadmap__item2-inner">
                   <div className="roadmap__item2-content">

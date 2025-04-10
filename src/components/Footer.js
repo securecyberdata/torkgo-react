@@ -7,12 +7,14 @@ import {
   faLinkedinIn,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import { useContext } from "react";
+import { ThemeContext } from "@/context/ThemeContext";
 import Link from "next/link";
 import Image from 'next/image';
 
-
 function Footer() {
+  const { isDarkMode } = useContext(ThemeContext);
+
   return (
     <div>
       <footer
@@ -23,7 +25,8 @@ function Footer() {
           <div className="container">
             <div className="footer__content text-center">
               <Link className="mb-4 d-inline-block" href="/">
-                <Image src="/images/logo/logo.png"
+                <Image 
+                  src={isDarkMode ? "/images/logo/logo_dark.png" : "/images/logo/logo_light.png"}
                   width={150}
                   height={55}
                   alt="Logo"

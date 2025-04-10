@@ -106,6 +106,16 @@ body.dark-theme {
         background-color: $dark-text-color;
       }
     }
+
+    // Header Logo
+    .logo {
+      img[src*="logo_light"] {
+        display: none;
+      }
+      img[src*="logo_dark"] {
+        display: block;
+      }
+    }
   }
   
   // Banner Styles
@@ -481,13 +491,21 @@ body.dark-theme {
   
   // Roadmap Section
   .roadmap {
+    position: relative;
+    z-index: 1;
+    
     &__wrapper2 {
+      position: relative;
+      z-index: 2;
+      
       &:after {
         background-color: $dark-theme-color;
+        z-index: 1;
       }
       
       &:before {
         background-color: $dark-secondary-color;
+        z-index: 1;
       }
     }
     
@@ -496,6 +514,11 @@ body.dark-theme {
       border: $dark-card-border;
       box-shadow: $dark-shadow;
       transition: all 0.3s ease;
+      position: relative;
+      z-index: 3;
+      margin-bottom: 30px;
+      opacity: 1;
+      visibility: visible;
       
       &:hover {
         transform: translateY(-5px);
@@ -522,6 +545,75 @@ body.dark-theme {
       
       &-content {
         color: $dark-text-color;
+      }
+    }
+    
+    .roadmap-item-visible {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: translateY(0) !important;
+      animation: fadeIn 0.5s ease-in-out forwards;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  // Apply Project Section
+  .apply-project {
+    position: relative;
+    z-index: 1;
+    
+    &__block {
+      background-color: $dark-card-bg;
+      border: $dark-card-border;
+      box-shadow: $dark-shadow;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 30px;
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        border-color: rgba(108, 92, 231, 0.3);
+      }
+      
+      &-header {
+        position: relative;
+        z-index: 3;
+        
+        h4 {
+          color: $dark-title-color;
+        }
+      }
+      
+      &-content {
+        position: relative;
+        z-index: 3;
+        
+        .form-control, .form-select {
+          background-color: $dark-primary-color;
+          border-color: $dark-card-border;
+          color: $dark-text-color;
+          
+          &:focus {
+            border-color: $dark-theme-color;
+            box-shadow: 0 0 0 0.25rem rgba(108, 92, 231, 0.25);
+          }
+        }
+        
+        label {
+          color: $dark-text-color;
+        }
       }
     }
   }
@@ -578,10 +670,33 @@ body.dark-theme {
           }
         }
       }
+
+      // Footer Logo
+      .logo {
+        img[src*="logo_light"] {
+          display: none;
+        }
+        img[src*="logo_dark"] {
+          display: block;
+        }
+      }
     }
     
     .footer__bottom {
       border-top: $dark-card-border;
+    }
+  }
+  
+  // Footer Logo in Homepage
+  .footer__content {
+    .mb-4 {
+      img[src*="logo.png"],
+      img[src*="logo_light.png"] {
+        display: none;
+      }
+      img[src*="logo_dark.png"] {
+        display: block;
+      }
     }
   }
   
@@ -718,5 +833,120 @@ body.dark-theme {
     &:hover {
       background: lighten($dark-theme-color, 10%);
     }
+  }
+  
+  // Social Media Icons
+  .social-icons {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+    
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: transparent !important;
+      border-radius: 8px;
+      font-size: 20px;
+      transition: all 0.3s ease;
+      
+      i {
+        color: inherit;
+        transition: all 0.3s ease;
+      }
+      
+      &:hover {
+        transform: translateY(-3px);
+        background: rgba(255, 255, 255, 0.1) !important;
+        
+        i {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+
+  // Footer Social Icons
+  .footer__widget {
+    .social-icons {
+      a {
+        background: transparent !important;
+        
+        &:hover {
+          background: rgba(255, 255, 255, 0.1) !important;
+        }
+      }
+    }
+  }
+
+  // CTA Section - Fixing visibility and scroll issues
+  .cta {
+    position: relative;
+    z-index: 1;
+    
+    &__wrapper {
+      background: linear-gradient(145deg, rgba($dark-primary-color, 1), rgba($dark-secondary-color, 0.7));
+      border-left: 3px solid rgba($dark-theme-color, 0.3);
+      border-right: 3px solid rgba($dark-theme-color, 0.3);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+      
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at top right, rgba($dark-theme-color, 0.1), transparent 70%);
+        z-index: 0;
+      }
+    }
+    
+    &__content {
+      position: relative;
+      z-index: 3;
+      
+      .section-header__subtitle {
+        color: $dark-theme-color;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+      
+      .section__header__title {
+        color: $dark-title-color;
+        margin-bottom: 25px;
+        font-weight: 700;
+      }
+      
+      .default-btn {
+        background: linear-gradient(to right, $dark-gradient-start, $dark-gradient-end);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: $dark-glow;
+        position: relative;
+        z-index: 4;
+        
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 20px rgba($dark-theme-color, 0.5);
+        }
+      }
+    }
+  }
+  
+  .apply-section-visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    animation: fadeIn 0.5s ease-in-out forwards;
   }
 } 
