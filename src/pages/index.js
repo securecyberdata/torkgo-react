@@ -2,7 +2,7 @@ import "../../node_modules/@fortawesome/fontawesome-svg-core/styles.css";
 import { useEffect, useState } from "react";
 import Hero from "./../components/modules/index/Hero";
 import Work from "@/components/modules/index/Work";
-import Featured from "@/components/modules/index/Featured";
+// import Featured from "@/components/modules/index/Featured";
 import UpcommingTwo from "@/components/modules/project2/UpcommingTwo";
 import CompletedTwo from "@/components/modules/project2/CompletedTwo";
 import Benifits from "@/components/modules/index/Benifits";
@@ -50,7 +50,7 @@ export default function Home() {
     <>
       <Wallet show={showWallet} handleClose={handleCloseWallet} />
       <Hero />
-      <Featured data={data} />
+      {/* <Featured data={data} /> */}
       <Work />
       <UpcommingTwo />
       <CompletedTwo />
