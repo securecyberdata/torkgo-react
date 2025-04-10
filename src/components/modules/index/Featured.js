@@ -8,7 +8,6 @@ SwiperCore.use([Autoplay, Navigation, Pagination]);
 function Featured({ data = [] }) {
   return (
     <section className="project project--featured padding-top padding-bottom">
-      {/*
       <div className="container">
         <div className="project__wrapper">
           <div className="row">
@@ -16,9 +15,6 @@ function Featured({ data = [] }) {
               <div className="section-header section-header--left">
                 <div className="section-header__content">
                   <div className="section-header__titlebar">
-                    
-
-                    
                     <div className="section-header__subtitle">Trending</div>
                     <h2 className="section__header__title">
                       Most Popular IDO Projects
@@ -88,7 +84,6 @@ function Featured({ data = [] }) {
         </div>
       </div>
     </section>
-    */}
   );
 }
 
