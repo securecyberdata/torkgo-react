@@ -93,7 +93,7 @@ function Roadmap() {
                     </div>
                     <p>
                       Introduction of our token staking program with multiple tiers offering different 
-                      benefits. Stakers earn rewards while contributing to the platform's security and 
+                      benefits. Stakers earn rewards while contributing to the platform&apos;s security and 
                       governance, creating a sustainable ecosystem for all participants.
                     </p>
                   </div>
