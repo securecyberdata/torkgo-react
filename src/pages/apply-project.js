@@ -154,10 +154,10 @@ const ApplyProject = () => {
                               defaultValue="Ready to launch"
 
                             >
-                              <option value="Ready to launch" >Ready to launch</option>
-                              <option value="In early development" >In early development</option>
-                              <option value="Idea with White Paper" >Idea with White Paper</option>
-                              <option value="Just an initial idea" >Just an initial idea</option>
+                              <option value="Ready to launch">Ready to launch</option>
+                              <option value="In early development">In early development</option>
+                              <option value="Idea with White Paper">Idea with White Paper</option>
+                              <option value="Just an initial idea">Just an initial idea</option>
                             </select>
                             <label htmlFor="status-select">
                               Project Status
@@ -172,7 +172,7 @@ const ApplyProject = () => {
                               defaultValue="no"
                             >
                               <option value="no">No</option>
-                              <option value='yes' >Yes</option>
+                              <option value="yes">Yes</option>
                             </select>
                             <label htmlFor="raised-fund">Raised before ?</label>
                           </div>
