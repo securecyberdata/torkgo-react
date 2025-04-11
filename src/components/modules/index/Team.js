@@ -15,7 +15,7 @@ function Team({ team }) {
     {
       id: 1,
       name: "Alex Thompson",
-      role: "CEO & Founder",
+      role: "CEO &amp; Founder",
       img: "/images/team/01.png",
       bio: "Blockchain veteran with 8+ years of experience in DeFi and crypto startups."
     },
