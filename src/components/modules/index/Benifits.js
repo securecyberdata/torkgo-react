@@ -29,8 +29,7 @@ function Benefits() {
                   <div className="benifit__item-content">
                     <h4>Cross Chain</h4>
                     <p>
-                      Lorem ipsum dolor, sit amet consec tetur adipisicing elit.
-                      Provident eius eaque aspernatur amet
+                      Access IDO opportunities across multiple blockchain networks including Ethereum, Binance Smart Chain, Polygon, and more. Our platform eliminates the need to switch between different launchpads.
                     </p>
                   </div>
                 </div>
@@ -45,10 +44,9 @@ function Benefits() {
                     />
                   </div>
                   <div className="benifit__item-content">
-                    <h4>Stack Pad</h4>
+                    <h4>Staking Rewards</h4>
                     <p>
-                      Lorem ipsum dolor, sit amet consec tetur adipisicing elit.
-                      Provident eius eaque aspernatur amet
+                      Earn additional rewards by staking your tokens on our platform. Higher staking tiers unlock greater allocation percentages and exclusive access to premium IDO projects.
                     </p>
                   </div>
                 </div>
@@ -63,10 +61,9 @@ function Benefits() {
                     />
                   </div>
                   <div className="benifit__item-content">
-                    <h4>Multi Layer</h4>
+                    <h4>Multi Layer Security</h4>
                     <p>
-                      Lorem ipsum dolor, sit amet consec tetur adipisicing elit.
-                      Provident eius eaque aspernatur amet
+                      Our platform implements advanced security measures including smart contract audits, multi-signature wallets, and real-time monitoring to protect your investments and personal information.
                     </p>
                   </div>
                 </div>
@@ -83,8 +80,7 @@ function Benefits() {
                   <div className="benifit__item-content">
                     <h4>Elite Projects</h4>
                     <p>
-                      Lorem ipsum dolor, sit amet consec tetur adipisicing elit.
-                      Provident eius eaque aspernatur amet
+                      Gain access to carefully vetted blockchain projects with strong fundamentals, experienced teams, and innovative technology. Our due diligence process ensures only high-quality opportunities.
                     </p>
                   </div>
                 </div>

@@ -21,15 +21,16 @@ const Hero = () => {
                 data-aos-duration={1000}
               >
                 <h1 className="text-uppercase">
-                  WEB 3.0 <br />
-                  Launchpad <br />
-                  for IDO &amp; INO
+                  NEXT-GEN <br />
+                  WEB3 <br />
+                  LAUNCHPAD
                 </h1>
                 <p>
-                  The next generation gaming ecosystem for IDO&apos;s and INO
-                  launchpad web 3.0 platform
+                  The premier platform for IDO & INO launches in the Web3 ecosystem. 
+                  Access exclusive token sales, participate in fair distributions, and 
+                  invest in the future of blockchain innovation.
                 </p>
-                <DefaultButton text="ExploreIDO" />
+                <DefaultButton text="Explore Projects" />
               </div>
             </div>
             <div className="col-lg-6">

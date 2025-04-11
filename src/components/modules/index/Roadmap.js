@@ -25,15 +25,13 @@ function Roadmap() {
                 <div className="roadmap__item2-inner">
                   <div className="roadmap__item2-content">
                     <div className="roadmap__item2-header">
-                      <h4>Launchpad Initialized</h4>
+                      <h4>Platform Development</h4>
                       <p>01</p>
                     </div>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Sunt, accusant ium! Dolores maxime numquam animi saepe
-                      sapiente tempora, veritatis velit delectus debitis
-                      provident dolore alias reiciendis cupiditate facere
-                      aliquid iusto inventore!
+                      Initial development of our core platform infrastructure, including smart contracts, 
+                      security protocols, and user interface. Comprehensive testing and auditing to ensure 
+                      a secure and reliable launchpad experience for all users.
                     </p>
                   </div>
                 </div>
@@ -48,15 +46,13 @@ function Roadmap() {
                 <div className="roadmap__item2-inner">
                   <div className="roadmap__item2-content">
                     <div className="roadmap__item2-header">
-                      <h4>Website Creation</h4>
+                      <h4>Community Building</h4>
                       <p>02</p>
                     </div>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Sunt, accusant ium! Dolores maxime numquam animi saepe
-                      sapiente tempora, veritatis velit delectus debitis
-                      provident dolore alias reiciendis cupiditate facere
-                      aliquid iusto inventore!
+                      Launch of our website and social media channels to build a strong community. 
+                      Implementation of KYC verification system and wallet integration to prepare for 
+                      the first IDO launches on our platform.
                     </p>
                   </div>
                 </div>
@@ -71,15 +67,13 @@ function Roadmap() {
                 <div className="roadmap__item2-inner">
                   <div className="roadmap__item2-content">
                     <div className="roadmap__item2-header">
-                      <h4>Seed Sale</h4>
+                      <h4>Token Launch</h4>
                       <p>03</p>
                     </div>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Sunt, accusant ium! Dolores maxime numquam animi saepe
-                      sapiente tempora, veritatis velit delectus debitis
-                      provident dolore alias reiciendis cupiditate facere
-                      aliquid iusto inventore!
+                      Public token sale with fair distribution mechanisms to ensure equal opportunity 
+                      for all participants. Implementation of vesting schedules and token utility features 
+                      to support long-term platform sustainability.
                     </p>
                   </div>
                 </div>
@@ -94,15 +88,13 @@ function Roadmap() {
                 <div className="roadmap__item2-inner">
                   <div className="roadmap__item2-content">
                     <div className="roadmap__item2-header">
-                      <h4>Torkgo Farming</h4>
+                      <h4>Staking Program</h4>
                       <p>04</p>
                     </div>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Sunt, accusant ium! Dolores maxime numquam animi saepe
-                      sapiente tempora, veritatis velit delectus debitis
-                      provident dolore alias reiciendis cupiditate facere
-                      aliquid iusto inventore!
+                      Introduction of our token staking program with multiple tiers offering different 
+                      benefits. Stakers earn rewards while contributing to the platform's security and 
+                      governance, creating a sustainable ecosystem for all participants.
                     </p>
                   </div>
                 </div>
@@ -117,15 +109,13 @@ function Roadmap() {
                 <div className="roadmap__item2-inner">
                   <div className="roadmap__item2-content">
                     <div className="roadmap__item2-header">
-                      <h4>Stacking Program</h4>
+                      <h4>IDO Platform Launch</h4>
                       <p>05</p>
                     </div>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Sunt, accusant ium! Dolores maxime numquam animi saepe
-                      sapiente tempora, veritatis velit delectus debitis
-                      provident dolore alias reiciendis cupiditate facere
-                      aliquid iusto inventore!
+                      Official launch of our IDO platform with the first projects going live. Implementation 
+                      of fair distribution mechanisms, tiered allocation systems, and comprehensive project 
+                      information to ensure transparent and equitable participation.
                     </p>
                   </div>
                 </div>
@@ -140,15 +130,13 @@ function Roadmap() {
                 <div className="roadmap__item2-inner">
                   <div className="roadmap__item2-content">
                     <div className="roadmap__item2-header">
-                      <h4>Multichain Launchpad</h4>
+                      <h4>Multi-Chain Expansion</h4>
                       <p>06</p>
                     </div>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Sunt, accusant ium! Dolores maxime numquam animi saepe
-                      sapiente tempora, veritatis velit delectus debitis
-                      provident dolore alias reiciendis cupiditate facere
-                      aliquid iusto inventore!
+                      Expansion to multiple blockchain networks including Ethereum, Binance Smart Chain, 
+                      Polygon, and more. Integration of cross-chain functionality to provide users with 
+                      access to IDO opportunities across the entire blockchain ecosystem.
                     </p>
                   </div>
                 </div>

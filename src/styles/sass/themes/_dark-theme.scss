@@ -431,36 +431,96 @@ body.dark-theme {
   }
   
   // Team Section
-  .team__item {
-    background-color: $dark-card-bg;
-    border: $dark-card-border;
-    box-shadow: $dark-shadow;
-    transition: all 0.3s ease;
-    
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-      border-color: rgba(108, 92, 231, 0.3);
-    }
-    
-    .team__content {
-      h3 {
-        color: $dark-title-color;
+  .team {
+    &__item {
+      background: rgba($dark-secondary-color, 0.5);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid rgba($dark-border-color, 0.2);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba($dark-theme-color, 0.3);
+        border-color: rgba($dark-theme-color, 0.4);
       }
       
-      p {
-        color: $dark-text-color;
-      }
-    }
-    
-    .team__social {
-      a {
-        color: $dark-accent-color;
-        transition: all 0.3s ease;
+      &-thumb {
+        position: relative;
+        overflow: hidden;
         
-        &:hover {
-          color: $dark-theme-color;
-          transform: translateY(-3px);
+        img {
+          width: 100%;
+          height: auto;
+          transition: transform 0.5s ease;
+        }
+        
+        &:hover img {
+          transform: scale(1.05);
+        }
+      }
+      
+      &-content {
+        padding: 20px;
+        text-align: center;
+        
+        h4 {
+          color: $dark-title-color;
+          margin-bottom: 5px;
+          font-weight: 600;
+          
+          a {
+            color: inherit;
+            transition: color 0.3s ease;
+            
+            &:hover {
+              color: $dark-theme-color;
+            }
+          }
+        }
+        
+        p {
+          color: $dark-text-color;
+          margin-bottom: 15px;
+          font-size: 14px;
+        }
+        
+        .team__bio {
+          color: $dark-accent-color;
+          font-size: 13px;
+          line-height: 1.5;
+          margin-bottom: 15px;
+          min-height: 60px;
+        }
+        
+        .social {
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+          margin-top: 15px;
+          
+          &__item {
+            list-style: none;
+          }
+          
+          &__link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: rgba($dark-theme-color, 0.1);
+            color: $dark-theme-color;
+            transition: all 0.3s ease;
+            
+            &:hover {
+              background: $dark-theme-color;
+              color: white;
+              transform: translateY(-3px);
+            }
+          }
         }
       }
     }
@@ -948,5 +1008,112 @@ body.dark-theme {
     visibility: visible !important;
     transform: translateY(0) !important;
     animation: fadeIn 0.5s ease-in-out forwards;
+  }
+
+  // Team Member Page
+  .member {
+    &__content {
+      background: $dark-card-bg;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: $dark-shadow;
+      padding: 30px;
+      margin-bottom: 30px;
+      border: 1px solid rgba($dark-border-color, 0.2);
+    }
+
+    &__thumb {
+      margin-bottom: 30px;
+      border-radius: 12px;
+      overflow: hidden;
+      
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+      }
+    }
+
+    &__info {
+      h2 {
+        color: $dark-title-color;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+
+      .role {
+        color: $dark-theme-color;
+        font-size: 18px;
+        margin-bottom: 20px;
+        font-weight: 500;
+      }
+
+      .bio {
+        color: $dark-text-color;
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .description {
+        color: $dark-text-color;
+        font-size: 15px;
+        line-height: 1.6;
+        margin-bottom: 30px;
+      }
+
+      .expertise {
+        margin-bottom: 30px;
+
+        h3 {
+          color: $dark-title-color;
+          font-size: 20px;
+          margin-bottom: 15px;
+          font-weight: 600;
+        }
+
+        ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+
+          li {
+            background: rgba($dark-theme-color, 0.1);
+            color: $dark-theme-color;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+          }
+        }
+      }
+
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+
+        .social-link {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: rgba($dark-theme-color, 0.1);
+          color: $dark-theme-color;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: $dark-theme-color;
+            color: white;
+            transform: translateY(-3px);
+          }
+        }
+      }
+    }
   }
 } 

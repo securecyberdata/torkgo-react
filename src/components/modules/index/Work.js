@@ -9,7 +9,7 @@ function Work() {
         <div className="section-header section-header--middle">
           <div className="section-header__content">
             <div className="section-header__titlebar">
-              <Simple subTitle="Getting Start" title="Simple as 1, 2, 3" />
+              <Simple subTitle="Getting Started" title="Simple as 1, 2, 3" />
             </div>
           </div>
         </div>
@@ -24,10 +24,9 @@ function Work() {
                     />
                   </div>
                   <div className="work__item-content">
-                    <h4>1.Submit KYC</h4>
+                    <h4>1. Submit KYC</h4>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur adipiscing elit
-                      odio massa ege.
+                      Complete our secure KYC verification process to ensure compliance and protect our community. This step helps maintain the integrity of our platform and safeguards all participants.
                     </p>
                   </div>
                 </div>
@@ -42,10 +41,9 @@ function Work() {
                     />
                   </div>
                   <div className="work__item-content">
-                    <h4>2. Verify Wallet</h4>
+                    <h4>2. Connect Wallet</h4>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur adipiscing elit
-                      odio massa ege.
+                      Link your cryptocurrency wallet to our platform. We support multiple blockchain networks, allowing you to participate in IDOs across different ecosystems with ease and convenience.
                     </p>
                   </div>
                 </div>
@@ -60,10 +58,9 @@ function Work() {
                     />
                   </div>
                   <div className="work__item-content">
-                    <h4>3. Start Staking</h4>
+                    <h4>3. Participate in IDOs</h4>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur adipiscing elit
-                      odio massa ege.
+                      Browse upcoming IDO projects, stake tokens for allocation, and invest in promising blockchain ventures. Our platform provides transparent information and fair distribution mechanisms.
                     </p>
                   </div>
                 </div>
