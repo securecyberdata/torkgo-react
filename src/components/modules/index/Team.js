@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Simple from "@/components/base/Simple";
+import Image from "next/image";
 
 import {
   faFacebookF,
@@ -17,6 +18,8 @@ function Team({ team }) {
       name: "Michele Cucchierato",
       role: "Co-Founder, Chairman & CEO, Planet Sayari Group",
       img: "/images/team/michele.jpg",
+      imgWidth: 800,
+      imgHeight: 1000,
       bio: "Michele Cucchierato is the Co-Founder, Chairman, and CEO of Planet Sayari Group, a pioneering force in the evolution of crypto banking and digital finance. With a wealth of experience in the financial sector and deep expertise in blockchain technology, Michele bridges the worlds of traditional and decentralized finance with clarity, vision, and purpose."
     },
     {
@@ -24,6 +27,8 @@ function Team({ team }) {
       name: "Dr. Shermaine Nicholas",
       role: "Founder & President of Social Responsibility, COO, Planet Sayari Group",
       img: "/images/team/sharmaine.jpg",
+      imgWidth: 800,
+      imgHeight: 1000,
       bio: "Dr. Shermaine Nicholas is the founder of Planet Sayari, a company at the forefront of revolutionizing crypto banking. With over 20 years of experience in business and a PhD in Christian Counseling, and currently pursuing a JD degree, Dr. Nicholas brings a rare blend of academic depth, industry insight, and visionary leadership."
     },
     {
@@ -31,6 +36,8 @@ function Team({ team }) {
       name: "Brad Moore",
       role: "Co-Founder, Vice Chairman & Co-CEO, Planet Sayari",
       img: "/images/team/brad.jpg",
+      imgWidth: 800,
+      imgHeight: 1000,
       bio: "Brad Moore is a seasoned finance professional with over 20 years of experience in the financial services industry. He is a Co-Founder of Planet Sayari, and serves as the Co-CEO and Vice Chairman of the company. Holding a degree in business, and currently pursuing his MBA, Mr. Moore has built a career marked by deep expertise in financial strategy, risk management, and emerging financial technologies."
     },
     {
@@ -38,13 +45,17 @@ function Team({ team }) {
       name: "Zaahir Ibrahim Pooloo",
       role: "CFO & Board member",
       img: "/images/team/zaahir.jpg",
+      imgWidth: 800,
+      imgHeight: 1000,
       bio: "Zaahir Ibrahim Pooloo is a key member of the Board of Directors at Planet Sayari Group. With a robust background in economics and extensive experience in the banking sector, Zaahir brings valuable insights and strategic direction to the company. His expertise in both traditional and innovative financial solutions plays a pivotal role in guiding the group's growth and success."
     },
     {
       id: 5,
       name: "Martha Reyes",
       role: "Board Member & Vice President of Human Resources, Planet Sayari Group",
-      img: "/images/team/05.png",
+      img: "/images/team/martha.jpg",
+      imgWidth: 800,
+      imgHeight: 1000,
       bio: "Martha Reyes serves as a Board Member and the Vice President of Human Resources at Planet Sayari Group, bringing over 30 years of leadership and supervisory experience to the organization. With a Bachelor's degree in Human Services and a professional certificate in Counseling, Martha combines a strong foundation in people-focused disciplines with a deep passion for the financial sector."
     }
   ];
@@ -74,11 +85,19 @@ function Team({ team }) {
                     data-aos-duration={800}
                   >
                     <div className="team__thumb">
-                      <img width="auto" src={item.img} alt={`${item.name} - Team Member`} />
+                      <Image
+                        src={item.img}
+                        alt={`${item.name} - Team Member`}
+                        width={item.imgWidth}
+                        height={item.imgHeight}
+                        quality={90}
+                        priority={item.id <= 3}
+                        className="team__image"
+                      />
                     </div>
                     <div className="team__content">
                       <h4>
-                        <Link href="/team-member">{item.name}</Link>
+                        <Link href={`/team-member?id=${item.id}`}>{item.name}</Link>
                       </h4>
                       <p>{item.role}</p>
                       <p className="team__bio">{item.bio}</p>

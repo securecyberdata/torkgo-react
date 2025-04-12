@@ -9,7 +9,6 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import PageHeader from "@/components/base/PageHeader";
 import NewsLetterTwo from "@/components/partials/NewsLetterTwo";
-import { fetchData } from "@/apiConfig";
 import { teamMembers } from "@/data/teamData";
 
 const TeamMember = () => {
@@ -18,19 +17,13 @@ const TeamMember = () => {
   const [member, setMember] = useState(null);
 
   useEffect(() => {
-    const getMember = async () => {
-      try {
-        if (id) {
-          const response = await fetchData(`/team/${id}`);
-          setMember(response);
-        } else {
-          setMember(teamMembers[0]);
-        }
-      } catch (error) {
-        setMember(teamMembers[0]);
-      }
-    };
-    getMember();
+    if (id) {
+      const memberId = parseInt(id);
+      const foundMember = teamMembers.find(m => m.id === memberId);
+      setMember(foundMember || teamMembers[0]);
+    } else {
+      setMember(teamMembers[0]);
+    }
   }, [id]);
 
   if (!member) return null;
