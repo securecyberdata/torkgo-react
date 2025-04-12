@@ -14,7 +14,7 @@ const Hero = () => {
       <div className="container">
         <div className="banner__wrapper">
           <div className="row g-5 align-items-center">
-            <div className="col-lg-6">
+            <div className="col-lg-8">
               <div
                 className="banner__content aos-init aos-animate"
                 data-aos="fade-right"
@@ -31,27 +31,6 @@ const Hero = () => {
                   invest in the future of blockchain innovation.
                 </p>
                 <DefaultButton text="Explore Projects" />
-              </div>
-            </div>
-            <div className="col-lg-6">
-              <div
-                className="banner__thumb aos-init aos-animate"
-                data-aos="fade-up"
-                data-aos-duration={1000}
-              >
-                <img width="auto" src={`/images/banner/banner-thumb/${isDarkMode ? '01-dark.png' : '01.png'}`}
-                  alt="banner Image"
-                />
-                <div className="shape-2">
-                  <img width="auto" src={`/images/banner/banner-thumb/${isDarkMode ? 'shape3-dark.png' : 'shape3.png'}`}
-                    alt="Banner Shape"
-                  />
-                </div>
-                <div className="shape-3">
-                  <img width="auto" src={`/images/banner/banner-thumb/${isDarkMode ? 'shape1-dark.png' : 'shape1.png'}`}
-                    alt="Banner Shape"
-                  />
-                </div>
               </div>
             </div>
           </div>

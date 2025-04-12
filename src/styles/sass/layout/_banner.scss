@@ -4,8 +4,13 @@
     padding-block: 100px;
 
     &__content {
+        max-width: 800px;
+
         h1 {
             @extend %mb-15;
+            text-transform: uppercase;
+            line-height: 1.2;
+            text-align: left;
         }
 
         p {
@@ -13,6 +18,7 @@
             @include font-size(18px);
             color: $white-color;
             max-inline-size: 50ch;
+            text-align: left;
         }
     }
 
@@ -96,18 +102,16 @@
         padding-block-end: 200px;
 
         @include breakpoint(xl) {
-            // padding-block: 220px;
+            padding-block: 180px;
         }
 
         .banner {
-
             &__content {
                 p {
                     @extend %mt-30;
                     @include font-size(20px);
                     color: $white-color;
                     max-inline-size: 70ch;
-                    margin-inline: auto;
                 }
 
                 .default-btn {
@@ -116,5 +120,4 @@
             }
         }
     }
-
 }
