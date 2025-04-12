@@ -502,16 +502,22 @@ body.dark-theme {
   // Team Section
   .team {
     background-color: $dark-primary-color;
+    position: relative;
+    z-index: 1;
     
     .section-header-wrapper {
       background-color: $dark-primary-color;
       padding: 20px 0;
       margin-bottom: 30px;
       transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
     }
     
     .team__wrapper {
       margin-top: 30px;
+      position: relative;
+      z-index: 2;
     }
     
     .team__item {
@@ -525,6 +531,8 @@ body.dark-theme {
       display: flex;
       flex-direction: column;
       margin-bottom: 30px;
+      position: relative;
+      z-index: 3;
       
       &:hover {
         transform: translateY(-10px);

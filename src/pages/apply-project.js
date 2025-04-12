@@ -17,7 +17,7 @@ const ApplyProject = () => {
           <div className="section-header section-header--middle">
             <div className="section-header__content">
               <div className="section-header__titlebar">
-                <h2 className="section__header__title">Please responsive the form</h2>
+                <h2 className="section__header__title">Complete the form below</h2>
               </div>
             </div>
           </div>

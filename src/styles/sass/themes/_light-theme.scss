@@ -35,6 +35,9 @@ body.light-theme {
         a {
           color: $light-text-color;
           transition: all 0.3s ease;
+          padding: 0.5rem 1rem;
+          display: block;
+          white-space: nowrap;
           
           &:hover {
             color: $light-theme-color;
@@ -64,11 +67,21 @@ body.light-theme {
         border: $light-card-border;
         box-shadow: $light-shadow;
         backdrop-filter: blur(10px);
+        min-width: 200px;
         
-        li a {
-          &:hover {
-            background-color: $light-hover-bg;
-            color: $light-theme-color;
+        li {
+          a {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba($light-border-color, 0.1);
+            
+            &:last-child {
+              border-bottom: none;
+            }
+            
+            &:hover {
+              background-color: $light-hover-bg;
+              color: $light-theme-color;
+            }
           }
         }
       }
@@ -497,16 +510,22 @@ body.light-theme {
   // Team Section Styles
   .team {
     background-color: $light-primary-color;
+    position: relative;
+    z-index: 1;
     
     .section-header-wrapper {
       background-color: $light-primary-color;
       padding: 20px 0;
       margin-bottom: 30px;
       transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
     }
     
     .team__wrapper {
       margin-top: 30px;
+      position: relative;
+      z-index: 2;
     }
     
     .team__item {
@@ -520,6 +539,8 @@ body.light-theme {
       display: flex;
       flex-direction: column;
       margin-bottom: 30px;
+      position: relative;
+      z-index: 3;
       
       &:hover {
         transform: translateY(-10px);
@@ -740,6 +761,19 @@ body.light-theme {
         
         h4 {
           color: $light-title-color;
+        }
+
+        h2.section__header__title {
+          color: #ffffff;
+          font-weight: 600;
+          margin-bottom: 1.5rem;
+          background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.9));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          font-size: 2.5rem;
+          line-height: 1.2;
+          letter-spacing: -0.02em;
         }
       }
       
@@ -1338,6 +1372,76 @@ body.light-theme {
         color: #555;
         line-height: 1.8;
         margin-bottom: 1rem;
+      }
+    }
+  }
+
+  // Contact Section
+  .contact {
+    &__content {
+      h2.section__header__title {
+        color: #ffffff;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.9));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-size: 2.5rem;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+      }
+
+      p {
+        color: rgba($light-text-color, 0.7);
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+      }
+
+      .contact__info {
+        .contact__info__item {
+          h4 {
+            color: rgba($light-text-color, 0.7);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+          }
+
+          p {
+            color: rgba($light-text-color, 0.7);
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+
+    &__form {
+      .form-control {
+        background-color: rgba($light-primary-color, 0.8);
+        border: 1px solid rgba($light-border-color, 0.5);
+        color: rgba($light-text-color, 0.7);
+        
+        &:focus {
+          border-color: $light-theme-color;
+          box-shadow: 0 0 0 0.2rem rgba($light-theme-color, 0.15);
+        }
+      }
+
+      textarea.form-control {
+        min-height: 150px;
+      }
+
+      h2.section__header__title {
+        color: #ffffff;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.9));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-size: 2.5rem;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
       }
     }
   }
