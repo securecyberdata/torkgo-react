@@ -30,20 +30,18 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Torkgo Web 3 Metaverse IDO Launchpad React.js (Next.js) Template</title>
+        <title>PS Bank - The Next Generation Crypto Bank</title>
         <meta
           name="title"
-          content="Torkgo — Web 3 Metaverse   IDO  Launchpad  HTML Template"
+          content="PS Bank - The Next Generation Crypto Bank"
         />
-        <meta name="description" content="Torkgo Web 3 Metaverse IDO Launchpad Vue.js (Nuxt.js) Template by TheTork. It is suitable for any kind of IDO,IGO,INO and Metaverse Launchpad." />
-        <meta name="keywords" content="torkgo, web3, ico ino, nft, blockchain,launchpad,ido launchpad, nft launchpad, crypto launchpad, next js, react js, bootstrap 5" />
-        <meta name="author" content="thetork.com" />
+        <meta name="description" content="PS Bank is a next-generation crypto bank offering innovative financial services in the Web3 ecosystem. Access exclusive token sales, participate in fair distributions, and invest in the future of blockchain innovation." />
+        <meta name="keywords" content="ps bank, crypto bank, web3, blockchain, cryptocurrency, financial services, token sales, crypto investment" />
+        <meta name="author" content="PS Bank" />
         <meta property="og:image" content="../images/Torkgo-next.png" />
-
       </Head>
 
       <AppProvider>

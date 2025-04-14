@@ -30,7 +30,7 @@ const Hero = () => {
                   Access exclusive token sales, participate in fair distributions, and 
                   invest in the future of blockchain innovation.
                 </p>
-                <DefaultButton text="Explore Projects" />
+                <DefaultButton text="Explore Projects" link="/project2" />
               </div>
             </div>
           </div>

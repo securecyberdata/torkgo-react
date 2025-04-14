@@ -70,7 +70,12 @@ function Footer() {
         <div className="footer__copyright">
           <div className="container">
             <div className="text-center py-4">
-              <p className="mb-0">TorkGo © 2023 | All Rights Reserved</p>
+              <p className="mb-0">
+                PS bank IT Department © 2025 | All Rights Reserved | 
+                <Link href="/terms" className="ms-2">Terms & Conditions</Link> | 
+                <Link href="/privacy-policy" className="ms-2">Privacy Policy</Link> | 
+                <Link href="/aml-kyc" className="ms-2">AML/KYC Policy</Link>
+              </p>
             </div>
           </div>
         </div>

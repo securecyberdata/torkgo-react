@@ -72,6 +72,12 @@ function ComingSoonCard() {
                 </Link>
               </li>
             </ul>
+            <div className="mt-4">
+              <p className="mb-0">
+                <Link href="/terms">Terms & Conditions</Link> | 
+                <Link href="/privacy-policy" className="ms-2">Privacy Policy</Link>
+              </p>
+            </div>
           </div>
         </div>
       </div>

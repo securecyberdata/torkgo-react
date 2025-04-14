@@ -8,6 +8,10 @@ import {
   faGlobe,
   faArrowDown,
   faCloudArrowDown,
+  faChartLine,
+  faShieldHalved,
+  faCode,
+  faRocket,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faInstagram,
@@ -16,16 +20,17 @@ import {
   faTwitch,
   faFacebookF,
   faLinkedinIn,
+  faTelegram,
+  faMedium,
 } from "@fortawesome/free-brands-svg-icons";
 import ApplyToLaunch from "@/components/common/ApplyToLaunch";
 import PageHeader from "@/components/base/PageHeader";
 import Link from "next/link";
 
-
 const ProjectDetails = () => {
   return (
     <>
-      <PageHeader title="Project Details" text="project details" />
+      <PageHeader title="Project Details" text="Discover the future of decentralized finance" />
       {/* ================> Project Details start here <================== */}
       <section className="pro-details padding-top padding-bottom">
         <div className="container">
@@ -38,20 +43,22 @@ const ProjectDetails = () => {
                     <div className="pro-details__item-wrap">
                       <div className="pro-details__item">
                         <div className="pro-details__item-thumb">
-                          <img width="auto" src="/images/igo/author/1.png"
-                            alt="IGO Project"
+                          <img 
+                            width="auto" 
+                            src="/images/igo/project/nexus-protocol.png" 
+                            alt="Nexus Protocol"
+                            className="rounded-lg shadow-lg"
                           />
                         </div>
                         <div className="pro-details__item-content">
                           <h4>
-                            Dexer Xone <span>(Bzon)</span>
+                            Nexus Protocol <span>(NEX)</span>
                           </h4>
+                          <p className="lead mb-4">
+                            Revolutionizing DeFi through cross-chain interoperability and sustainable yield generation
+                          </p>
                           <p>
-                            Lorem ipsum dolor sit, amet consectetur adipisicing
-                            elit. Repellendus obcaecati quas ex, praesentium
-                            omnis cum, corrupti repudiandae placeat sapiente sit
-                            exercitationem mollitia veniam illum. Autem nobis
-                            aliquid provident illo ad.
+                            Nexus Protocol is a next-generation DeFi platform that bridges the gap between different blockchain networks, enabling seamless asset transfers and yield optimization across multiple chains. Our innovative technology allows users to access the best yields across various protocols while maintaining security and reducing gas fees.
                           </p>
                         </div>
                       </div>
@@ -60,13 +67,14 @@ const ProjectDetails = () => {
                           href="/login"
                           className="default-btn default-btn--small"
                         >
-                          <span>Claim Token</span>
+                          <span>Participate in IDO</span>
                         </Link>
                         <Link
-                          href="/signup"
+                          href="/whitepaper.pdf"
                           className="default-btn default-btn--small default-btn--secondary"
+                          target="_blank"
                         >
-                          <span>Register Now</span>
+                          <span>Read Whitepaper</span>
                         </Link>
                       </div>
                     </div>
@@ -80,32 +88,54 @@ const ProjectDetails = () => {
                               Total Supply
                             </h6>
                             <p className="pro-details__info-value">
-                              1,000,000,000 Bzon
+                              100,000,000 NEX
                             </p>
                           </div>
                         </div>
                         <div className="col-sm-6">
                           <div className="pro-details__info-item">
-                            <h6 className="pro-details__info-name">FDV</h6>
-                            <p className="pro-details__info-value">30M USD</p>
+                            <h6 className="pro-details__info-name">Initial Market Cap</h6>
+                            <p className="pro-details__info-value">$5,000,000</p>
                           </div>
                         </div>
                         <div className="col-sm-6">
                           <div className="pro-details__info-item">
                             <h6 className="pro-details__info-name">
-                              Initial Supply
+                              IDO Price
                             </h6>
                             <p className="pro-details__info-value">
-                              1,300,000,0 Bzon
+                              $0.05 USD
                             </p>
                           </div>
                         </div>
                         <div className="col-sm-6">
                           <div className="pro-details__info-item">
                             <h6 className="pro-details__info-name">
-                              Initial Market Cap
+                              Vesting Period
                             </h6>
-                            <p className="pro-details__info-value">6.48M USD</p>
+                            <p className="pro-details__info-value">
+                              12 months
+                            </p>
+                          </div>
+                        </div>
+                        <div className="col-sm-6">
+                          <div className="pro-details__info-item">
+                            <h6 className="pro-details__info-name">
+                              Soft Cap
+                            </h6>
+                            <p className="pro-details__info-value">
+                              $1,000,000
+                            </p>
+                          </div>
+                        </div>
+                        <div className="col-sm-6">
+                          <div className="pro-details__info-item">
+                            <h6 className="pro-details__info-name">
+                              Hard Cap
+                            </h6>
+                            <p className="pro-details__info-value">
+                              $5,000,000
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -114,277 +144,175 @@ const ProjectDetails = () => {
                 </div>
               </div>
             </div>
-            {/* token infos */}
-            <div className="pro-details__token mb-5">
-              <div className="row g-4 row-cols-auto ">
-                <div className="col">
-                  <div className="pro-details__token-item d-flex flex-wrap justify-content-between align-items-center gap-40">
-                    <div className="pro-details__token-title">
-                      <span>$</span>
-                      <h6>Token Price :</h6>
-                    </div>
-                    <div className="pro-details__token-value">
-                      <p>
-                        0.25 <sub>USD</sub>
-                      </p>
+
+            {/* Project Features */}
+            <div className="pro-details__block mb-4">
+              <div className="pro-details__block-inner">
+                <h3 className="section__header__title mb-4">Key Features</h3>
+                <div className="row g-4">
+                  <div className="col-md-4">
+                    <div className="feature-card p-4 rounded-lg shadow-sm">
+                      <FontAwesomeIcon icon={faShieldHalved} className="feature-icon mb-3" />
+                      <h5>Cross-Chain Security</h5>
+                      <p>Advanced security protocols ensuring safe asset transfers across multiple blockchains</p>
                     </div>
                   </div>
-                </div>
-                <div className="col">
-                  <div className="pro-details__token-item">
-                    <p>30% at TGE, evenly per quarter 4 quarters, Best Sale!</p>
-                  </div>
-                </div>
-                <div className="col">
-                  <div className="pro-details__token-item d-flex flex-wrap justify-content-between align-items-center gap-40">
-                    <div className="pro-details__token-title">
-                      <span>$</span>
-                      <h6>Token Price :</h6>
+                  <div className="col-md-4">
+                    <div className="feature-card p-4 rounded-lg shadow-sm">
+                      <FontAwesomeIcon icon={faChartLine} className="feature-icon mb-3" />
+                      <h5>Yield Optimization</h5>
+                      <p>AI-powered yield farming strategies maximizing returns while minimizing risks</p>
                     </div>
-                    <div className="pro-details__token-value">
-                      <p>
-                        250000 <sub>USD</sub>
-                      </p>
+                  </div>
+                  <div className="col-md-4">
+                    <div className="feature-card p-4 rounded-lg shadow-sm">
+                      <FontAwesomeIcon icon={faCode} className="feature-icon mb-3" />
+                      <h5>Smart Contracts</h5>
+                      <p>Audited and verified smart contracts ensuring transparency and reliability</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            {/* project description */}
-            <div className="pro-details__desc">
-              <div className="row flex-lg-row-reverse g-5">
-                <div className="col-lg-8">
-                  <div className="pro-details__desc-content">
-                    <div
-                      data-bs-spy="scroll"
-                      data-bs-target="#pro-details-navlist"
-                      data-bs-smooth-scroll="true"
-                      data-bs-root-margin="0px 0px -60%"
-                      className="scrollspy-example"
-                      tabIndex={0}
-                    >
-                      {/* about */}
-                      <section id="pro-details-about">
-                        <h4>About TorkGo</h4>
-                        <p>
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Optio animi, id ducimus eum tempora minus labore
-                          saepe fuga eius dolor non veritatis excepturi
-                          perferendis molestiae nulla quia officiis sunt soluta.
-                        </p>
-                        <p>
-                          Lorem ipsum, dolor sit amet consectetur adipisicing
-                          elit. Laborum dolores alias aliquid iusto eaque
-                          perferendis.
-                        </p>
-                        <div className="pro-details__img my-4">
-                          <img width="auto" src="/images/blog/single/01.jpg"
-                            alt="Project Image"
-                          />
-                        </div>
-                        <h5>Metaverse</h5>
-                        <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit. Soluta, debitis tenetur dolorem a ab voluptas
-                          dolore nesciunt saepe optio amet temporibus ipsum
-                          beatae est quisquam.
-                        </p>
-                        <div className="pro-details__img my-4">
-                          <img width="auto" src="/images/blog/single/02.jpg"
-                            alt="Project Image"
-                          />
-                        </div>
-                      </section>
-                      {/* token */}
-                      <section id="pro-details-token">
-                        <h4> TorkGo Token Details</h4>
-                        <p>
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Optio animi, id ducimus eum tempora minus labore
-                          saepe fuga eius dolor non veritatis excepturi
-                          perferendis molestiae nulla quia officiis sunt soluta.
-                        </p>
-                        <p>
-                          Lorem ipsum, dolor sit amet consectetur adipisicing
-                          elit. Laborum dolores alias aliquid iusto eaque
-                          perferendis.
-                        </p>
-                        <div className="pro-details__token-info mt-4">
-                          <h5>Token Info</h5>
-                          <ul className="pro-details__tokenlist">
-                            <li className="pro-details__tokenlist-item">
-                              <FontAwesomeIcon icon={faDiceD6} />
-                              Lorem ipsum dolor sit amet.
-                            </li>
-                            <li className="pro-details__tokenlist-item">
-                              Opsum dolor sit amet.
-                            </li>
-                            <li className="pro-details__tokenlist-item">
-                              <FontAwesomeIcon icon={faDiceD6} />
-                              Dolor sit amet.
-                            </li>
-                            <li className="pro-details__tokenlist-item">
-                              <FontAwesomeIcon icon={faDiceD6} />
-                              Zit amet Lorem, ipsum.
-                            </li>
-                            <li className="pro-details__tokenlist-item">
-                              <FontAwesomeIcon icon={faDiceD6} />
-                              Xmet dio lor em.
-                            </li>
-                            <li className="pro-details__tokenlist-item">
-                              <FontAwesomeIcon icon={faDiceD6} />
-                              Elor sit amet.
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="pro-details__img my-4">
-                          <img width="auto" src="/images/blog/single/03.jpg"
-                            alt="Token Image"
-                          />
-                        </div>
-                      </section>
-                      {/* Roadmap */}
-                      <section id="pro-details-roadmap">
-                        <h4> TorkGo Roadmap</h4>
-                        <p>
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Optio animi, id ducimus eum tempora minus labore
-                          saepe fuga eius dolor non veritatis excepturi
-                          perferendis molestiae nulla quia officiis sunt soluta.
-                        </p>
-                        <p>
-                          Lorem ipsum, dolor sit amet consectetur adipisicing
-                          elit. Laborum dolores alias aliquid iusto eaque
-                          perferendis.
-                        </p>
-                        <div className="pro-details__img my-4">
-                          <img width="auto" src="/images/blog/single/04.jpg"
-                            alt="roadmap Image"
-                          />
-                        </div>
-                      </section>
-                      {/* backers */}
-                      <section id="pro-details-backers">
-                        <h4> Our Backers</h4>
-                        <p>
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Optio animi, id ducimus eum tempora minus labore
-                          saepe fuga eius dolor non veritatis excepturi
-                          perferendis molestiae nulla quia officiis sunt soluta.
-                        </p>
-                        <div className="pro-details__img my-4">
-                          <img width="auto" src="/images/blog/single/05.jpg"
-                            alt="Project Image"
-                          />
-                        </div>
-                      </section>
+
+            {/* Tokenomics */}
+            <div className="pro-details__block mb-4">
+              <div className="pro-details__block-inner">
+                <h3 className="section__header__title mb-4">Tokenomics</h3>
+                <div className="row g-4">
+                  <div className="col-md-6">
+                    <div className="tokenomics-card p-4 rounded-lg shadow-sm">
+                      <h5>Token Distribution</h5>
+                      <ul className="list-unstyled">
+                        <li className="mb-2">• Public Sale: 20%</li>
+                        <li className="mb-2">• Team & Advisors: 15%</li>
+                        <li className="mb-2">• Development Fund: 25%</li>
+                        <li className="mb-2">• Marketing: 10%</li>
+                        <li className="mb-2">• Liquidity: 20%</li>
+                        <li className="mb-2">• Community Rewards: 10%</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="tokenomics-card p-4 rounded-lg shadow-sm">
+                      <h5>Vesting Schedule</h5>
+                      <ul className="list-unstyled">
+                        <li className="mb-2">• Public Sale: 20% unlock at TGE, 6 months cliff, 12 months linear vesting</li>
+                        <li className="mb-2">• Team & Advisors: 12 months cliff, 24 months linear vesting</li>
+                        <li className="mb-2">• Development Fund: 6 months cliff, 36 months linear vesting</li>
+                        <li className="mb-2">• Marketing: 3 months cliff, 12 months linear vesting</li>
+                        <li className="mb-2">• Liquidity: 100% unlock at TGE</li>
+                        <li className="mb-2">• Community Rewards: 6 months cliff, 24 months linear vesting</li>
+                      </ul>
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-4">
-                  <aside>
-                    <div className="pro-details__desc-nav">
-                      {/* navlist */}
-                      <div
-                        className="list-group bg--primary-color mb-4"
-                        id="pro-details-navlist"
-                      >
-                        <Link className="list-group-item list-group-item-action"
-                          href="#pro-details-about"
-                        >
-                          <FontAwesomeIcon icon={faWindowRestore} />
-                          About
-                        </Link>
-                        <Link className="list-group-item list-group-item-action"
-                          href="#pro-details-token"
-                        >
-                          {" "}
-                          <FontAwesomeIcon icon={faDiagramProject} />
-                          Token
-                        </Link>
-                        <Link className="list-group-item list-group-item-action"
-                          href="#pro-details-roadmap"
-                        >
-                          <FontAwesomeIcon icon={faRoad} />
-                          Roadmap
-                        </Link>
-                        <Link className="list-group-item list-group-item-action"
-                          href="#pro-details-backers"
-                        >
-                          <FontAwesomeIcon icon={faUserAstronaut} />
-                          Backers
-                        </Link>
-                      </div>
-                      {/* pro details link */}
-                      <div className="pro-details__links">
-                        <div className="pro-details__links-item">
-                          <div className="pro-details__links-title">
-                            <h6>Social Media</h6>
-                          </div>
-                          <div className="pro-details__links-content">
-                            <ul className="social">
-                              <li className="social__item">
-                                <Link href="#" className="social__link">
-                                  <FontAwesomeIcon icon={faTwitter} />
-                                </Link>
-                              </li>
-                              <li className="social__item">
-                                <Link href="#" className="social__link">
-                                  <FontAwesomeIcon icon={faDiscord} />
-                                </Link>
-                              </li>
-                              <li className="social__item">
-                                <Link href="#" className="social__link">
-                                  <FontAwesomeIcon icon={faTwitch} />
-                                </Link>
-                              </li>
-                              <li className="social__item">
-                                <Link href="#" className="social__link">
-                                  <FontAwesomeIcon icon={faInstagram} />
-                                </Link>
-                              </li>
-                              <li className="social__item">
-                                <Link href="#" className="social__link">
-                                  <FontAwesomeIcon icon={faLinkedinIn} />
-                                </Link>
-                              </li>
-                              <li className="social__item">
-                                <Link href="#" className="social__link">
-                                  <FontAwesomeIcon icon={faFacebookF} />
-                                </Link>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div className="pro-details__links-item">
-                          <div className="pro-details__links-title">
-                            <h6>Website Link</h6>
-                          </div>
-                          <div className="pro-details__links-content">
-                            <Link className="pro-details__links-btn" href="#">
-                              www.example.com{" "}
-                              <span>
-                                <FontAwesomeIcon icon={faGlobe} />
-                              </span>
-                            </Link>
-                          </div>
-                        </div>
-                        <div className="pro-details__links-item">
-                          <div className="pro-details__links-title">
-                            <h6>Download Whitepaper</h6>
-                          </div>
-                          <div className="pro-details__links-content">
-                            <Link className="pro-details__links-btn" href="#">
-                              Whitepaper{" "}
-                              <span>
-                                <FontAwesomeIcon icon={faCloudArrowDown} />
-                              </span>
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
+              </div>
+            </div>
+
+            {/* Roadmap */}
+            <div className="pro-details__block mb-4">
+              <div className="pro-details__block-inner">
+                <h3 className="section__header__title mb-4">Roadmap</h3>
+                <div className="roadmap-timeline">
+                  <div className="roadmap-item mb-4">
+                    <div className="roadmap-date">Q1 2024</div>
+                    <div className="roadmap-content">
+                      <h5>Platform Launch</h5>
+                      <ul>
+                        <li>Initial IDO Launch</li>
+                        <li>Core Protocol Development</li>
+                        <li>Security Audits</li>
+                      </ul>
                     </div>
-                  </aside>
+                  </div>
+                  <div className="roadmap-item mb-4">
+                    <div className="roadmap-date">Q2 2024</div>
+                    <div className="roadmap-content">
+                      <h5>Expansion Phase</h5>
+                      <ul>
+                        <li>Cross-Chain Integration</li>
+                        <li>Yield Optimization Features</li>
+                        <li>Community Governance Launch</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="roadmap-item mb-4">
+                    <div className="roadmap-date">Q3 2024</div>
+                    <div className="roadmap-content">
+                      <h5>Ecosystem Growth</h5>
+                      <ul>
+                        <li>Partnership Program</li>
+                        <li>Advanced Trading Features</li>
+                        <li>Mobile App Release</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="roadmap-item">
+                    <div className="roadmap-date">Q4 2024</div>
+                    <div className="roadmap-content">
+                      <h5>Global Adoption</h5>
+                      <ul>
+                        <li>Enterprise Solutions</li>
+                        <li>Institutional Integration</li>
+                        <li>Global Expansion</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Team Section */}
+            <div className="pro-details__block mb-4">
+              <div className="pro-details__block-inner">
+                <h3 className="section__header__title mb-4">Core Team</h3>
+                <div className="row g-4">
+                  <div className="col-md-4">
+                    <div className="team-card text-center p-4 rounded-lg shadow-sm">
+                      <img src="/images/team/1.png" alt="Team Member" className="rounded-circle mb-3" width="120" height="120" />
+                      <h5>Dr. Sarah Chen</h5>
+                      <p className="text-muted">CEO & Founder</p>
+                      <p>Former Head of Research at Ethereum Foundation</p>
+                    </div>
+                  </div>
+                  <div className="col-md-4">
+                    <div className="team-card text-center p-4 rounded-lg shadow-sm">
+                      <img src="/images/team/2.png" alt="Team Member" className="rounded-circle mb-3" width="120" height="120" />
+                      <h5>Alex Thompson</h5>
+                      <p className="text-muted">CTO</p>
+                      <p>Blockchain Architect with 10+ years experience</p>
+                    </div>
+                  </div>
+                  <div className="col-md-4">
+                    <div className="team-card text-center p-4 rounded-lg shadow-sm">
+                      <img src="/images/team/3.png" alt="Team Member" className="rounded-circle mb-3" width="120" height="120" />
+                      <h5>Maria Rodriguez</h5>
+                      <p className="text-muted">Head of Product</p>
+                      <p>DeFi Product Specialist</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Social Links */}
+            <div className="pro-details__block">
+              <div className="pro-details__block-inner">
+                <h3 className="section__header__title mb-4">Connect With Us</h3>
+                <div className="social-links d-flex gap-3 justify-content-center">
+                  <a href="#" className="social-link">
+                    <FontAwesomeIcon icon={faTwitter} />
+                  </a>
+                  <a href="#" className="social-link">
+                    <FontAwesomeIcon icon={faTelegram} />
+                  </a>
+                  <a href="#" className="social-link">
+                    <FontAwesomeIcon icon={faDiscord} />
+                  </a>
+                  <a href="#" className="social-link">
+                    <FontAwesomeIcon icon={faMedium} />
+                  </a>
                 </div>
               </div>
             </div>
@@ -396,4 +324,5 @@ const ProjectDetails = () => {
     </>
   );
 };
+
 export default ProjectDetails;

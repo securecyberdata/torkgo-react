@@ -124,7 +124,7 @@ const ApplyProject = () => {
                           required=""
                         />
                         <label htmlFor="project-raise">
-                          Target Raise Ammount *
+                          Target Raise Amount *
                         </label>
                       </div>
                       <div className="row g-3 mb-5">

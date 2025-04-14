@@ -10,6 +10,7 @@ import {
 import PageHeader from "@/components/base/PageHeader";
 import NewsLetterTwo from "@/components/partials/NewsLetterTwo";
 import { teamMembers } from "@/data/teamData";
+import Image from "next/image";
 
 const TeamMember = () => {
   const router = useRouter();
@@ -37,7 +38,14 @@ const TeamMember = () => {
           <div className="row g-4">
             <div className="col-lg-4">
               <div className="team-member__thumb">
-                <img width="auto" src={member.img} alt={`${member.name} - Team Member`} />
+                <Image 
+                  src={member.img} 
+                  alt={`${member.name} - Team Member`} 
+                  width={800}
+                  height={1000}
+                  quality={90}
+                  priority
+                />
               </div>
               <div className="team-member__content">
                 <h3>{member.name}</h3>

@@ -284,12 +284,10 @@ const Completed = () => {
               </div>
             </div>
           </div>
-          <div
-            className="text-center mt-5 aos-init aos-animate"
-            data-aos="fade-up"
-            data-aos-duration={800}
-          >
-            <DefaultButton text="View more" />
+          <div className="col-12">
+            <div className="text-center">
+              <DefaultButton text="View more" link="/project2" />
+            </div>
           </div>
         </div>
       </div>

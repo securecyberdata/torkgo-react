@@ -63,10 +63,40 @@ export const teamMembers = [
     id: 5,
     name: "Martha Reyes",
     role: "Board Member & Vice President of Human Resources, Planet Sayari Group",
-    img: "/images/team/05.png",
+    img: "/images/team/martha.jpg",
     bio: "Martha Reyes serves as a Board Member and the Vice President of Human Resources at Planet Sayari Group.",
     description: "Martha Reyes serves as a Board Member and the Vice President of Human Resources at Planet Sayari Group, bringing over 30 years of leadership and supervisory experience to the organization. With a Bachelor's degree in Human Services and a professional certificate in Counseling, Martha combines a strong foundation in people-focused disciplines with a deep passion for the financial sector. Throughout her career, she has been recognized for her dedication to fostering inclusive, high-performing workplace cultures and guiding teams toward long-term success. Her commitment to organizational development and employee well-being plays a vital role in supporting Planet Sayari's mission and values.",
     expertise: ["Human Resources", "Leadership Development", "Organizational Culture", "Employee Relations"],
+    social: {
+      twitter: "https://twitter.com",
+      linkedin: "https://linkedin.com",
+      facebook: "https://facebook.com",
+      instagram: "https://instagram.com"
+    }
+  },
+  {
+    id: 6,
+    name: "Michael Wilkinson",
+    role: "Chief Sales Officer & Head of Banking",
+    img: "/images/team/michael.jpg",
+    bio: "Michael is an accomplished financial services professional with a strong track record in retail banking, customer relationship management, and team leadership.",
+    description: "Michael is an accomplished financial services professional with a strong track record in retail banking, customer relationship management, and team leadership. As a former Branch Manager with Citigroup, Michael was responsible for overseeing day-to-day branch operations, driving business growth, and ensuring exceptional service delivery to clients. Michael's role at Planet Sayari Group involves structuring, developing, and evaluating strategic opportunities with traditional financial services and native digital asset companies that align with the growth of the Planet Sayari platform. Michael is known for his strategic mindset, commitment to team development, and ability to foster strong client relationships. He continues to bring value to the financial sector through his dedication to excellence and innovation.",
+    expertise: ["Retail Banking", "Customer Relationship Management", "Team Leadership", "Business Growth"],
+    social: {
+      twitter: "https://twitter.com",
+      linkedin: "https://linkedin.com",
+      facebook: "https://facebook.com",
+      instagram: "https://instagram.com"
+    }
+  },
+  {
+    id: 7,
+    name: "Duncan Oduor Otieno",
+    role: "Director of Business Development",
+    img: "/images/team/duncan.jpg",
+    bio: "Duncan Oduor Otieno is the Director of Business Development at Planet Sayari group, responsible for driving client acquisition, expanding the bank's market presence, and shaping its growth in digital financial markets.",
+    description: "Duncan Oduor Otieno is the Director of Business Development at Planet Sayari group, responsible for driving client acquisition, expanding the bank's market presence, and shaping its growth in digital financial markets. As a renowned and innovative entrepreneur, Mr. Otieno has interests spanning various sectors, including Financial Services, Private Equity & Investments, ICT & Related Services, Business & Professional Consulting, Retail & Distribution, Agriculture, Manufacturing, Media, Real Estate, Construction, Events Management, and Charitable Activities. Mr. Otieno holds prominent corporate directorships in notable organizations such as The SPH Group (Pty) Ltd, ADF Group, Sawa Farm, Rising Petroleum (Pty) Ltd, The Top Property Group Limited, Rising Mines Limited, Rising Resources Limited, The GrandCity Development Limited, among others. Furthermore, he founded MobiKashAfrica, which under his leadership became the second-largest mobile money service before he sold the company in 2013 and exited senior management in 2015. With over 25 years of experience in the banking and investments industry, Mr. Otieno has held senior management positions and collaborated with the Government of Kenya. He has also worked with auditing and consulting firms, excelling in Commercial & Private Banking, Private Equity, Microfinance Institutions, Payment & Money Systems, Retail & Trade, Risk management, audit, strategic management, and accounting. Mr. Otieno's educational achievements include an MBA in Finance and a BSc. in Finance. Currently pursuing a PhD in Finance at Jomo Kenyatta University of Science & Technology in Kenya, he continually expands his knowledge and expertise. He has also obtained professional certifications such as Certified Public Accountant (CPA), Oracle Certified Professional (OCP), and Certified Securities & Investment Analyst (CSIA). This diverse educational and professional background reflects Mr. Otieno's comprehensive skill set and broad understanding of various aspects of finance and business.",
+    expertise: ["Business Development", "Financial Services", "Private Equity", "Strategic Management"],
     social: {
       twitter: "https://twitter.com",
       linkedin: "https://linkedin.com",

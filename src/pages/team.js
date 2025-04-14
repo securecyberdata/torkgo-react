@@ -12,6 +12,7 @@ import NewsLetterTwo from "@/components/partials/NewsLetterTwo";
 import { fetchData } from "@/apiConfig";
 import Link from "next/link";
 import { teamMembers } from "@/data/teamData";
+import Image from "next/image";
 
 const Team = () => {
   const [team, setTeam] = useState(teamMembers);
@@ -58,14 +59,22 @@ const Team = () => {
             <div className="row justify-content-center g-4">
               {team.map((item) => {
                 return (
-                  <div key={item.id} className="col-lg-3 col-sm-6">
+                  <div key={item.id} className="col-lg-4 col-sm-6">
                     <div
                       className="team__item aos-init aos-animate"
                       data-aos="fade-up"
                       data-aos-duration={800}
                     >
                       <div className="team__thumb">
-                        <img width="auto" src={item.img} alt={`${item.name} - Team Member`} />
+                        <Image
+                          src={item.img}
+                          alt={`${item.name} - Team Member`}
+                          width={800}
+                          height={1000}
+                          quality={90}
+                          priority={item.id <= 3}
+                          className="team__image"
+                        />
                       </div>
                       <div className="team__content">
                         <h4>
