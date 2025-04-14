@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import PageHeader from '@/components/base/PageHeader';
 import { ThemeContext } from '@/context/ThemeContext';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const AmlKyc = () => {
   const { theme } = useContext(ThemeContext);
@@ -13,10 +14,13 @@ const AmlKyc = () => {
       <div className="terms__wrapper">
         <div className="terms__content">
           <div className="terms__header">
-            <img 
+            <Image 
               src={isDark ? "/images/logo-light.png" : "/images/logo-dark.png"} 
               alt="Planet Sayari Bank" 
               className="terms__logo"
+              width={200}
+              height={50}
+              priority
             />
             <p className="terms__version">Last Updated: May 15, 2024</p>
           </div>
@@ -41,7 +45,7 @@ const AmlKyc = () => {
 
           <h2 id="section1">1. Scope</h2>
           <p>
-            Planet Sayari Bank's AML and CTF Policy applies for Planet Sayari Bank and all subsidiaries.
+            Planet Sayari Bank&apos;s AML and CTF Policy applies for Planet Sayari Bank and all subsidiaries.
           </p>
 
           <h2 id="section2">2. The Policy in Brief</h2>
@@ -80,7 +84,7 @@ const AmlKyc = () => {
 
           <h2 id="section4">4. Customer Due Diligence</h2>
           <p>
-            Customer Due Diligence (CDD) includes, among other things, identifying the customer and verifying the customer's identity on the basis of documents, data or information obtained from reliable and independent sources. We also need to understand the ownership and control structure of our customers.
+            Customer Due Diligence (CDD) includes, among other things, identifying the customer and verifying the customer&apos;s identity on the basis of documents, data or information obtained from reliable and independent sources. We also need to understand the ownership and control structure of our customers.
           </p>
 
           <h2 id="section5">5. Screening and Monitoring</h2>
