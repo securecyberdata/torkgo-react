@@ -16,6 +16,7 @@ const AdminProjects = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [isClient, setIsClient] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     symbol: '',
@@ -47,7 +48,15 @@ const AdminProjects = () => {
     }
   });
 
+  // Set isClient to true when component mounts (client-side only)
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    // Only run this effect on the client side
+    if (!isClient) return;
+
     // Check if user is authenticated
     const token = localStorage.getItem('adminToken');
     if (!token) {
@@ -56,22 +65,27 @@ const AdminProjects = () => {
     }
 
     // Load projects from localStorage
-    const storedProjects = localStorage.getItem('projects');
-    if (storedProjects) {
-      try {
+    try {
+      const storedProjects = localStorage.getItem('projects');
+      if (storedProjects) {
         const parsedProjects = JSON.parse(storedProjects);
         if (Array.isArray(parsedProjects)) {
           setProjects(parsedProjects);
+        } else {
+          console.error('Stored projects is not an array:', parsedProjects);
+          setProjects(defaultProjects);
         }
-      } catch (e) {
-        console.error('Error parsing stored projects:', e);
+      } else {
+        console.log('No projects found in localStorage, using defaults');
         setProjects(defaultProjects);
       }
-    } else {
+    } catch (e) {
+      console.error('Error loading projects:', e);
       setProjects(defaultProjects);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
-  }, [router]);
+  }, [router, isClient]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -221,6 +235,14 @@ const AdminProjects = () => {
     }
   };
 
+  if (!isClient) {
+    return (
+      <AdminLayout>
+        <div className="loading-message">Loading...</div>
+      </AdminLayout>
+    );
+  }
+
   if (loading) {
     return (
       <AdminLayout>
@@ -248,33 +270,39 @@ const AdminProjects = () => {
 
         <div className="projects-table">
           <h2>Current Projects</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Symbol</th>
-                <th>ID</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {projects.map(project => (
-                <tr key={project.id}>
-                  <td>{project.title}</td>
-                  <td>{project.symbol}</td>
-                  <td className="id-cell">{project.id.substring(0, 8)}...</td>
-                  <td>
-                    <button 
-                      className="delete-btn"
-                      onClick={() => handleDelete(project.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
+          {projects.length > 0 ? (
+            <table>
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Symbol</th>
+                  <th>ID</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {projects.map(project => (
+                  <tr key={project.id}>
+                    <td>{project.title}</td>
+                    <td>{project.symbol}</td>
+                    <td className="id-cell">{project.id ? project.id.substring(0, 8) + '...' : 'N/A'}</td>
+                    <td>
+                      <button 
+                        className="delete-btn"
+                        onClick={() => handleDelete(project.id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div className="no-projects">
+              <p>No projects found. Add your first project using the form below.</p>
+            </div>
+          )}
         </div>
 
         <div className="add-project-form">
