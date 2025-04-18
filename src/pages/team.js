@@ -120,7 +120,7 @@ const Team = () => {
     return (
       <div className="error-container">
         <h2>No Team Members Found</h2>
-        <p>We couldn't find any team members to display.</p>
+        <p>We couldn&apos;t find any team members to display.</p>
         <button onClick={() => window.location.reload()} className="retry-button">
           Retry
         </button>

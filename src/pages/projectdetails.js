@@ -26,6 +26,7 @@ import {
 import ApplyToLaunch from "@/components/common/ApplyToLaunch";
 import PageHeader from "@/components/base/PageHeader";
 import Link from "next/link";
+import Image from "next/image";
 
 const ProjectDetails = () => {
   return (
@@ -43,8 +44,9 @@ const ProjectDetails = () => {
                     <div className="pro-details__item-wrap">
                       <div className="pro-details__item">
                         <div className="pro-details__item-thumb">
-                          <img 
-                            width="auto" 
+                          <Image 
+                            width={800}
+                            height={600}
                             src="/images/igo/project/nexus-protocol.png" 
                             alt="Nexus Protocol"
                             className="rounded-lg shadow-lg"
@@ -270,7 +272,13 @@ const ProjectDetails = () => {
                 <div className="row g-4">
                   <div className="col-md-4">
                     <div className="team-card text-center p-4 rounded-lg shadow-sm">
-                      <img src="/images/team/1.png" alt="Team Member" className="rounded-circle mb-3" width="120" height="120" />
+                      <Image 
+                        src="/images/team/1.png" 
+                        alt="Team Member" 
+                        className="rounded-circle mb-3" 
+                        width={120} 
+                        height={120} 
+                      />
                       <h5>Dr. Sarah Chen</h5>
                       <p className="text-muted">CEO & Founder</p>
                       <p>Former Head of Research at Ethereum Foundation</p>
@@ -278,7 +286,13 @@ const ProjectDetails = () => {
                   </div>
                   <div className="col-md-4">
                     <div className="team-card text-center p-4 rounded-lg shadow-sm">
-                      <img src="/images/team/2.png" alt="Team Member" className="rounded-circle mb-3" width="120" height="120" />
+                      <Image 
+                        src="/images/team/2.png" 
+                        alt="Team Member" 
+                        className="rounded-circle mb-3" 
+                        width={120} 
+                        height={120} 
+                      />
                       <h5>Alex Thompson</h5>
                       <p className="text-muted">CTO</p>
                       <p>Blockchain Architect with 10+ years experience</p>
@@ -286,7 +300,13 @@ const ProjectDetails = () => {
                   </div>
                   <div className="col-md-4">
                     <div className="team-card text-center p-4 rounded-lg shadow-sm">
-                      <img src="/images/team/3.png" alt="Team Member" className="rounded-circle mb-3" width="120" height="120" />
+                      <Image 
+                        src="/images/team/3.png" 
+                        alt="Team Member" 
+                        className="rounded-circle mb-3" 
+                        width={120} 
+                        height={120} 
+                      />
                       <h5>Maria Rodriguez</h5>
                       <p className="text-muted">Head of Product</p>
                       <p>DeFi Product Specialist</p>
