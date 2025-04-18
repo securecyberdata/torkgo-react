@@ -38,9 +38,11 @@ const AdminDashboard = () => {
             if (Array.isArray(parsedProjects)) {
               projectsCount = parsedProjects.length;
               console.log(`Dashboard: Found ${projectsCount} projects`);
+            } else {
+              console.error('Dashboard: Stored projects is not an array:', parsedProjects);
             }
           } catch (e) {
-            console.error('Error parsing projects:', e);
+            console.error('Dashboard: Error parsing projects:', e);
           }
         } else {
           console.log('Dashboard: No projects found in localStorage');

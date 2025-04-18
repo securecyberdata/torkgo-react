@@ -69,23 +69,57 @@ const AdminProjects = () => {
       console.log('Loading projects from localStorage...');
       const storedProjects = localStorage.getItem('projects');
       if (storedProjects) {
-        const parsedProjects = JSON.parse(storedProjects);
-        if (Array.isArray(parsedProjects)) {
-          console.log(`Found ${parsedProjects.length} projects in localStorage`);
-          setProjects(parsedProjects);
-        } else {
-          console.error('Stored projects is not an array:', parsedProjects);
-          setProjects(defaultProjects);
+        try {
+          const parsedProjects = JSON.parse(storedProjects);
+          if (Array.isArray(parsedProjects) && parsedProjects.length > 0) {
+            console.log(`Found ${parsedProjects.length} projects in localStorage`);
+            // Ensure all project IDs are strings
+            const projectsWithStringIds = parsedProjects.map(project => ({
+              ...project,
+              id: String(project.id)
+            }));
+            setProjects(projectsWithStringIds);
+          } else {
+            console.log('Stored projects is empty or not an array, using defaults');
+            // Ensure all default project IDs are strings
+            const defaultProjectsWithStringIds = defaultProjects.map(project => ({
+              ...project,
+              id: String(project.id)
+            }));
+            setProjects(defaultProjectsWithStringIds);
+            // Store default projects in localStorage for future use
+            localStorage.setItem('projects', JSON.stringify(defaultProjectsWithStringIds));
+          }
+        } catch (parseError) {
+          console.error('Error parsing projects from localStorage:', parseError);
+          // Ensure all default project IDs are strings
+          const defaultProjectsWithStringIds = defaultProjects.map(project => ({
+            ...project,
+            id: String(project.id)
+          }));
+          setProjects(defaultProjectsWithStringIds);
+          localStorage.setItem('projects', JSON.stringify(defaultProjectsWithStringIds));
         }
       } else {
         console.log('No projects found in localStorage, using defaults');
-        setProjects(defaultProjects);
+        // Ensure all default project IDs are strings
+        const defaultProjectsWithStringIds = defaultProjects.map(project => ({
+          ...project,
+          id: String(project.id)
+        }));
+        setProjects(defaultProjectsWithStringIds);
         // Store default projects in localStorage for future use
-        localStorage.setItem('projects', JSON.stringify(defaultProjects));
+        localStorage.setItem('projects', JSON.stringify(defaultProjectsWithStringIds));
       }
     } catch (e) {
       console.error('Error loading projects:', e);
-      setProjects(defaultProjects);
+      // Ensure all default project IDs are strings
+      const defaultProjectsWithStringIds = defaultProjects.map(project => ({
+        ...project,
+        id: String(project.id)
+      }));
+      setProjects(defaultProjectsWithStringIds);
+      localStorage.setItem('projects', JSON.stringify(defaultProjectsWithStringIds));
     } finally {
       setLoading(false);
     }
@@ -169,15 +203,57 @@ const AdminProjects = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
+      // Ensure features, tokenomics, and roadmap are in the correct format
+      const formattedFeatures = formData.features.map(feature => {
+        if (typeof feature === 'string') {
+          return {
+            icon: "faCheck",
+            title: feature,
+            description: feature
+          };
+        }
+        return feature;
+      });
+
+      const formattedTokenomics = formData.tokenomics.map(item => {
+        if (typeof item === 'string') {
+          return {
+            category: item,
+            percentage: "0%"
+          };
+        }
+        return item;
+      });
+
+      const formattedRoadmap = formData.roadmap.map(item => {
+        if (typeof item === 'string') {
+          return {
+            quarter: "Q1 2024",
+            title: item,
+            items: [item]
+          };
+        }
+        return item;
+      });
+
+      // Ensure ID is always a string
+      const projectId = formData.id ? String(formData.id) : uuidv4();
+
       const newProject = {
         ...formData,
-        id: formData.id || uuidv4(),
+        id: projectId,
         createdAt: formData.createdAt || new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
+        features: formattedFeatures,
+        tokenomics: {
+          distribution: formattedTokenomics,
+          vesting: []
+        },
+        roadmap: formattedRoadmap
       };
 
       const updatedProjects = formData.id
-        ? projects.map(p => p.id === formData.id ? newProject : p)
+        ? projects.map(p => String(p.id) === String(formData.id) ? newProject : p)
         : [...projects, newProject];
 
       setProjects(updatedProjects);
@@ -216,6 +292,7 @@ const AdminProjects = () => {
         }
       });
     } catch (err) {
+      console.error('Error saving project:', err);
       setError('Failed to save project. Please try again.');
       setSuccess('');
     }
@@ -223,13 +300,17 @@ const AdminProjects = () => {
 
   const handleDelete = (id) => {
     try {
-      const updatedProjects = projects.filter(p => p.id !== id);
+      console.log(`Deleting project with ID: ${id}`);
+      // Convert both the project ID and the ID to delete to strings for comparison
+      const updatedProjects = projects.filter(p => String(p.id) !== String(id));
+      console.log(`Projects after deletion: ${updatedProjects.length}`);
       setProjects(updatedProjects);
       localStorage.setItem('projects', JSON.stringify(updatedProjects));
       localStorage.setItem('projectsLastUpdated', new Date().toISOString());
       setSuccess('Project deleted successfully!');
       setError('');
     } catch (err) {
+      console.error('Error deleting project:', err);
       setError('Failed to delete project. Please try again.');
       setSuccess('');
     }
@@ -283,9 +364,15 @@ const AdminProjects = () => {
               <tbody>
                 {projects.map(project => (
                   <tr key={project.id}>
-                    <td>{project.title}</td>
-                    <td>{project.symbol}</td>
-                    <td className="id-cell">{project.id ? project.id.substring(0, 8) + '...' : 'N/A'}</td>
+                    <td>{project.title || 'Untitled Project'}</td>
+                    <td>{project.symbol || 'N/A'}</td>
+                    <td className="id-cell">
+                      {project.id 
+                        ? (typeof project.id === 'string' 
+                            ? project.id.substring(0, 8) + '...' 
+                            : String(project.id))
+                        : 'N/A'}
+                    </td>
                     <td>
                       <button 
                         className="delete-btn"
