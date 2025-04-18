@@ -1,218 +1,363 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
-import { projects } from '@/data/projectData';
+import Image from 'next/image';
+import { projects as defaultProjects } from '@/data/projectData';
 import PageHeader from '@/components/base/PageHeader';
 
 const ProjectDetails = () => {
   const router = useRouter();
   const { id } = router.query;
+  const [project, setProject] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  const project = projects.find(p => p.id === parseInt(id));
+  useEffect(() => {
+    if (!id) return;
 
-  if (!project) {
+    const fetchProject = () => {
+      try {
+        // First try to get from localStorage
+        const storedProjects = localStorage.getItem('projects');
+        if (storedProjects) {
+          const parsedProjects = JSON.parse(storedProjects);
+          const foundProject = parsedProjects.find(p => p.id === id);
+          if (foundProject) {
+            setProject(foundProject);
+            setLoading(false);
+            return;
+          }
+        }
+
+        // If not found in localStorage, check default projects
+        const defaultProject = defaultProjects.find(p => p.id === id);
+        if (defaultProject) {
+          setProject(defaultProject);
+        } else {
+          setError('Project not found');
+        }
+      } catch (err) {
+        console.error('Error fetching project:', err);
+        setError('Error loading project details');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProject();
+  }, [id]);
+
+  // Helper function to safely render feature content
+  const renderFeature = (feature) => {
+    if (typeof feature === 'string') {
+      return feature;
+    }
+    if (typeof feature === 'object' && feature !== null) {
+      return feature.description || feature.text || JSON.stringify(feature);
+    }
+    return '';
+  };
+
+  if (loading) {
     return (
-      <div className="container padding-top padding-bottom">
-        <div className="text-center">
-          <h2>Project not found</h2>
-          <Link href="/project2" className="default-btn">
-            <span>Back to Projects</span>
+      <>
+        <Head>
+          <title>Loading Project - Torkgo</title>
+        </Head>
+        <div className="loading-container">
+          <div className="loading-message">Loading project details...</div>
+        </div>
+        <style jsx>{`
+          .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 50vh;
+          }
+          .loading-message {
+            font-size: 1.2rem;
+            color: var(--body-color);
+          }
+        `}</style>
+      </>
+    );
+  }
+
+  if (error || !project) {
+    return (
+      <>
+        <Head>
+          <title>Project Not Found - Torkgo</title>
+        </Head>
+        <div className="error-container">
+          <h1>Project Not Found</h1>
+          <p>The project you're looking for doesn't exist or has been removed.</p>
+          <Link href="/project2" className="back-button">
+            Back to Projects
           </Link>
         </div>
-      </div>
+        <style jsx>{`
+          .error-container {
+            text-align: center;
+            padding: 50px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+          }
+          h1 {
+            color: var(--heading-color);
+            margin-bottom: 20px;
+          }
+          p {
+            color: var(--body-color);
+            margin-bottom: 30px;
+          }
+          .back-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--color-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+          }
+          .back-button:hover {
+            background-color: var(--color-primary-dark);
+          }
+        `}</style>
+      </>
     );
   }
 
   return (
     <>
       <Head>
-        <title>{project.title} - Planet Sayari Bank</title>
+        <title>{project.title} - Torkgo</title>
         <meta name="description" content={project.shortDescription} />
       </Head>
 
-      <PageHeader title={project.title} text={project.shortDescription} />
+      <PageHeader 
+        title={project.title} 
+        text={project.shortDescription}
+      />
 
-      <section className="project-details padding-top padding-bottom">
+      <section className="project-details-section padding-top padding-bottom">
         <div className="container">
-          <div className="row">
-            <div className="col-lg-8">
-              <div className="project-content">
-                <div className="project-image">
-                  <img src={project.image} alt={project.title} />
-                </div>
-                
-                <div className="project-info">
-                  <h2>About {project.title}</h2>
-                  <p>{project.description}</p>
-                </div>
+          <div className="project-details-grid">
+            <div className="project-image">
+              <Image
+                src={project.image}
+                alt={project.title}
+                width={600}
+                height={400}
+                quality={90}
+              />
+            </div>
 
+            <div className="project-info">
+              <div className="project-header">
+                <h2>{project.title}</h2>
+                <span className="project-symbol">{project.symbol}</span>
+              </div>
+
+              <div className="project-stats">
+                <div className="stat-item">
+                  <span className="stat-label">Price</span>
+                  <span className="stat-value">{project.idoPrice}</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Hard Cap</span>
+                  <span className="stat-value">{project.hardCap}</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Soft Cap</span>
+                  <span className="stat-value">{project.softCap}</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Total Supply</span>
+                  <span className="stat-value">{project.totalSupply}</span>
+                </div>
+              </div>
+
+              <div className="project-description">
+                <h3>About Project</h3>
+                <p>{project.description}</p>
+              </div>
+
+              {project.features && project.features.length > 0 && (
                 <div className="project-features">
-                  <h3>Key Features</h3>
+                  <h3>Features</h3>
                   <ul>
                     {project.features.map((feature, index) => (
-                      <li key={index}>
-                        <h4>{feature.title}</h4>
-                        <p>{feature.description}</p>
-                      </li>
+                      <li key={index}>{renderFeature(feature)}</li>
                     ))}
                   </ul>
                 </div>
+              )}
 
+              {project.tokenomics && project.tokenomics.length > 0 && (
                 <div className="project-tokenomics">
                   <h3>Tokenomics</h3>
                   <div className="tokenomics-grid">
-                    {project.tokenomics.distribution.map((item, index) => (
+                    {project.tokenomics.map((item, index) => (
                       <div key={index} className="tokenomics-item">
-                        <span className="label">{item.category}</span>
-                        <span className="value">{item.percentage}</span>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <h4 className="mt-4">Vesting Schedule</h4>
-                  <div className="tokenomics-grid">
-                    {project.tokenomics.vesting.map((item, index) => (
-                      <div key={index} className="tokenomics-item">
-                        <span className="label">{item.category}</span>
-                        <span className="value">{item.schedule}</span>
+                        <span className="tokenomics-name">
+                          {typeof item === 'object' ? item.name || item.category : item}
+                        </span>
+                        <span className="tokenomics-percentage">
+                          {typeof item === 'object' ? item.percentage || item.value : ''}%
+                        </span>
                       </div>
                     ))}
                   </div>
                 </div>
+              )}
 
+              {project.roadmap && project.roadmap.length > 0 && (
                 <div className="project-roadmap">
                   <h3>Roadmap</h3>
                   <div className="roadmap-timeline">
                     {project.roadmap.map((item, index) => (
                       <div key={index} className="roadmap-item">
-                        <div className="roadmap-date">{item.date}</div>
-                        <div className="roadmap-content">
-                          <h4>{item.title}</h4>
-                          <p>{item.description}</p>
+                        <div className="roadmap-phase">
+                          {typeof item === 'object' ? item.phase || item.title : item}
+                        </div>
+                        <div className="roadmap-description">
+                          {typeof item === 'object' ? item.description : ''}
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
-              </div>
-            </div>
+              )}
 
-            <div className="col-lg-4">
-              <div className="project-sidebar">
-                <div className="sidebar-card">
-                  <h3>Project Details</h3>
-                  <div className="details-list">
-                    <div className="detail-item">
-                      <span className="label">Symbol</span>
-                      <span className="value">{project.symbol}</span>
-                    </div>
-                    <div className="detail-item">
-                      <span className="label">Total Supply</span>
-                      <span className="value">{project.totalSupply}</span>
-                    </div>
-                    <div className="detail-item">
-                      <span className="label">Initial Market Cap</span>
-                      <span className="value">{project.initialMarketCap}</span>
-                    </div>
-                    <div className="detail-item">
-                      <span className="label">IDO Price</span>
-                      <span className="value">{project.idoPrice}</span>
-                    </div>
-                    <div className="detail-item">
-                      <span className="label">Vesting Period</span>
-                      <span className="value">{project.vestingPeriod}</span>
-                    </div>
-                    <div className="detail-item">
-                      <span className="label">Soft Cap</span>
-                      <span className="value">{project.softCap}</span>
-                    </div>
-                    <div className="detail-item">
-                      <span className="label">Hard Cap</span>
-                      <span className="value">{project.hardCap}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="sidebar-card">
-                  <h3>Project Team</h3>
-                  <div className="team-list">
-                    {project.team.map((member, index) => (
-                      <div key={index} className="team-member">
-                        <img src={member.image} alt={member.name} />
-                        <div className="member-info">
-                          <h4>{member.name}</h4>
-                          <p>{member.role}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="sidebar-card">
+              {project.socialLinks && (
+                <div className="project-social">
                   <h3>Social Links</h3>
                   <div className="social-links">
-                    {Object.entries(project.socialLinks).map(([platform, url]) => (
-                      <a
-                        key={platform}
-                        href={url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="social-link"
-                      >
-                        {platform}
+                    {project.socialLinks.website && (
+                      <a href={project.socialLinks.website} target="_blank" rel="noopener noreferrer" className="social-link">
+                        Website
                       </a>
-                    ))}
+                    )}
+                    {project.socialLinks.twitter && (
+                      <a href={project.socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="social-link">
+                        Twitter
+                      </a>
+                    )}
+                    {project.socialLinks.telegram && (
+                      <a href={project.socialLinks.telegram} target="_blank" rel="noopener noreferrer" className="social-link">
+                        Telegram
+                      </a>
+                    )}
+                    {project.socialLinks.discord && (
+                      <a href={project.socialLinks.discord} target="_blank" rel="noopener noreferrer" className="social-link">
+                        Discord
+                      </a>
+                    )}
+                    {project.socialLinks.github && (
+                      <a href={project.socialLinks.github} target="_blank" rel="noopener noreferrer" className="social-link">
+                        GitHub
+                      </a>
+                    )}
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
       </section>
 
       <style jsx>{`
-        .project-details {
-          background-color: #f8f9fa;
+        .project-details-section {
+          background-color: var(--body-bg);
         }
 
-        .project-content {
-          background: white;
-          border-radius: 10px;
-          padding: 2rem;
-          margin-bottom: 2rem;
+        .project-details-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 40px;
+          margin-top: 40px;
         }
 
         .project-image {
-          width: 100%;
-          height: 400px;
-          overflow: hidden;
           border-radius: 10px;
-          margin-bottom: 2rem;
+          overflow: hidden;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .project-image img {
           width: 100%;
-          height: 100%;
+          height: auto;
           object-fit: cover;
         }
 
-        .project-info h2 {
-          margin-bottom: 1rem;
-          color: #333;
+        .project-info {
+          background: var(--card-bg);
+          padding: 30px;
+          border-radius: 10px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .project-info p {
-          color: #666;
-          line-height: 1.6;
-          margin-bottom: 2rem;
+        .project-header {
+          margin-bottom: 20px;
         }
 
-        .project-features h3,
-        .project-tokenomics h3,
-        .project-roadmap h3 {
-          margin-bottom: 1.5rem;
-          color: #333;
+        .project-header h2 {
+          font-size: 2rem;
+          color: var(--heading-color);
+          margin-bottom: 10px;
+        }
+
+        .project-symbol {
+          display: inline-block;
+          padding: 5px 10px;
+          background-color: var(--color-primary);
+          color: white;
+          border-radius: 5px;
+          font-size: 0.9rem;
+        }
+
+        .project-stats {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 15px;
+          margin-bottom: 30px;
+        }
+
+        .stat-item {
+          background: var(--card-bg-secondary);
+          padding: 15px;
+          border-radius: 5px;
+          text-align: center;
+        }
+
+        .stat-label {
+          display: block;
+          font-size: 0.9rem;
+          color: var(--body-color);
+          margin-bottom: 5px;
+        }
+
+        .stat-value {
+          display: block;
+          font-size: 1.2rem;
+          font-weight: 600;
+          color: var(--heading-color);
+        }
+
+        .project-description,
+        .project-features,
+        .project-tokenomics,
+        .project-roadmap,
+        .project-social {
+          margin-bottom: 30px;
+        }
+
+        h3 {
+          font-size: 1.5rem;
+          color: var(--heading-color);
+          margin-bottom: 15px;
         }
 
         .project-features ul {
@@ -221,199 +366,125 @@ const ProjectDetails = () => {
         }
 
         .project-features li {
-          padding: 1rem 0;
-          color: #666;
-          border-bottom: 1px solid #eee;
+          padding: 10px 0;
+          border-bottom: 1px solid var(--color-border);
+          color: var(--body-color);
         }
 
         .project-features li:last-child {
           border-bottom: none;
         }
 
-        .project-features li h4 {
-          color: #333;
-          margin-bottom: 0.5rem;
+        .feature-item h4 {
           font-size: 1.1rem;
+          color: var(--heading-color);
+          margin-bottom: 5px;
         }
 
-        .project-features li p {
+        .feature-item p {
           margin: 0;
-          line-height: 1.6;
+          color: var(--body-color);
         }
 
         .tokenomics-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-          gap: 1rem;
-          margin-bottom: 2rem;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 15px;
         }
 
         .tokenomics-item {
-          background: #f8f9fa;
-          padding: 1rem;
+          background: var(--card-bg-secondary);
+          padding: 15px;
           border-radius: 5px;
+          text-align: center;
         }
 
-        .tokenomics-item .label {
+        .tokenomics-name {
           display: block;
-          color: #666;
           font-size: 0.9rem;
-          margin-bottom: 0.5rem;
+          color: var(--body-color);
+          margin-bottom: 5px;
         }
 
-        .tokenomics-item .value {
+        .tokenomics-percentage {
           display: block;
-          color: #333;
+          font-size: 1.2rem;
           font-weight: 600;
+          color: var(--heading-color);
         }
 
         .roadmap-timeline {
           position: relative;
-          padding-left: 2rem;
+          padding-left: 20px;
         }
 
-        .roadmap-timeline:before {
-          content: "";
+        .roadmap-timeline::before {
+          content: '';
           position: absolute;
           left: 0;
           top: 0;
           bottom: 0;
           width: 2px;
-          background: #007bff;
+          background-color: var(--color-primary);
         }
 
         .roadmap-item {
           position: relative;
-          padding-bottom: 2rem;
+          padding-bottom: 20px;
         }
 
-        .roadmap-item:before {
-          content: "";
+        .roadmap-item::before {
+          content: '';
           position: absolute;
-          left: -2.4rem;
-          top: 0.5rem;
-          width: 1rem;
-          height: 1rem;
+          left: -24px;
+          top: 0;
+          width: 10px;
+          height: 10px;
           border-radius: 50%;
-          background: #007bff;
+          background-color: var(--color-primary);
         }
 
-        .roadmap-date {
-          color: #007bff;
+        .roadmap-phase {
           font-weight: 600;
-          margin-bottom: 0.5rem;
+          color: var(--heading-color);
+          margin-bottom: 5px;
         }
 
-        .roadmap-content h4 {
-          margin-bottom: 0.5rem;
-          color: #333;
-        }
-
-        .roadmap-content p {
-          color: #666;
-          line-height: 1.6;
-        }
-
-        .project-sidebar {
-          position: sticky;
-          top: 2rem;
-        }
-
-        .sidebar-card {
-          background: white;
-          border-radius: 10px;
-          padding: 1.5rem;
-          margin-bottom: 2rem;
-        }
-
-        .sidebar-card h3 {
-          margin-bottom: 1.5rem;
-          color: #333;
-        }
-
-        .details-list {
-          display: grid;
-          gap: 1rem;
-        }
-
-        .detail-item {
-          display: flex;
-          justify-content: space-between;
-          padding: 0.5rem 0;
-          border-bottom: 1px solid #eee;
-        }
-
-        .detail-item .label {
-          color: #666;
-        }
-
-        .detail-item .value {
-          color: #333;
-          font-weight: 600;
-        }
-
-        .team-list {
-          display: grid;
-          gap: 1rem;
-        }
-
-        .team-member {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-        }
-
-        .team-member img {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          object-fit: cover;
-        }
-
-        .member-info h4 {
-          margin: 0;
-          font-size: 1rem;
-          color: #333;
-        }
-
-        .member-info p {
-          margin: 0;
-          font-size: 0.9rem;
-          color: #666;
+        .roadmap-description {
+          color: var(--body-color);
         }
 
         .social-links {
-          display: grid;
-          gap: 0.5rem;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
         }
 
         .social-link {
-          display: block;
-          padding: 0.75rem;
-          background: #f8f9fa;
-          color: #333;
-          text-decoration: none;
-          border-radius: 5px;
-          text-align: center;
-          transition: background-color 0.3s ease;
-        }
-
-        .social-link:hover {
-          background: #e9ecef;
-        }
-
-        .default-btn {
           display: inline-block;
-          padding: 0.75rem 1.5rem;
-          background-color: #007bff;
+          padding: 8px 16px;
+          background-color: var(--color-primary);
           color: white;
           text-decoration: none;
           border-radius: 5px;
           transition: background-color 0.3s ease;
         }
 
-        .default-btn:hover {
-          background-color: #0056b3;
+        .social-link:hover {
+          background-color: var(--color-primary-dark);
+        }
+
+        @media (max-width: 992px) {
+          .project-details-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .project-stats,
+          .tokenomics-grid {
+            grid-template-columns: 1fr;
+          }
         }
       `}</style>
     </>

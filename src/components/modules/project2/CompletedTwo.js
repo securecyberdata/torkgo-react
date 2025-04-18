@@ -38,7 +38,7 @@ const CompletedTwo = () => {
                         </div>
                         <div className="project__item-middle">
                            <div className="project__item-amount">
-                              <p>Raised Ammount</p>
+                              <p>Raised Amount</p>
                               <h6><span className="color--theme-color">15000</span> / <span>15000
                                  BUSD</span>
                               </h6>
@@ -85,7 +85,7 @@ const CompletedTwo = () => {
                         </div>
                         <div className="project__item-middle">
                            <div className="project__item-amount">
-                              <p>Raised Ammount</p>
+                              <p>Raised Amount</p>
                               <h6><span className="color--theme-color">15000</span> / <span>15000
                                  BUSD</span>
                               </h6>
@@ -132,7 +132,7 @@ const CompletedTwo = () => {
                         </div>
                         <div className="project__item-middle">
                            <div className="project__item-amount">
-                              <p>Raised Ammount</p>
+                              <p>Raised Amount</p>
                               <h6><span className="color--theme-color">15000</span> / <span>15000
                                  BUSD</span>
                               </h6>

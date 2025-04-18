@@ -1,10 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { projects } from '@/data/projectData';
+import { projects as defaultProjects } from '@/data/projectData';
 import PageHeader from '@/components/base/PageHeader';
 
 const Project2 = () => {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Load projects from localStorage first
+    const storedProjects = localStorage.getItem('projects');
+    if (storedProjects) {
+      try {
+        const parsedProjects = JSON.parse(storedProjects);
+        if (Array.isArray(parsedProjects)) {
+          setProjects(parsedProjects);
+          setLoading(false);
+          return;
+        }
+      } catch (e) {
+        console.error('Error parsing stored projects:', e);
+      }
+    }
+
+    // If no stored projects, use default projects
+    setProjects(defaultProjects);
+    setLoading(false);
+  }, []);
+
   return (
     <>
       <Head>
@@ -16,35 +40,39 @@ const Project2 = () => {
 
       <section className="projects-section padding-top padding-bottom">
         <div className="container">
-          <div className="row g-4">
-            {projects.map((project) => (
-              <div key={project.id} className="col-lg-4 col-md-6">
-                <div className="project-card">
-                  <div className="project-card__image">
-                    <img src={project.image} alt={project.title} />
-                  </div>
-                  <div className="project-card__content">
-                    <h3>{project.title}</h3>
-                    <p className="project-symbol">{project.symbol}</p>
-                    <p className="project-description">{project.shortDescription}</p>
-                    <div className="project-stats">
-                      <div className="stat-item">
-                        <span className="stat-label">Price</span>
-                        <span className="stat-value">{project.idoPrice}</span>
-                      </div>
-                      <div className="stat-item">
-                        <span className="stat-label">Hard Cap</span>
-                        <span className="stat-value">{project.hardCap}</span>
-                      </div>
+          {loading ? (
+            <div className="loading-message">Loading projects...</div>
+          ) : (
+            <div className="row g-4">
+              {projects.map((project) => (
+                <div key={project.id} className="col-lg-4 col-md-6">
+                  <div className="project-card">
+                    <div className="project-card__image">
+                      <img src={project.image} alt={project.title} />
                     </div>
-                    <Link href={`/projectdetails/${project.id}`} className="default-btn">
-                      <span>View Details</span>
-                    </Link>
+                    <div className="project-card__content">
+                      <h3>{project.title}</h3>
+                      <p className="project-symbol">{project.symbol}</p>
+                      <p className="project-description">{project.shortDescription}</p>
+                      <div className="project-stats">
+                        <div className="stat-item">
+                          <span className="stat-label">Price</span>
+                          <span className="stat-value">{project.idoPrice}</span>
+                        </div>
+                        <div className="stat-item">
+                          <span className="stat-label">Hard Cap</span>
+                          <span className="stat-value">{project.hardCap}</span>
+                        </div>
+                      </div>
+                      <Link href={`/projectdetails/${project.id}`} className="default-btn">
+                        <span>View Details</span>
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -52,6 +80,13 @@ const Project2 = () => {
         .project-section {
           padding: 80px 0;
           background-color: var(--body-bg);
+        }
+
+        .loading-message {
+          text-align: center;
+          padding: 40px;
+          font-size: 1.2rem;
+          color: var(--body-color);
         }
 
         .section-header {

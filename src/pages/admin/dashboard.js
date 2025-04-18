@@ -2,22 +2,139 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faProjectDiagram, faNewspaper, faUsers, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const AdminDashboard = () => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('overview');
+  const [stats, setStats] = useState({
+    projects: 0,
+    contentItems: 0,
+    teamMembers: 0
+  });
+  const [loading, setLoading] = useState(true);
+  const [recentActivity, setRecentActivity] = useState([]);
   
-  // Check if user is authenticated
+  // Check if user is authenticated and fetch stats
   useEffect(() => {
     const adminToken = localStorage.getItem('adminToken');
     if (!adminToken) {
       router.push('/admin');
+      return;
     }
+
+    // Fetch real-time stats
+    const fetchStats = () => {
+      try {
+        setLoading(true);
+        
+        // Get projects count
+        const storedProjects = localStorage.getItem('projects');
+        let projectsCount = 0;
+        if (storedProjects) {
+          try {
+            const parsedProjects = JSON.parse(storedProjects);
+            if (Array.isArray(parsedProjects)) {
+              projectsCount = parsedProjects.length;
+            }
+          } catch (e) {
+            console.error('Error parsing projects:', e);
+          }
+        }
+        
+        // Get team members count
+        const storedTeamMembers = localStorage.getItem('teamMembers');
+        let teamMembersCount = 0;
+        if (storedTeamMembers) {
+          try {
+            const parsedTeamMembers = JSON.parse(storedTeamMembers);
+            if (Array.isArray(parsedTeamMembers)) {
+              teamMembersCount = parsedTeamMembers.length;
+            }
+          } catch (e) {
+            console.error('Error parsing team members:', e);
+          }
+        }
+        
+        // Get content items count (this is a placeholder - adjust based on your actual content storage)
+        const storedContent = localStorage.getItem('content');
+        let contentCount = 0;
+        if (storedContent) {
+          try {
+            const parsedContent = JSON.parse(storedContent);
+            if (Array.isArray(parsedContent)) {
+              contentCount = parsedContent.length;
+            }
+          } catch (e) {
+            console.error('Error parsing content:', e);
+          }
+        }
+        
+        // Update stats
+        setStats({
+          projects: projectsCount,
+          contentItems: contentCount,
+          teamMembers: teamMembersCount
+        });
+        
+        // Generate recent activity based on localStorage timestamps
+        const activity = [];
+        
+        // Check for recent project changes
+        const projectTimestamp = localStorage.getItem('projectsLastUpdated');
+        if (projectTimestamp) {
+          const date = new Date(parseInt(projectTimestamp));
+          activity.push({
+            text: 'Projects were updated',
+            date: date
+          });
+        }
+        
+        // Check for recent team changes
+        const teamTimestamp = localStorage.getItem('teamMembersLastUpdated');
+        if (teamTimestamp) {
+          const date = new Date(parseInt(teamTimestamp));
+          activity.push({
+            text: 'Team members were updated',
+            date: date
+          });
+        }
+        
+        // Check for recent content changes
+        const contentTimestamp = localStorage.getItem('contentLastUpdated');
+        if (contentTimestamp) {
+          const date = new Date(parseInt(contentTimestamp));
+          activity.push({
+            text: 'Content was updated',
+            date: date
+          });
+        }
+        
+        // Sort by date (most recent first)
+        activity.sort((a, b) => b.date - a.date);
+        
+        // Take only the 5 most recent activities
+        setRecentActivity(activity.slice(0, 5));
+        
+      } catch (error) {
+        console.error('Error fetching dashboard stats:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
   }, [router]);
   
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
     router.push('/admin');
+  };
+  
+  // Format date for display
+  const formatDate = (date) => {
+    return new Date(date).toLocaleString();
   };
   
   return (
@@ -82,37 +199,55 @@ const AdminDashboard = () => {
             {activeTab === 'overview' && (
               <div className="admin-section">
                 <h2>Dashboard Overview</h2>
-                <div className="admin-stats">
-                  <div className="admin-stat-card">
-                    <h3>Projects</h3>
-                    <p className="admin-stat-number">3</p>
-                    <Link href="/admin/projects" className="admin-stat-link">
-                      Manage Projects
-                    </Link>
+                {loading ? (
+                  <div className="loading-container">
+                    <FontAwesomeIcon icon={faSpinner} spin size="2x" />
+                    <p>Loading dashboard data...</p>
                   </div>
-                  <div className="admin-stat-card">
-                    <h3>Content Items</h3>
-                    <p className="admin-stat-number">3</p>
-                    <Link href="/admin/content" className="admin-stat-link">
-                      Manage Content
-                    </Link>
-                  </div>
-                  <div className="admin-stat-card">
-                    <h3>Team Members</h3>
-                    <p className="admin-stat-number">6</p>
-                    <Link href="/admin/team" className="admin-stat-link">
-                      Manage Team
-                    </Link>
-                  </div>
-                </div>
-                <div className="admin-recent-activity">
-                  <h3>Recent Activity</h3>
-                  <ul className="admin-activity-list">
-                    <li>Test Project was added</li>
-                    <li>Team member profile was updated</li>
-                    <li>Content was modified</li>
-                  </ul>
-                </div>
+                ) : (
+                  <>
+                    <div className="admin-stats">
+                      <div className="admin-stat-card">
+                        <FontAwesomeIcon icon={faProjectDiagram} className="stat-icon" />
+                        <h3>Projects</h3>
+                        <p className="admin-stat-number">{stats.projects}</p>
+                        <Link href="/admin/projects" className="admin-stat-link">
+                          Manage Projects
+                        </Link>
+                      </div>
+                      <div className="admin-stat-card">
+                        <FontAwesomeIcon icon={faNewspaper} className="stat-icon" />
+                        <h3>Content Items</h3>
+                        <p className="admin-stat-number">{stats.contentItems}</p>
+                        <Link href="/admin/content" className="admin-stat-link">
+                          Manage Content
+                        </Link>
+                      </div>
+                      <div className="admin-stat-card">
+                        <FontAwesomeIcon icon={faUsers} className="stat-icon" />
+                        <h3>Team Members</h3>
+                        <p className="admin-stat-number">{stats.teamMembers}</p>
+                        <Link href="/admin/team" className="admin-stat-link">
+                          Manage Team
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="admin-recent-activity">
+                      <h3>Recent Activity</h3>
+                      {recentActivity.length > 0 ? (
+                        <ul className="admin-activity-list">
+                          {recentActivity.map((activity, index) => (
+                            <li key={index}>
+                              {activity.text} - {formatDate(activity.date)}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p>No recent activity</p>
+                      )}
+                    </div>
+                  </>
+                )}
               </div>
             )}
             
@@ -249,36 +384,6 @@ const AdminDashboard = () => {
                     Manage Settings
                   </Link>
                 </div>
-                <div className="admin-settings-list">
-                  <h3>Available Settings</h3>
-                  <ul>
-                    <li>
-                      <Link href="/admin/settings/general" className="admin-setting-link">
-                        General Settings
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/admin/settings/appearance" className="admin-setting-link">
-                        Appearance
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/admin/settings/seo" className="admin-setting-link">
-                        SEO Settings
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/admin/settings/social" className="admin-setting-link">
-                        Social Media
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/admin/settings/analytics" className="admin-setting-link">
-                        Analytics
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
               </div>
             )}
           </main>
@@ -288,14 +393,13 @@ const AdminDashboard = () => {
       <style jsx>{`
         .admin-dashboard {
           min-height: 100vh;
-          display: flex;
-          flex-direction: column;
+          background-color: #f5f5f5;
         }
         
         .admin-header {
-          background-color: #1976d2;
+          background-color: #1a237e;
           color: white;
-          padding: 1rem 2rem;
+          padding: 1rem;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
@@ -313,34 +417,29 @@ const AdminDashboard = () => {
         }
         
         .admin-logout-button {
-          background-color: transparent;
+          background-color: #f44336;
           color: white;
-          border: 1px solid white;
+          border: none;
           padding: 0.5rem 1rem;
           border-radius: 4px;
           cursor: pointer;
-          transition: all 0.2s;
-        }
-        
-        .admin-logout-button:hover {
-          background-color: rgba(255, 255, 255, 0.1);
+          font-weight: 500;
         }
         
         .admin-container {
           display: flex;
-          flex: 1;
           max-width: 1200px;
           margin: 0 auto;
-          width: 100%;
-          padding: 2rem;
+          padding: 1rem;
+          gap: 1rem;
         }
         
         .admin-sidebar {
           width: 200px;
-          background-color: #f5f5f5;
-          border-radius: 8px;
+          background-color: white;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
           padding: 1rem;
-          margin-right: 2rem;
         }
         
         .admin-nav {
@@ -356,111 +455,97 @@ const AdminDashboard = () => {
         .admin-nav button {
           width: 100%;
           text-align: left;
-          padding: 0.75rem;
-          background-color: transparent;
+          padding: 0.5rem;
+          background: none;
           border: none;
-          border-radius: 4px;
           cursor: pointer;
-          transition: background-color 0.2s;
+          border-radius: 4px;
+          font-weight: 500;
         }
         
         .admin-nav li.active button {
-          background-color: #1976d2;
+          background-color: #1a237e;
           color: white;
-        }
-        
-        .admin-nav button:hover {
-          background-color: #e0e0e0;
-        }
-        
-        .admin-nav li.active button:hover {
-          background-color: #1565c0;
         }
         
         .admin-content {
           flex: 1;
           background-color: white;
-          border-radius: 8px;
-          padding: 2rem;
+          border-radius: 4px;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          padding: 1rem;
         }
         
         .admin-section h2 {
           margin-top: 0;
-          margin-bottom: 1.5rem;
-          color: #333;
-        }
-        
-        .admin-actions {
-          display: flex;
-          gap: 1rem;
-          margin-bottom: 2rem;
-        }
-        
-        .admin-button {
-          display: inline-block;
-          padding: 0.75rem 1.5rem;
-          background-color: #1976d2;
-          color: white;
-          border-radius: 4px;
-          text-decoration: none;
-          font-weight: 500;
-          transition: background-color 0.2s;
-        }
-        
-        .admin-button:hover {
-          background-color: #1565c0;
+          margin-bottom: 1rem;
+          color: #1a237e;
+          border-bottom: 1px solid #e0e0e0;
+          padding-bottom: 0.5rem;
         }
         
         .admin-stats {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-          gap: 1.5rem;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 1rem;
           margin-bottom: 2rem;
         }
         
         .admin-stat-card {
           background-color: #f9f9f9;
-          border-radius: 8px;
-          padding: 1.5rem;
+          border-radius: 4px;
+          padding: 1rem;
           text-align: center;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+          transition: transform 0.2s;
+        }
+        
+        .admin-stat-card:hover {
+          transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+          font-size: 2rem;
+          color: #1a237e;
+          margin-bottom: 0.5rem;
         }
         
         .admin-stat-card h3 {
-          margin-top: 0;
-          margin-bottom: 0.5rem;
+          margin: 0.5rem 0;
           color: #333;
         }
         
         .admin-stat-number {
           font-size: 2rem;
-          font-weight: 700;
-          color: #1976d2;
+          font-weight: bold;
+          color: #1a237e;
           margin: 0.5rem 0;
         }
         
         .admin-stat-link {
           display: inline-block;
-          margin-top: 0.5rem;
-          color: #1976d2;
+          background-color: #1a237e;
+          color: white;
           text-decoration: none;
+          padding: 0.5rem 1rem;
+          border-radius: 4px;
+          margin-top: 0.5rem;
+          transition: background-color 0.2s;
         }
         
         .admin-stat-link:hover {
-          text-decoration: underline;
+          background-color: #0d1757;
         }
         
         .admin-recent-activity {
           background-color: #f9f9f9;
-          border-radius: 8px;
-          padding: 1.5rem;
-          margin-top: 2rem;
+          border-radius: 4px;
+          padding: 1rem;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
         
         .admin-recent-activity h3 {
           margin-top: 0;
-          margin-bottom: 1rem;
           color: #333;
         }
         
@@ -479,57 +564,81 @@ const AdminDashboard = () => {
           border-bottom: none;
         }
         
+        .admin-actions {
+          margin-bottom: 1rem;
+        }
+        
+        .admin-button {
+          display: inline-block;
+          background-color: #1a237e;
+          color: white;
+          text-decoration: none;
+          padding: 0.5rem 1rem;
+          border-radius: 4px;
+          transition: background-color 0.2s;
+        }
+        
+        .admin-button:hover {
+          background-color: #0d1757;
+        }
+        
         .admin-pages-list,
-        .admin-components-list,
-        .admin-settings-list {
-          background-color: #f9f9f9;
-          border-radius: 8px;
-          padding: 1.5rem;
-          margin-top: 1.5rem;
+        .admin-components-list {
+          margin-top: 1rem;
         }
         
         .admin-pages-list h3,
-        .admin-components-list h3,
-        .admin-settings-list h3 {
+        .admin-components-list h3 {
           margin-top: 0;
-          margin-bottom: 1rem;
           color: #333;
         }
         
         .admin-pages-list ul,
-        .admin-components-list ul,
-        .admin-settings-list ul {
+        .admin-components-list ul {
           list-style: none;
           padding: 0;
           margin: 0;
         }
         
         .admin-pages-list li,
-        .admin-components-list li,
-        .admin-settings-list li {
-          padding: 0.5rem 0;
-          border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .admin-pages-list li:last-child,
-        .admin-components-list li:last-child,
-        .admin-settings-list li:last-child {
-          border-bottom: none;
+        .admin-components-list li {
+          margin-bottom: 0.5rem;
         }
         
         .admin-page-link,
-        .admin-component-link,
-        .admin-setting-link {
-          color: #1976d2;
+        .admin-component-link {
+          color: #1a237e;
           text-decoration: none;
-          display: block;
-          padding: 0.5rem 0;
+          transition: color 0.2s;
         }
         
         .admin-page-link:hover,
-        .admin-component-link:hover,
-        .admin-setting-link:hover {
+        .admin-component-link:hover {
+          color: #0d1757;
           text-decoration: underline;
+        }
+        
+        .loading-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 2rem;
+          color: #1a237e;
+        }
+        
+        .loading-container p {
+          margin-top: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+          .admin-container {
+            flex-direction: column;
+          }
+          
+          .admin-sidebar {
+            width: 100%;
+          }
         }
       `}</style>
     </>

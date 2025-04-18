@@ -8,14 +8,15 @@ import { teamMembers as defaultTeamMembers } from '@/data/teamData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEdit, faTrash, faTimes, faSave, faArrowLeft, faUserPlus, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin, faTwitter, faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { v4 as uuidv4 } from 'uuid';
 
 const TeamManagement = () => {
   const router = useRouter();
-  const [teamMembers, setTeamMembers] = useState(defaultTeamMembers);
+  const [teamMembers, setTeamMembers] = useState([]);
   const [isAddingMember, setIsAddingMember] = useState(false);
   const [isEditingMember, setIsEditingMember] = useState(false);
   const [currentMember, setCurrentMember] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
   const [formData, setFormData] = useState({
@@ -39,11 +40,40 @@ const TeamManagement = () => {
       return;
     }
 
-    // Use default team members directly
-    setTeamMembers(defaultTeamMembers);
-    
-    // Log that we're using default data
-    console.log('Using default team data');
+    // Fetch team members from localStorage
+    const fetchTeamMembers = () => {
+      try {
+        console.log('Fetching team members for admin panel...');
+        const storedMembers = localStorage.getItem('teamMembers');
+        
+        if (storedMembers) {
+          try {
+            const parsedMembers = JSON.parse(storedMembers);
+            console.log('Found team members in localStorage:', parsedMembers);
+            if (Array.isArray(parsedMembers) && parsedMembers.length > 0) {
+              setTeamMembers(parsedMembers);
+              setLoading(false);
+              return;
+            }
+          } catch (parseError) {
+            console.error('Error parsing stored team members:', parseError);
+            localStorage.removeItem('teamMembers'); // Clear invalid data
+          }
+        }
+        
+        // If no localStorage data or invalid data, use default team members
+        console.log('Using default team members');
+        setTeamMembers(defaultTeamMembers);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching team members:', error);
+        setError('Failed to load team members');
+        setTeamMembers(defaultTeamMembers);
+        setLoading(false);
+      }
+    };
+
+    fetchTeamMembers();
   }, [router]);
 
   // Clear success message after 3 seconds
@@ -111,6 +141,9 @@ const TeamManagement = () => {
         // Store in localStorage
         localStorage.setItem('teamMembers', JSON.stringify(updatedMembers));
         
+        // Store timestamp for recent activity
+        localStorage.setItem('teamMembersLastUpdated', Date.now().toString());
+        
         setSuccessMessage('Team member deleted successfully');
         setTimeout(() => setSuccessMessage(''), 3000);
       } catch (error) {
@@ -138,14 +171,40 @@ const TeamManagement = () => {
         // Update existing member
         updatedMembers = teamMembers.map(member => 
           member.id === currentMember.id 
-            ? { ...member, ...formData }
+            ? { 
+                ...member, 
+                name: formData.name,
+                role: formData.role,
+                image: formData.image,
+                bio: formData.bio,
+                description: formData.description,
+                expertise: formData.expertise.split(',').map(item => item.trim()),
+                social: {
+                  ...member.social,
+                  linkedin: formData.linkedin,
+                  twitter: formData.twitter,
+                  facebook: formData.facebook,
+                  instagram: formData.instagram
+                }
+              }
             : member
         );
       } else {
         // Add new member
         const newMember = {
-          id: Date.now().toString(), // Generate a unique ID
-          ...formData
+          id: uuidv4(), // Generate a unique ID using UUID
+          name: formData.name,
+          role: formData.role,
+          image: formData.image,
+          bio: formData.bio,
+          description: formData.description,
+          expertise: formData.expertise.split(',').map(item => item.trim()),
+          social: {
+            linkedin: formData.linkedin,
+            twitter: formData.twitter,
+            facebook: formData.facebook,
+            instagram: formData.instagram
+          }
         };
         updatedMembers = [...teamMembers, newMember];
       }
@@ -155,6 +214,9 @@ const TeamManagement = () => {
       
       // Store in localStorage
       localStorage.setItem('teamMembers', JSON.stringify(updatedMembers));
+      
+      // Store timestamp for recent activity
+      localStorage.setItem('teamMembersLastUpdated', Date.now().toString());
       
       // Reset form
       setFormData({
@@ -189,6 +251,29 @@ const TeamManagement = () => {
     setIsEditingMember(false);
     setCurrentMember(null);
   };
+
+  // If we have team members but still showing loading, update the state
+  useEffect(() => {
+    if (teamMembers.length > 0 && loading) {
+      setLoading(false);
+    }
+  }, [teamMembers, loading]);
+
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <h2>Loading team members...</h2>
+        <style jsx>{`
+          .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 50vh;
+          }
+        `}</style>
+      </div>
+    );
+  }
 
   if (error) {
     return (
