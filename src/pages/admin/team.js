@@ -3,95 +3,21 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
-
-// Mock data for team members
-const initialTeamMembers = [
-  {
-    id: 1,
-    name: 'Michael Wilkinson',
-    role: 'CEO & Founder',
-    image: '/images/team/michael.jpg',
-    bio: 'Experienced leader in financial technology and banking solutions.',
-    description: 'Michael has over 15 years of experience in fintech and banking.',
-    expertise: ['Leadership', 'FinTech', 'Banking'],
-    socialLinks: {
-      linkedin: 'https://linkedin.com/in/michael-wilkinson',
-      twitter: 'https://twitter.com/michaelwilkinson'
-    }
-  },
-  {
-    id: 2,
-    name: 'Duncan Oduor Otieno',
-    role: 'CTO',
-    image: '/images/team/duncan.jpg',
-    bio: 'Technology innovator with expertise in blockchain and AI.',
-    description: 'Duncan leads our technical initiatives and innovation strategy.',
-    expertise: ['Blockchain', 'AI', 'Software Architecture'],
-    socialLinks: {
-      linkedin: 'https://linkedin.com/in/duncan-otieno',
-      twitter: 'https://twitter.com/duncannotieno'
-    }
-  },
-  {
-    id: 3,
-    name: 'Dr. Shermaine',
-    role: 'Chief Medical Officer',
-    image: '/images/team/shermaine.jpg',
-    bio: 'Medical expert with a focus on healthcare innovation.',
-    description: 'Dr. Shermaine brings extensive experience in medical research and healthcare technology.',
-    expertise: ['Healthcare', 'Medical Research', 'Innovation'],
-    socialLinks: {
-      linkedin: 'https://linkedin.com/in/dr-shermaine',
-      twitter: 'https://twitter.com/drshermaine'
-    }
-  },
-  {
-    id: 4,
-    name: 'Michele',
-    role: 'Marketing Director',
-    image: '/images/team/michele.jpg',
-    bio: 'Creative marketing strategist with a passion for brand development.',
-    description: 'Michele has led successful marketing campaigns for numerous fintech companies.',
-    expertise: ['Marketing', 'Brand Strategy', 'Digital Media'],
-    socialLinks: {
-      linkedin: 'https://linkedin.com/in/michele',
-      twitter: 'https://twitter.com/michele'
-    }
-  },
-  {
-    id: 5,
-    name: 'John Smith',
-    role: 'Financial Advisor',
-    image: '/images/team/john.jpg',
-    bio: 'Financial expert specializing in investment strategies.',
-    description: 'John has advised numerous high-profile clients on investment opportunities.',
-    expertise: ['Finance', 'Investment', 'Risk Management'],
-    socialLinks: {
-      linkedin: 'https://linkedin.com/in/johnsmith',
-      twitter: 'https://twitter.com/johnsmith'
-    }
-  },
-  {
-    id: 6,
-    name: 'Sarah Johnson',
-    role: 'Head of Operations',
-    image: '/images/team/sarah.jpg',
-    bio: 'Operations specialist with a focus on efficiency and scalability.',
-    description: 'Sarah has optimized operations for several growing fintech companies.',
-    expertise: ['Operations', 'Process Optimization', 'Team Management'],
-    socialLinks: {
-      linkedin: 'https://linkedin.com/in/sarahjohnson',
-      twitter: 'https://twitter.com/sarahjohnson'
-    }
-  }
-];
+import { fetchData } from '@/apiConfig';
+import { teamMembers as defaultTeamMembers } from '@/data/teamData';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faEdit, faTrash, faTimes, faSave, faArrowLeft, faUserPlus, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faLinkedin, faTwitter, faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
 
 const TeamManagement = () => {
   const router = useRouter();
-  const [teamMembers, setTeamMembers] = useState(initialTeamMembers);
+  const [teamMembers, setTeamMembers] = useState(defaultTeamMembers);
   const [isAddingMember, setIsAddingMember] = useState(false);
   const [isEditingMember, setIsEditingMember] = useState(false);
   const [currentMember, setCurrentMember] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     role: '',
@@ -100,16 +26,35 @@ const TeamManagement = () => {
     description: '',
     expertise: '',
     linkedin: '',
-    twitter: ''
+    twitter: '',
+    facebook: '',
+    instagram: ''
   });
 
-  // Check if user is authenticated
+  // Check if user is authenticated and fetch team data
   useEffect(() => {
     const adminToken = localStorage.getItem('adminToken');
     if (!adminToken) {
       router.push('/admin');
+      return;
     }
+
+    // Use default team members directly
+    setTeamMembers(defaultTeamMembers);
+    
+    // Log that we're using default data
+    console.log('Using default team data');
   }, [router]);
+
+  // Clear success message after 3 seconds
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        setSuccessMessage('');
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -129,7 +74,9 @@ const TeamManagement = () => {
       description: '',
       expertise: '',
       linkedin: '',
-      twitter: ''
+      twitter: '',
+      facebook: '',
+      instagram: ''
     });
   };
 
@@ -139,52 +86,101 @@ const TeamManagement = () => {
     setFormData({
       name: member.name,
       role: member.role,
-      image: member.image,
-      bio: member.bio,
-      description: member.description,
-      expertise: member.expertise.join(', '),
-      linkedin: member.socialLinks.linkedin || '',
-      twitter: member.socialLinks.twitter || ''
+      image: member.image || member.img || '',
+      bio: member.bio || '',
+      description: member.description || '',
+      expertise: Array.isArray(member.expertise) ? member.expertise.join(', ') : '',
+      linkedin: member.socialLinks?.linkedin || member.social?.linkedin || '',
+      twitter: member.socialLinks?.twitter || member.social?.twitter || '',
+      facebook: member.socialLinks?.facebook || member.social?.facebook || '',
+      instagram: member.socialLinks?.instagram || member.social?.instagram || ''
     });
   };
 
-  const handleDeleteMember = (id) => {
+  const handleDeleteMember = async (id) => {
     if (window.confirm('Are you sure you want to delete this team member?')) {
-      setTeamMembers(teamMembers.filter(member => member.id !== id));
+      setLoading(true);
+      try {
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Update local state
+        const updatedMembers = teamMembers.filter(member => member.id !== id);
+        setTeamMembers(updatedMembers);
+        
+        // Store in localStorage
+        localStorage.setItem('teamMembers', JSON.stringify(updatedMembers));
+        
+        setSuccessMessage('Team member deleted successfully');
+        setTimeout(() => setSuccessMessage(''), 3000);
+      } catch (error) {
+        console.error('Error deleting team member:', error);
+        setError('Failed to delete team member');
+        setTimeout(() => setError(''), 3000);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
     
-    const memberData = {
-      name: formData.name,
-      role: formData.role,
-      image: formData.image,
-      bio: formData.bio,
-      description: formData.description,
-      expertise: formData.expertise.split(',').map(item => item.trim()),
-      socialLinks: {
-        linkedin: formData.linkedin,
-        twitter: formData.twitter
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      let updatedMembers;
+      
+      if (currentMember) {
+        // Update existing member
+        updatedMembers = teamMembers.map(member => 
+          member.id === currentMember.id 
+            ? { ...member, ...formData }
+            : member
+        );
+      } else {
+        // Add new member
+        const newMember = {
+          id: Date.now().toString(), // Generate a unique ID
+          ...formData
+        };
+        updatedMembers = [...teamMembers, newMember];
       }
-    };
-    
-    if (isAddingMember) {
-      // Add new member
-      const newMember = {
-        id: teamMembers.length > 0 ? Math.max(...teamMembers.map(m => m.id)) + 1 : 1,
-        ...memberData
-      };
-      setTeamMembers([...teamMembers, newMember]);
+      
+      // Update state
+      setTeamMembers(updatedMembers);
+      
+      // Store in localStorage
+      localStorage.setItem('teamMembers', JSON.stringify(updatedMembers));
+      
+      // Reset form
+      setFormData({
+        name: '',
+        role: '',
+        image: '',
+        bio: '',
+        description: '',
+        expertise: '',
+        linkedin: '',
+        twitter: '',
+        facebook: '',
+        instagram: ''
+      });
       setIsAddingMember(false);
-    } else if (isEditingMember) {
-      // Update existing member
-      setTeamMembers(teamMembers.map(member => 
-        member.id === currentMember.id ? { ...member, ...memberData } : member
-      ));
       setIsEditingMember(false);
       setCurrentMember(null);
+      
+      setSuccessMessage(`Team member ${currentMember ? 'updated' : 'added'} successfully`);
+      setTimeout(() => setSuccessMessage(''), 3000);
+    } catch (error) {
+      console.error('Error saving team member:', error);
+      setError(`Failed to ${currentMember ? 'update' : 'add'} team member`);
+      setTimeout(() => setError(''), 3000);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -193,6 +189,18 @@ const TeamManagement = () => {
     setIsEditingMember(false);
     setCurrentMember(null);
   };
+
+  if (error) {
+    return (
+      <div className="error-container">
+        <h2>Error</h2>
+        <p>{error}</p>
+        <button onClick={() => window.location.reload()} className="retry-button">
+          Retry
+        </button>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -204,31 +212,43 @@ const TeamManagement = () => {
       <div className="admin-page">
         <header className="admin-header">
           <div className="admin-header-content">
-            <h1>Team Management</h1>
+            <h1><FontAwesomeIcon icon={faUsers} className="header-icon" /> Team Management</h1>
             <Link href="/admin/dashboard" className="admin-back-link">
-              Back to Dashboard
+              <FontAwesomeIcon icon={faArrowLeft} /> Back to Dashboard
             </Link>
           </div>
         </header>
+        
+        {successMessage && (
+          <div className="success-message">
+            {successMessage}
+          </div>
+        )}
         
         <div className="admin-container">
           <div className="admin-content">
             <div className="admin-actions">
               <button 
-                className="admin-button" 
+                className="admin-button add-button" 
                 onClick={handleAddMember}
                 disabled={isAddingMember || isEditingMember}
               >
-                Add New Team Member
+                <FontAwesomeIcon icon={faUserPlus} /> Add New Team Member
               </button>
             </div>
             
             {(isAddingMember || isEditingMember) && (
               <div className="admin-form-container">
-                <h2>{isAddingMember ? 'Add New Team Member' : 'Edit Team Member'}</h2>
+                <h2>
+                  {isAddingMember ? (
+                    <><FontAwesomeIcon icon={faUserPlus} /> Add New Team Member</>
+                  ) : (
+                    <><FontAwesomeIcon icon={faEdit} /> Edit Team Member</>
+                  )}
+                </h2>
                 <form onSubmit={handleSubmit} className="admin-form">
-                  <div className="admin-form-group">
-                    <label htmlFor="name">Full Name</label>
+                  <div className="form-group">
+                    <label htmlFor="name">Name</label>
                     <input
                       type="text"
                       id="name"
@@ -236,10 +256,11 @@ const TeamManagement = () => {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
+                      placeholder="Enter full name"
                     />
                   </div>
                   
-                  <div className="admin-form-group">
+                  <div className="form-group">
                     <label htmlFor="role">Role</label>
                     <input
                       type="text"
@@ -248,93 +269,136 @@ const TeamManagement = () => {
                       value={formData.role}
                       onChange={handleInputChange}
                       required
+                      placeholder="Enter role (e.g. CEO, CTO)"
                     />
                   </div>
                   
-                  <div className="admin-form-group">
-                    <label htmlFor="image">Image Path</label>
+                  <div className="form-group">
+                    <label htmlFor="image">Image URL</label>
                     <input
                       type="text"
                       id="image"
                       name="image"
                       value={formData.image}
                       onChange={handleInputChange}
-                      required
                       placeholder="/images/team/member.jpg"
                     />
+                    {formData.image && (
+                      <div className="image-preview">
+                        <Image
+                          src={formData.image}
+                          alt="Preview"
+                          width={100}
+                          height={100}
+                          className="preview-image"
+                        />
+                      </div>
+                    )}
                   </div>
                   
-                  <div className="admin-form-group">
+                  <div className="form-group">
                     <label htmlFor="bio">Short Bio</label>
                     <textarea
                       id="bio"
                       name="bio"
                       value={formData.bio}
                       onChange={handleInputChange}
-                      required
                       rows="3"
-                    />
+                      required
+                      placeholder="Enter a short bio"
+                    ></textarea>
                   </div>
                   
-                  <div className="admin-form-group">
+                  <div className="form-group">
                     <label htmlFor="description">Full Description</label>
                     <textarea
                       id="description"
                       name="description"
                       value={formData.description}
                       onChange={handleInputChange}
+                      rows="5"
                       required
-                      rows="4"
-                    />
+                      placeholder="Enter a detailed description"
+                    ></textarea>
                   </div>
                   
-                  <div className="admin-form-group">
-                    <label htmlFor="expertise">Areas of Expertise (comma-separated)</label>
+                  <div className="form-group">
+                    <label htmlFor="expertise">Expertise (comma-separated)</label>
                     <input
                       type="text"
                       id="expertise"
                       name="expertise"
                       value={formData.expertise}
                       onChange={handleInputChange}
-                      required
                       placeholder="Leadership, FinTech, Banking"
                     />
                   </div>
                   
-                  <div className="admin-form-group">
-                    <label htmlFor="linkedin">LinkedIn Profile URL</label>
-                    <input
-                      type="url"
-                      id="linkedin"
-                      name="linkedin"
-                      value={formData.linkedin}
-                      onChange={handleInputChange}
-                      placeholder="https://linkedin.com/in/username"
-                    />
+                  <div className="form-group social-links">
+                    <label>Social Links</label>
+                    <div className="social-input-group">
+                      <FontAwesomeIcon icon={faLinkedin} className="social-icon" />
+                      <input
+                        type="url"
+                        id="linkedin"
+                        name="linkedin"
+                        value={formData.linkedin}
+                        onChange={handleInputChange}
+                        placeholder="LinkedIn URL"
+                      />
+                    </div>
+                    <div className="social-input-group">
+                      <FontAwesomeIcon icon={faTwitter} className="social-icon" />
+                      <input
+                        type="url"
+                        id="twitter"
+                        name="twitter"
+                        value={formData.twitter}
+                        onChange={handleInputChange}
+                        placeholder="Twitter URL"
+                      />
+                    </div>
+                    <div className="social-input-group">
+                      <FontAwesomeIcon icon={faFacebook} className="social-icon" />
+                      <input
+                        type="url"
+                        id="facebook"
+                        name="facebook"
+                        value={formData.facebook}
+                        onChange={handleInputChange}
+                        placeholder="Facebook URL"
+                      />
+                    </div>
+                    <div className="social-input-group">
+                      <FontAwesomeIcon icon={faInstagram} className="social-icon" />
+                      <input
+                        type="url"
+                        id="instagram"
+                        name="instagram"
+                        value={formData.instagram}
+                        onChange={handleInputChange}
+                        placeholder="Instagram URL"
+                      />
+                    </div>
                   </div>
                   
-                  <div className="admin-form-group">
-                    <label htmlFor="twitter">Twitter Profile URL</label>
-                    <input
-                      type="url"
-                      id="twitter"
-                      name="twitter"
-                      value={formData.twitter}
-                      onChange={handleInputChange}
-                      placeholder="https://twitter.com/username"
-                    />
-                  </div>
-                  
-                  <div className="admin-form-actions">
-                    <button type="submit" className="admin-button">
-                      {isAddingMember ? 'Add Member' : 'Update Member'}
+                  <div className="form-actions">
+                    <button 
+                      type="submit" 
+                      className="admin-button save-button"
+                      disabled={loading}
+                    >
+                      {loading ? 'Saving...' : (
+                        <><FontAwesomeIcon icon={faSave} /> {isAddingMember ? 'Add Member' : 'Update Member'}</>
+                      )}
                     </button>
                     <button 
                       type="button" 
                       className="admin-button admin-button-secondary"
                       onClick={handleCancel}
+                      disabled={loading}
                     >
-                      Cancel
+                      <FontAwesomeIcon icon={faTimes} /> Cancel
                     </button>
                   </div>
                 </form>
@@ -342,7 +406,7 @@ const TeamManagement = () => {
             )}
             
             <div className="admin-table-container">
-              <h2>Team Members List</h2>
+              <h2><FontAwesomeIcon icon={faUsers} /> Team Members ({teamMembers.length})</h2>
               <table className="admin-table">
                 <thead>
                   <tr>
@@ -350,40 +414,42 @@ const TeamManagement = () => {
                     <th>Image</th>
                     <th>Name</th>
                     <th>Role</th>
-                    <th>Expertise</th>
+                    <th>Bio</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {teamMembers.map(member => (
+                  {teamMembers.map((member) => (
                     <tr key={member.id}>
                       <td>{member.id}</td>
                       <td>
-                        <div className="admin-image-container">
+                        <div className="member-image">
                           <Image
-                            src={member.image}
+                            src={member.image || member.img || '/images/placeholder.jpg'}
                             alt={member.name}
                             width={50}
                             height={50}
-                            className="admin-member-image"
+                            className="member-thumbnail"
                           />
                         </div>
                       </td>
                       <td>{member.name}</td>
                       <td>{member.role}</td>
-                      <td>{member.expertise.join(', ')}</td>
-                      <td className="admin-table-actions">
-                        <button 
-                          className="admin-button admin-button-small"
+                      <td className="bio-cell">{member.bio}</td>
+                      <td className="action-buttons">
+                        <button
+                          className="admin-button admin-button-small edit-button"
                           onClick={() => handleEditMember(member)}
+                          title="Edit member"
                         >
-                          Edit
+                          <FontAwesomeIcon icon={faEdit} />
                         </button>
-                        <button 
-                          className="admin-button admin-button-small admin-button-danger"
+                        <button
+                          className="admin-button admin-button-small admin-button-danger delete-button"
                           onClick={() => handleDeleteMember(member.id)}
+                          title="Delete member"
                         >
-                          Delete
+                          <FontAwesomeIcon icon={faTrash} />
                         </button>
                       </td>
                     </tr>
@@ -397,162 +463,261 @@ const TeamManagement = () => {
       
       <style jsx>{`
         .admin-page {
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
+          padding: 20px;
+          max-width: 1200px;
+          margin: 0 auto;
         }
         
         .admin-header {
-          background-color: #1976d2;
-          color: white;
-          padding: 1rem 2rem;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          margin-bottom: 30px;
+          padding-bottom: 15px;
+          border-bottom: 1px solid #eee;
         }
         
         .admin-header-content {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          max-width: 1200px;
-          margin: 0 auto;
         }
         
         .admin-header h1 {
           margin: 0;
-          font-size: 1.5rem;
+          font-size: 2rem;
+          color: var(--color-primary);
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        
+        .header-icon {
+          color: var(--color-primary);
         }
         
         .admin-back-link {
-          color: white;
+          color: var(--color-primary);
           text-decoration: none;
-          padding: 0.5rem 1rem;
-          border: 1px solid white;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          padding: 8px 15px;
           border-radius: 4px;
-          transition: background-color 0.2s;
+          background-color: rgba(25, 118, 210, 0.1);
+          transition: all 0.3s ease;
         }
         
         .admin-back-link:hover {
-          background-color: rgba(255, 255, 255, 0.1);
+          background-color: rgba(25, 118, 210, 0.2);
         }
         
         .admin-container {
-          flex: 1;
-          max-width: 1200px;
-          margin: 0 auto;
-          width: 100%;
-          padding: 2rem;
+          background: white;
+          border-radius: 8px;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          overflow: hidden;
         }
         
         .admin-content {
-          background-color: white;
-          border-radius: 8px;
-          padding: 2rem;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          padding: 20px;
         }
         
         .admin-actions {
-          margin-bottom: 2rem;
+          margin-bottom: 20px;
         }
         
         .admin-button {
-          display: inline-block;
-          padding: 0.75rem 1.5rem;
-          background-color: #1976d2;
+          background-color: var(--color-primary);
           color: white;
           border: none;
+          padding: 10px 15px;
           border-radius: 4px;
-          text-decoration: none;
-          font-weight: 500;
           cursor: pointer;
-          transition: background-color 0.2s;
+          font-size: 1rem;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          gap: 8px;
         }
         
         .admin-button:hover {
-          background-color: #1565c0;
+          background-color: var(--color-primary-dark);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
         .admin-button:disabled {
-          background-color: #bdbdbd;
+          background-color: #ccc;
           cursor: not-allowed;
+          transform: none;
+          box-shadow: none;
+        }
+        
+        .add-button {
+          background-color: #4caf50;
+        }
+        
+        .add-button:hover {
+          background-color: #388e3c;
+        }
+        
+        .save-button {
+          background-color: #2196f3;
+        }
+        
+        .save-button:hover {
+          background-color: #1976d2;
         }
         
         .admin-button-secondary {
-          background-color: #f5f5f5;
-          color: #333;
-          border: 1px solid #ddd;
+          background-color: #6c757d;
         }
         
         .admin-button-secondary:hover {
-          background-color: #e0e0e0;
+          background-color: #5a6268;
         }
         
         .admin-button-danger {
-          background-color: #f44336;
+          background-color: #dc3545;
         }
         
         .admin-button-danger:hover {
-          background-color: #d32f2f;
+          background-color: #c82333;
         }
         
         .admin-button-small {
-          padding: 0.5rem 0.75rem;
+          padding: 8px;
           font-size: 0.875rem;
+          margin-right: 5px;
+          width: 36px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        
+        .edit-button {
+          background-color: #ff9800;
+        }
+        
+        .edit-button:hover {
+          background-color: #f57c00;
+        }
+        
+        .delete-button {
+          background-color: #f44336;
+        }
+        
+        .delete-button:hover {
+          background-color: #d32f2f;
         }
         
         .admin-form-container {
-          margin-bottom: 2rem;
-          padding: 1.5rem;
-          background-color: #f9f9f9;
+          background-color: #f8f9fa;
+          padding: 20px;
           border-radius: 8px;
-          border: 1px solid #e0e0e0;
+          margin-bottom: 30px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
         
         .admin-form-container h2 {
           margin-top: 0;
-          margin-bottom: 1.5rem;
-          color: #333;
+          margin-bottom: 20px;
+          color: var(--color-primary);
+          display: flex;
+          align-items: center;
+          gap: 10px;
         }
         
         .admin-form {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
         }
         
-        .admin-form-group {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
+        .form-group {
+          margin-bottom: 15px;
         }
         
-        .admin-form-group label {
+        .form-group label {
+          display: block;
+          margin-bottom: 5px;
           font-weight: 500;
           color: #333;
         }
         
-        .admin-form-group input,
-        .admin-form-group select,
-        .admin-form-group textarea {
-          padding: 0.75rem;
+        .form-group input,
+        .form-group textarea {
+          width: 100%;
+          padding: 10px 12px;
           border: 1px solid #ddd;
           border-radius: 4px;
           font-size: 1rem;
+          transition: border-color 0.3s ease;
         }
         
-        .admin-form-actions {
+        .form-group input:focus,
+        .form-group textarea:focus {
+          border-color: var(--color-primary);
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+        }
+        
+        .form-group textarea {
+          resize: vertical;
+        }
+        
+        .image-preview {
+          margin-top: 10px;
+          border-radius: 4px;
+          overflow: hidden;
+          width: 100px;
+          height: 100px;
+          border: 1px solid #ddd;
+        }
+        
+        .preview-image {
+          object-fit: cover;
+        }
+        
+        .social-links {
+          grid-column: 1 / -1;
+        }
+        
+        .social-input-group {
           display: flex;
-          gap: 1rem;
-          margin-top: 1rem;
+          align-items: center;
+          margin-bottom: 10px;
+        }
+        
+        .social-icon {
+          width: 20px;
+          margin-right: 10px;
+          color: #666;
+        }
+        
+        .form-actions {
+          grid-column: 1 / -1;
+          display: flex;
+          gap: 10px;
+          justify-content: flex-end;
+          margin-top: 20px;
         }
         
         .admin-table-container {
-          margin-top: 2rem;
+          overflow-x: auto;
+          background-color: white;
+          border-radius: 8px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+          padding: 20px;
         }
         
         .admin-table-container h2 {
           margin-top: 0;
-          margin-bottom: 1.5rem;
-          color: #333;
+          margin-bottom: 20px;
+          color: var(--color-primary);
+          display: flex;
+          align-items: center;
+          gap: 10px;
         }
         
         .admin-table {
@@ -562,31 +727,103 @@ const TeamManagement = () => {
         
         .admin-table th,
         .admin-table td {
-          padding: 0.75rem;
+          padding: 12px 15px;
           text-align: left;
-          border-bottom: 1px solid #e0e0e0;
+          border-bottom: 1px solid #eee;
         }
         
         .admin-table th {
+          background-color: #f8f9fa;
+          font-weight: 600;
+          color: #333;
+        }
+        
+        .admin-table tr:hover {
           background-color: #f5f5f5;
-          font-weight: 500;
         }
         
-        .admin-table-actions {
-          display: flex;
-          gap: 0.5rem;
-        }
-        
-        .admin-image-container {
+        .member-image {
           width: 50px;
           height: 50px;
-          position: relative;
           border-radius: 50%;
           overflow: hidden;
+          border: 2px solid #eee;
         }
         
-        .admin-member-image {
+        .member-thumbnail {
           object-fit: cover;
+        }
+        
+        .bio-cell {
+          max-width: 300px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        
+        .action-buttons {
+          display: flex;
+          gap: 5px;
+        }
+        
+        .error-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          min-height: 400px;
+          text-align: center;
+          padding: 20px;
+          color: var(--color-error);
+        }
+        
+        .retry-button {
+          margin-top: 20px;
+          padding: 10px 20px;
+          background-color: var(--color-primary);
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 1rem;
+          transition: background-color 0.3s ease;
+        }
+        
+        .retry-button:hover {
+          background-color: var(--color-primary-dark);
+        }
+        
+        .success-message {
+          background-color: #4caf50;
+          color: white;
+          padding: 15px;
+          border-radius: 4px;
+          margin-bottom: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+          .admin-form {
+            grid-template-columns: 1fr;
+          }
+          
+          .admin-header-content {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+          }
+          
+          .bio-cell {
+            max-width: 150px;
+          }
         }
       `}</style>
     </>
