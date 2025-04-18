@@ -66,7 +66,7 @@ function ProjectCard() {
             </div>
           </div>
           <div className="project__item-bottom">
-            <Link href={`/projectdetails/${project.id}`} className="default-btn default-btn--small">
+            <Link href={`/projectdetails/${String(project.id)}`} className="default-btn default-btn--small">
               View Details
             </Link>
           </div>

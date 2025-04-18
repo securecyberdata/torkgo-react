@@ -64,7 +64,7 @@ const Project2 = () => {
                           <span className="stat-value">{project.hardCap}</span>
                         </div>
                       </div>
-                      <Link href={`/projectdetails/${project.id}`} className="default-btn">
+                      <Link href={`/projectdetails/${String(project.id)}`} className="default-btn">
                         <span>View Details</span>
                       </Link>
                     </div>

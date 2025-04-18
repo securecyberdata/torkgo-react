@@ -22,7 +22,8 @@ const ProjectDetails = () => {
         const storedProjects = localStorage.getItem('projects');
         if (storedProjects) {
           const parsedProjects = JSON.parse(storedProjects);
-          const foundProject = parsedProjects.find(p => p.id === id);
+          // Convert both IDs to strings for comparison
+          const foundProject = parsedProjects.find(p => String(p.id) === String(id));
           if (foundProject) {
             setProject(foundProject);
             setLoading(false);
@@ -31,7 +32,7 @@ const ProjectDetails = () => {
         }
 
         // If not found in localStorage, check default projects
-        const defaultProject = defaultProjects.find(p => p.id === id);
+        const defaultProject = defaultProjects.find(p => String(p.id) === String(id));
         if (defaultProject) {
           setProject(defaultProject);
         } else {
