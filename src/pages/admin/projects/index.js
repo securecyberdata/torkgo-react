@@ -66,10 +66,12 @@ const AdminProjects = () => {
 
     // Load projects from localStorage
     try {
+      console.log('Loading projects from localStorage...');
       const storedProjects = localStorage.getItem('projects');
       if (storedProjects) {
         const parsedProjects = JSON.parse(storedProjects);
         if (Array.isArray(parsedProjects)) {
+          console.log(`Found ${parsedProjects.length} projects in localStorage`);
           setProjects(parsedProjects);
         } else {
           console.error('Stored projects is not an array:', parsedProjects);
@@ -78,6 +80,8 @@ const AdminProjects = () => {
       } else {
         console.log('No projects found in localStorage, using defaults');
         setProjects(defaultProjects);
+        // Store default projects in localStorage for future use
+        localStorage.setItem('projects', JSON.stringify(defaultProjects));
       }
     } catch (e) {
       console.error('Error loading projects:', e);

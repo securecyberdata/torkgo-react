@@ -37,10 +37,13 @@ const AdminDashboard = () => {
             const parsedProjects = JSON.parse(storedProjects);
             if (Array.isArray(parsedProjects)) {
               projectsCount = parsedProjects.length;
+              console.log(`Dashboard: Found ${projectsCount} projects`);
             }
           } catch (e) {
             console.error('Error parsing projects:', e);
           }
+        } else {
+          console.log('Dashboard: No projects found in localStorage');
         }
         
         // Get team members count
@@ -84,31 +87,82 @@ const AdminDashboard = () => {
         // Check for recent project changes
         const projectTimestamp = localStorage.getItem('projectsLastUpdated');
         if (projectTimestamp) {
-          const date = new Date(parseInt(projectTimestamp));
-          activity.push({
-            text: 'Projects were updated',
-            date: date
-          });
+          try {
+            // Try to parse as ISO string first
+            let date;
+            try {
+              date = new Date(projectTimestamp);
+              // Check if date is valid
+              if (isNaN(date.getTime())) {
+                // If not valid, try parsing as integer
+                date = new Date(parseInt(projectTimestamp));
+              }
+            } catch (e) {
+              // If parsing fails, use current date
+              date = new Date();
+            }
+            
+            activity.push({
+              text: 'Projects were updated',
+              date: date
+            });
+          } catch (e) {
+            console.error('Error parsing project timestamp:', e);
+          }
         }
         
         // Check for recent team changes
         const teamTimestamp = localStorage.getItem('teamMembersLastUpdated');
         if (teamTimestamp) {
-          const date = new Date(parseInt(teamTimestamp));
-          activity.push({
-            text: 'Team members were updated',
-            date: date
-          });
+          try {
+            // Try to parse as ISO string first
+            let date;
+            try {
+              date = new Date(teamTimestamp);
+              // Check if date is valid
+              if (isNaN(date.getTime())) {
+                // If not valid, try parsing as integer
+                date = new Date(parseInt(teamTimestamp));
+              }
+            } catch (e) {
+              // If parsing fails, use current date
+              date = new Date();
+            }
+            
+            activity.push({
+              text: 'Team members were updated',
+              date: date
+            });
+          } catch (e) {
+            console.error('Error parsing team timestamp:', e);
+          }
         }
         
         // Check for recent content changes
         const contentTimestamp = localStorage.getItem('contentLastUpdated');
         if (contentTimestamp) {
-          const date = new Date(parseInt(contentTimestamp));
-          activity.push({
-            text: 'Content was updated',
-            date: date
-          });
+          try {
+            // Try to parse as ISO string first
+            let date;
+            try {
+              date = new Date(contentTimestamp);
+              // Check if date is valid
+              if (isNaN(date.getTime())) {
+                // If not valid, try parsing as integer
+                date = new Date(parseInt(contentTimestamp));
+              }
+            } catch (e) {
+              // If parsing fails, use current date
+              date = new Date();
+            }
+            
+            activity.push({
+              text: 'Content was updated',
+              date: date
+            });
+          } catch (e) {
+            console.error('Error parsing content timestamp:', e);
+          }
         }
         
         // Sort by date (most recent first)
