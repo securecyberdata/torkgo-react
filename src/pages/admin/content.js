@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
+import AdminLayout from '@/components/admin/AdminLayout';
 
 // Mock data for content
 const initialContent = [
@@ -118,10 +119,10 @@ const ContentManagement = () => {
   };
 
   return (
-    <>
+    <AdminLayout>
       <Head>
-        <title>Content Management | Admin Dashboard</title>
-        <meta name="description" content="Manage content for Planet Sayari Bank" />
+        <title>Content Management | Admin | Torkgo</title>
+        <meta name="description" content="Manage content for Torkgo" />
       </Head>
       
       <div className="admin-page">
@@ -456,7 +457,7 @@ const ContentManagement = () => {
           gap: 0.5rem;
         }
       `}</style>
-    </>
+    </AdminLayout>
   );
 };
 

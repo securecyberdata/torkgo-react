@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
+import AdminLayout from '@/components/admin/AdminLayout';
 
 const PageEditor = () => {
   const router = useRouter();
@@ -93,10 +94,10 @@ const PageEditor = () => {
   }
   
   return (
-    <>
+    <AdminLayout>
       <Head>
-        <title>Edit Page | Admin Dashboard</title>
-        <meta name="description" content="Edit page content" />
+        <title>Edit Page | Admin | Torkgo</title>
+        <meta name="description" content="Edit page content for Torkgo" />
       </Head>
       
       <div className="admin-page-editor">
@@ -371,7 +372,7 @@ const PageEditor = () => {
           background-color: #1b5e20;
         }
       `}</style>
-    </>
+    </AdminLayout>
   );
 };
 

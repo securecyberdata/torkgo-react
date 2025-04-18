@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEdit, faTrash, faTimes, faSave, faArrowLeft, faUserPlus, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin, faTwitter, faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { v4 as uuidv4 } from 'uuid';
+import AdminLayout from '@/components/admin/AdminLayout';
 
 const TeamManagement = () => {
   const router = useRouter();
@@ -288,10 +289,10 @@ const TeamManagement = () => {
   }
 
   return (
-    <>
+    <AdminLayout>
       <Head>
-        <title>Team Management | Admin Dashboard</title>
-        <meta name="description" content="Manage team members for Planet Sayari Bank" />
+        <title>Team Management | Admin | Torkgo</title>
+        <meta name="description" content="Manage team members for Torkgo" />
       </Head>
       
       <div className="admin-page">
@@ -911,7 +912,7 @@ const TeamManagement = () => {
           }
         }
       `}</style>
-    </>
+    </AdminLayout>
   );
 };
 

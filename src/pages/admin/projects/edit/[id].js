@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import AdminLayout from '@/components/admin/AdminLayout';
 
 const EditProject = () => {
   const router = useRouter();
@@ -12,9 +13,9 @@ const EditProject = () => {
   }, [router, id]);
 
   return (
-    <>
+    <AdminLayout>
       <Head>
-        <title>Edit Project - Admin Dashboard</title>
+        <title>Edit Project | Admin | Torkgo</title>
       </Head>
       <div className="loading-container">
         <p>Redirecting to projects page...</p>
@@ -28,7 +29,7 @@ const EditProject = () => {
           font-size: 1.2rem;
         }
       `}</style>
-    </>
+    </AdminLayout>
   );
 };
 

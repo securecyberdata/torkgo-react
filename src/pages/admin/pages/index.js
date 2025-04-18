@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
+import AdminLayout from '@/components/admin/AdminLayout';
 
 const PagesManagement = () => {
   const router = useRouter();
@@ -63,10 +64,10 @@ const PagesManagement = () => {
   };
   
   return (
-    <>
+    <AdminLayout>
       <Head>
-        <title>Pages Management | Admin Dashboard</title>
-        <meta name="description" content="Manage site pages" />
+        <title>Pages Management | Admin | Torkgo</title>
+        <meta name="description" content="Manage pages for Torkgo" />
       </Head>
       
       <div className="admin-pages">
@@ -293,7 +294,7 @@ const PagesManagement = () => {
           background-color: #ffcdd2;
         }
       `}</style>
-    </>
+    </AdminLayout>
   );
 };
 
