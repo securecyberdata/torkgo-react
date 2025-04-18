@@ -164,24 +164,25 @@ const AdminProjects = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
-
     try {
       const newProject = {
-        id: uuidv4(),
-        ...formData
+        ...formData,
+        id: formData.id || uuidv4(),
+        createdAt: formData.createdAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       };
 
-      const updatedProjects = [...projects, newProject];
+      const updatedProjects = formData.id
+        ? projects.map(p => p.id === formData.id ? newProject : p)
+        : [...projects, newProject];
+
       setProjects(updatedProjects);
       localStorage.setItem('projects', JSON.stringify(updatedProjects));
-      
-      // Store timestamp for recent activity
-      localStorage.setItem('projectsLastUpdated', Date.now().toString());
-      
-      setSuccess('Project added successfully!');
+      localStorage.setItem('projectsLastUpdated', new Date().toISOString());
+      setSuccess('Project saved successfully!');
+      setError('');
       setFormData({
+        id: '',
         title: '',
         symbol: '',
         shortDescription: '',
@@ -202,7 +203,6 @@ const AdminProjects = () => {
         features: [],
         tokenomics: [],
         roadmap: [],
-        team: [],
         socialLinks: {
           website: '',
           twitter: '',
@@ -211,27 +211,23 @@ const AdminProjects = () => {
           github: ''
         }
       });
-    } catch (error) {
-      console.error('Error adding project:', error);
-      setError('Failed to add project');
+    } catch (err) {
+      setError('Failed to save project. Please try again.');
+      setSuccess('');
     }
   };
 
   const handleDelete = (id) => {
-    if (window.confirm('Are you sure you want to delete this project?')) {
-      try {
-        const updatedProjects = projects.filter(project => project.id !== id);
-        setProjects(updatedProjects);
-        localStorage.setItem('projects', JSON.stringify(updatedProjects));
-        
-        // Store timestamp for recent activity
-        localStorage.setItem('projectsLastUpdated', Date.now().toString());
-        
-        setSuccess('Project deleted successfully!');
-      } catch (error) {
-        console.error('Error deleting project:', error);
-        setError('Failed to delete project');
-      }
+    try {
+      const updatedProjects = projects.filter(p => p.id !== id);
+      setProjects(updatedProjects);
+      localStorage.setItem('projects', JSON.stringify(updatedProjects));
+      localStorage.setItem('projectsLastUpdated', new Date().toISOString());
+      setSuccess('Project deleted successfully!');
+      setError('');
+    } catch (err) {
+      setError('Failed to delete project. Please try again.');
+      setSuccess('');
     }
   };
 
