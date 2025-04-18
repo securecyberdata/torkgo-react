@@ -31,9 +31,7 @@ const Completed = () => {
                     </div>
                     <div className="project__item2-content">
                       <h4>
-                        <Link href="/projectdetails"
-                          className="stretched-link"
-                        >
+                        <Link href={`/projectdetails/${item.id}`} className="stretched-link">
                           Cyber battlefield
                         </Link>
                       </h4>
@@ -85,9 +83,7 @@ const Completed = () => {
                     </div>
                     <div className="project__item2-content">
                       <h4>
-                        <Link href="/projectdetails"
-                          className="stretched-link"
-                        >
+                        <Link href={`/projectdetails/${item.id}`} className="stretched-link">
                           Torgo IDO
                         </Link>
                       </h4>
@@ -140,9 +136,7 @@ const Completed = () => {
                     </div>
                     <div className="project__item2-content">
                       <h4>
-                        <Link href="/projectdetails"
-                          className="stretched-link"
-                        >
+                        <Link href={`/projectdetails/${item.id}`} className="stretched-link">
                           Red Monster
                         </Link>
                       </h4>
@@ -193,9 +187,7 @@ const Completed = () => {
                     </div>
                     <div className="project__item2-content">
                       <h4>
-                        <Link href="/projectdetails"
-                          className="stretched-link"
-                        >
+                        <Link href={`/projectdetails/${item.id}`} className="stretched-link">
                           Hulk City
                         </Link>
                       </h4>
@@ -246,9 +238,7 @@ const Completed = () => {
                     </div>
                     <div className="project__item2-content">
                       <h4>
-                        <Link href="/projectdetails"
-                          className="stretched-link"
-                        >
+                        <Link href={`/projectdetails/${item.id}`} className="stretched-link">
                           Servora Dex
                         </Link>
                       </h4>

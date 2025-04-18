@@ -77,7 +77,7 @@ function Upcoming({ data }) {
                         </div>
                         <div className="project__item-bottom">
                           <Link
-                            href="/projectdetails"
+                            href={`/projectdetails/${item.id}`}
                             className="default-btn default-btn--small"
                           >
                             View Details

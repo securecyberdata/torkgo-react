@@ -120,7 +120,7 @@ const ApplyProject = () => {
                           type="text"
                           className="form-control"
                           id="project-raise"
-                          placeholder="Project Raised ammount"
+                          placeholder="Project Raised amount"
                           required=""
                         />
                         <label htmlFor="project-raise">

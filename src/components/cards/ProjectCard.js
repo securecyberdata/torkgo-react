@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import Image from 'next/image';
 
@@ -67,7 +66,7 @@ function ProjectCard() {
             </div>
           </div>
           <div className="project__item-bottom">
-            <Link href="/projectdetails" className="default-btn default-btn--small">
+            <Link href={`/projectdetails/${project.id}`} className="default-btn default-btn--small">
               View Details
             </Link>
           </div>
