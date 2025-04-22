@@ -3,7 +3,7 @@ export const fetchData = async (url, options = {}) => {
     // Get the base URL from window.location in production
     const baseUrl = process.env.NODE_ENV === 'production' 
       ? `${window.location.origin}/api`
-      : process.env.BASE_API_URL || 'http://localhost:3000/api';
+      : process.env.BASE_API_URL || 'https://sayariglobal.com/api';
     
     const fullUrl = `${baseUrl}${url}`;
     console.log(`[Client] Fetching from: ${fullUrl}`);
