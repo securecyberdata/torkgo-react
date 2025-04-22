@@ -41,6 +41,9 @@ const AdminProjects = () => {
     const fetchProjects = async () => {
       try {
         setLoading(true);
+        setError('');
+        
+        console.log('Fetching projects...');
         const response = await fetch('/api/projects', {
           method: 'GET',
           headers: {
@@ -49,16 +52,29 @@ const AdminProjects = () => {
         });
 
         if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || 'Failed to fetch projects');
+          const errorText = await response.text();
+          console.error('Error response:', errorText);
+          
+          try {
+            const errorData = JSON.parse(errorText);
+            throw new Error(errorData.error || 'Failed to fetch projects');
+          } catch (parseError) {
+            throw new Error(`Failed to fetch projects: ${response.status} ${response.statusText}`);
+          }
         }
 
         const result = await response.json();
+        console.log('Projects fetched:', result);
+        
+        if (!result.success) {
+          throw new Error(result.error || 'Failed to fetch projects');
+        }
+        
         setProjects(result.data || []);
         setError('');
       } catch (err) {
         console.error('Error loading projects:', err);
-        setError('Failed to load projects. Please try again.');
+        setError(err.message || 'Failed to load projects. Please try again.');
         setProjects([]);
       } finally {
         setLoading(false);
