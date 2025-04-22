@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faChartLine, 
@@ -40,26 +41,26 @@ const AdminLayout = ({ children }) => {
       <div className="admin-container">
         <aside className={`admin-sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
           <nav className="sidebar-nav">
-            <a href="/admin/dashboard" className={`nav-item ${router.pathname === '/admin/dashboard' ? 'active' : ''}`}>
+            <Link href="/admin/dashboard" className={`nav-item ${router.pathname === '/admin/dashboard' ? 'active' : ''}`}>
               <FontAwesomeIcon icon={faHome} />
               <span>Dashboard</span>
-            </a>
-            <a href="/admin/team" className={`nav-item ${router.pathname === '/admin/team' ? 'active' : ''}`}>
+            </Link>
+            <Link href="/admin/team" className={`nav-item ${router.pathname === '/admin/team' ? 'active' : ''}`}>
               <FontAwesomeIcon icon={faUsers} />
               <span>Team</span>
-            </a>
-            <a href="/admin/projects" className={`nav-item ${router.pathname === '/admin/projects' ? 'active' : ''}`}>
+            </Link>
+            <Link href="/admin/projects" className={`nav-item ${router.pathname === '/admin/projects' ? 'active' : ''}`}>
               <FontAwesomeIcon icon={faNewspaper} />
               <span>Projects</span>
-            </a>
-            <a href="/admin/content" className={`nav-item ${router.pathname === '/admin/content' ? 'active' : ''}`}>
+            </Link>
+            <Link href="/admin/content" className={`nav-item ${router.pathname === '/admin/content' ? 'active' : ''}`}>
               <FontAwesomeIcon icon={faChartLine} />
               <span>Content</span>
-            </a>
-            <a href="/admin/settings" className={`nav-item ${router.pathname === '/admin/settings' ? 'active' : ''}`}>
+            </Link>
+            <Link href="/admin/settings" className={`nav-item ${router.pathname === '/admin/settings' ? 'active' : ''}`}>
               <FontAwesomeIcon icon={faCog} />
               <span>Settings</span>
-            </a>
+            </Link>
           </nav>
         </aside>
 
@@ -101,7 +102,7 @@ const AdminLayout = ({ children }) => {
           padding: 1rem 0;
         }
 
-        .nav-item {
+        :global(.nav-item) {
           display: flex;
           align-items: center;
           gap: 0.75rem;
@@ -111,18 +112,18 @@ const AdminLayout = ({ children }) => {
           transition: all 0.15s ease-in-out;
         }
 
-        .nav-item:hover {
+        :global(.nav-item:hover) {
           background-color: #f8f9fa;
           color: #212529;
         }
 
-        .nav-item.active {
+        :global(.nav-item.active) {
           background-color: #e9ecef;
           color: #0d6efd;
           font-weight: 500;
         }
 
-        .nav-item svg {
+        :global(.nav-item svg) {
           width: 1.25rem;
           height: 1.25rem;
         }
