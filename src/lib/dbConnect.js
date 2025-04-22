@@ -27,9 +27,12 @@ async function dbConnect() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      serverSelectionTimeoutMS: 5000, // Timeout after 5 seconds
+      socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
     };
 
     try {
+      console.log('Connecting to MongoDB...');
       cached.promise = mongoose.connect(MONGODB_URI, opts);
       console.log('MongoDB connected successfully');
     } catch (error) {
@@ -46,6 +49,18 @@ async function dbConnect() {
     cached.promise = null;
     throw error;
   }
+
+  mongoose.connection.on('connected', () => {
+    console.log('MongoDB connection established');
+  });
+
+  mongoose.connection.on('error', (err) => {
+    console.error('MongoDB connection error:', err);
+  });
+
+  mongoose.connection.on('disconnected', () => {
+    console.log('MongoDB connection disconnected');
+  });
 
   return cached.conn;
 }
