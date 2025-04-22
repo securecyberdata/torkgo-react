@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import AdminLayout from '@/components/admin/AdminLayout';
+import AdminHead from '@/components/admin/AdminHead';
 
 const NewProject = () => {
   const router = useRouter();
@@ -36,8 +36,10 @@ const NewProject = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     // Check if user is authenticated
     const token = localStorage.getItem('adminToken');
     if (!token) {
@@ -212,19 +214,20 @@ const NewProject = () => {
     }
   };
 
+  if (!isClient) {
+    return null;
+  }
+
   return (
     <AdminLayout>
-      <Head>
-        <title>New Project | Admin | Torkgo</title>
-        <meta name="description" content="Create a new project for Torkgo" />
-      </Head>
-
-      <div className="admin-projects">
-        <div className="header">
+      <AdminHead title="New Project" description="Create a new project" />
+      
+      <div className="admin-content">
+        <div className="admin-header">
+          <h1>Create New Project</h1>
           <Link href="/admin/projects" className="back-button">
             <FontAwesomeIcon icon={faArrowLeft} /> Back to Projects
           </Link>
-          <h1>Add New Project</h1>
         </div>
 
         {error && <div className="error-message">{error}</div>}
@@ -575,13 +578,13 @@ const NewProject = () => {
       </div>
 
       <style jsx>{`
-        .admin-projects {
+        .admin-content {
           padding: 20px;
           max-width: 1200px;
           margin: 0 auto;
         }
 
-        .header {
+        .admin-header {
           display: flex;
           align-items: center;
           gap: 20px;

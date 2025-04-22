@@ -308,4 +308,9 @@ export const projects = [
       medium: "#"
     }
   }
-]; 
+];
+
+// Log the projects data to verify it's being exported correctly
+if (typeof window !== 'undefined') {
+  console.log('Project data loaded:', projects);
+} 

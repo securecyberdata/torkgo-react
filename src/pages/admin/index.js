@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
+import AdminHead from '@/components/admin/AdminHead';
 
 const AdminIndex = () => {
   const router = useRouter();
@@ -11,15 +11,9 @@ const AdminIndex = () => {
   }, [router]);
 
   return (
-    <>
-      <Head>
-        <title>Admin | Torkgo</title>
-        <meta name="description" content="Admin panel for Torkgo" />
-      </Head>
-      
-      <div className="admin-redirect">
-        <p>Redirecting to admin login...</p>
-      </div>
+    <div className="admin-redirect">
+      <AdminHead title="Admin | Torkgo" description="Admin panel for Torkgo" />
+      <p>Redirecting to admin login...</p>
       
       <style jsx>{`
         .admin-redirect {
@@ -36,7 +30,7 @@ const AdminIndex = () => {
           font-size: 1rem;
         }
       `}</style>
-    </>
+    </div>
   );
 };
 

@@ -1,0 +1,29 @@
+.admin-wrapper {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  
+  // Remove any public website styles
+  .header-wrapper,
+  .footer {
+    display: none !important;
+  }
+  
+  // Ensure admin content takes full height
+  .admin-content {
+    min-height: calc(100vh - 60px); // Adjust based on your admin header height
+    padding: 20px;
+  }
+}
+
+// Admin-specific resets
+body.admin-page {
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+  
+  // Remove any public website elements
+  .header-section,
+  .footer {
+    display: none !important;
+  }
+} 

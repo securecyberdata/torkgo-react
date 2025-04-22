@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
 import Link from 'next/link';
 import AdminLayout from '@/components/admin/AdminLayout';
+import AdminHead from '@/components/admin/AdminHead';
 
 const PageEditor = () => {
   const router = useRouter();
@@ -20,12 +20,14 @@ const PageEditor = () => {
   
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   
   // Check if user is authenticated
   useEffect(() => {
+    setIsClient(true);
     const adminToken = localStorage.getItem('adminToken');
     if (!adminToken) {
-      router.push('/admin');
+      router.push('/admin/login');
     }
   }, [router]);
   
@@ -84,6 +86,10 @@ const PageEditor = () => {
     }, 1000);
   };
   
+  if (!isClient) {
+    return null;
+  }
+  
   if (isLoading) {
     return (
       <div className="admin-loading">
@@ -95,20 +101,15 @@ const PageEditor = () => {
   
   return (
     <AdminLayout>
-      <Head>
-        <title>Edit Page | Admin | Torkgo</title>
-        <meta name="description" content="Edit page content for Torkgo" />
-      </Head>
+      <AdminHead title="Page Editor" description="Edit your website page" />
       
-      <div className="admin-page-editor">
-        <header className="admin-header">
-          <div className="admin-header-content">
-            <h1>Edit Page: {page.title}</h1>
-            <Link href="/admin/pages" className="admin-back-link">
-              Back to Pages
-            </Link>
-          </div>
-        </header>
+      <div className="admin-content">
+        <div className="admin-header">
+          <h1>Page Editor</h1>
+          <Link href="/admin/pages" className="back-button">
+            Back to Pages
+          </Link>
+        </div>
         
         <div className="admin-container">
           <div className="admin-content">

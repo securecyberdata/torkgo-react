@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
-  faHome, 
+  faChartLine, 
   faUsers, 
-  faProjectDiagram, 
   faNewspaper, 
-  faCog, 
-  faSignOutAlt,
-  faBars,
-  faTimes
+  faCog,
+  faHome
 } from '@fortawesome/free-solid-svg-icons';
 import AdminHeader from './AdminHeader';
 import AdminFooter from './AdminFooter';
@@ -23,60 +18,51 @@ const AdminLayout = ({ children }) => {
 
   useEffect(() => {
     setIsClient(true);
-  }, []);
+    // Check if user is authenticated
+    const adminToken = localStorage.getItem('adminToken');
+    if (!adminToken) {
+      router.push('/admin/login');
+    }
+  }, [router]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
   if (!isClient) {
-    return <div>Loading...</div>;
+    return null;
   }
 
   return (
     <div className="admin-layout">
-      <Head>
-        <title>Admin Dashboard | Torkgo</title>
-        <meta name="description" content="Admin dashboard for Torkgo" />
-      </Head>
-
       <AdminHeader toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
-
+      
       <div className="admin-container">
-        {/* Admin Sidebar */}
         <aside className={`admin-sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
-          <nav className="admin-nav">
-            <ul>
-              <li className={router.pathname === '/admin/dashboard' ? 'active' : ''}>
-                <Link href="/admin/dashboard">
-                  <FontAwesomeIcon icon={faHome} /> Dashboard
-                </Link>
-              </li>
-              <li className={router.pathname === '/admin/team' ? 'active' : ''}>
-                <Link href="/admin/team">
-                  <FontAwesomeIcon icon={faUsers} /> Team
-                </Link>
-              </li>
-              <li className={router.pathname === '/admin/projects' ? 'active' : ''}>
-                <Link href="/admin/projects">
-                  <FontAwesomeIcon icon={faProjectDiagram} /> Projects
-                </Link>
-              </li>
-              <li className={router.pathname === '/admin/content' ? 'active' : ''}>
-                <Link href="/admin/content">
-                  <FontAwesomeIcon icon={faNewspaper} /> Content
-                </Link>
-              </li>
-              <li className={router.pathname === '/admin/settings' ? 'active' : ''}>
-                <Link href="/admin/settings">
-                  <FontAwesomeIcon icon={faCog} /> Settings
-                </Link>
-              </li>
-            </ul>
+          <nav className="sidebar-nav">
+            <a href="/admin/dashboard" className={`nav-item ${router.pathname === '/admin/dashboard' ? 'active' : ''}`}>
+              <FontAwesomeIcon icon={faHome} />
+              <span>Dashboard</span>
+            </a>
+            <a href="/admin/team" className={`nav-item ${router.pathname === '/admin/team' ? 'active' : ''}`}>
+              <FontAwesomeIcon icon={faUsers} />
+              <span>Team</span>
+            </a>
+            <a href="/admin/projects" className={`nav-item ${router.pathname === '/admin/projects' ? 'active' : ''}`}>
+              <FontAwesomeIcon icon={faNewspaper} />
+              <span>Projects</span>
+            </a>
+            <a href="/admin/content" className={`nav-item ${router.pathname === '/admin/content' ? 'active' : ''}`}>
+              <FontAwesomeIcon icon={faChartLine} />
+              <span>Content</span>
+            </a>
+            <a href="/admin/settings" className={`nav-item ${router.pathname === '/admin/settings' ? 'active' : ''}`}>
+              <FontAwesomeIcon icon={faCog} />
+              <span>Settings</span>
+            </a>
           </nav>
         </aside>
 
-        {/* Admin Main Content */}
         <main className="admin-main">
           {children}
         </main>
@@ -86,76 +72,75 @@ const AdminLayout = ({ children }) => {
 
       <style jsx>{`
         .admin-layout {
+          min-height: 100vh;
           display: flex;
           flex-direction: column;
-          min-height: 100vh;
-          background-color: #f5f5f5;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          background-color: #f8f9fa;
         }
 
         .admin-container {
           display: flex;
           flex: 1;
+          overflow: hidden;
         }
 
         .admin-sidebar {
           width: 250px;
-          background-color: #2d2d2d;
-          color: #e0e0e0;
-          transition: all 0.3s ease;
-          height: calc(100vh - 60px);
-          position: sticky;
-          top: 60px;
+          background-color: white;
+          border-right: 1px solid #dee2e6;
+          transition: width 0.3s ease;
           overflow-y: auto;
+          box-shadow: 1px 0 3px rgba(0, 0, 0, 0.05);
         }
 
         .admin-sidebar.closed {
           width: 0;
-          overflow: hidden;
         }
 
-        .admin-nav ul {
-          list-style: none;
-          padding: 0;
-          margin: 0;
+        .sidebar-nav {
+          padding: 1rem 0;
         }
 
-        .admin-nav li {
-          margin: 0;
-          padding: 0;
-        }
-
-        .admin-nav a {
+        .nav-item {
           display: flex;
           align-items: center;
-          padding: 0.75rem 1.5rem;
-          color: #e0e0e0;
-          text-decoration: none;
-          transition: all 0.2s ease;
           gap: 0.75rem;
+          padding: 0.75rem 1.5rem;
+          color: #495057;
+          text-decoration: none;
+          transition: all 0.15s ease-in-out;
         }
 
-        .admin-nav a:hover {
-          background-color: #3d3d3d;
+        .nav-item:hover {
+          background-color: #f8f9fa;
+          color: #212529;
         }
 
-        .admin-nav li.active a {
-          background-color: #4a9eff;
-          color: white;
+        .nav-item.active {
+          background-color: #e9ecef;
+          color: #0d6efd;
+          font-weight: 500;
+        }
+
+        .nav-item svg {
+          width: 1.25rem;
+          height: 1.25rem;
         }
 
         .admin-main {
           flex: 1;
-          padding: 1.5rem;
           overflow-y: auto;
+          padding: 1.5rem;
+          background-color: #f8f9fa;
         }
 
         @media (max-width: 768px) {
           .admin-sidebar {
             position: fixed;
-            z-index: 99;
-            height: 100vh;
             top: 60px;
+            left: 0;
+            bottom: 0;
+            z-index: 100;
           }
 
           .admin-sidebar.closed {

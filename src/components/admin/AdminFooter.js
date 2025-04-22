@@ -12,37 +12,40 @@ const AdminFooter = () => {
 
   return (
     <footer className="admin-footer">
-      <div className="admin-footer-content">
-        <div className="admin-footer-left">
-          <p className="admin-footer-copyright">
-            &copy; {currentYear} Torkgo Admin Panel. All rights reserved.
+      <div className="footer-content">
+        <div className="footer-left">
+          <p className="copyright">
+            &copy; {currentYear} Admin Panel. All rights reserved.
           </p>
         </div>
-        <div className="admin-footer-right">
-          <div className="admin-footer-links">
-            <a href="/admin/help" className="admin-footer-link">
-              <FontAwesomeIcon icon={faQuestionCircle} /> Help
-            </a>
-            <a href="/admin/security" className="admin-footer-link">
-              <FontAwesomeIcon icon={faShieldAlt} /> Security
-            </a>
-            <a href="/admin/version" className="admin-footer-link">
-              <FontAwesomeIcon icon={faCode} /> v1.0.0
-            </a>
+        
+        <div className="footer-right">
+          <a href="/admin/help" className="footer-link">
+            <FontAwesomeIcon icon={faQuestionCircle} />
+            <span>Help</span>
+          </a>
+          <a href="/admin/security" className="footer-link">
+            <FontAwesomeIcon icon={faShieldAlt} />
+            <span>Security</span>
+          </a>
+          <div className="footer-link">
+            <FontAwesomeIcon icon={faCode} />
+            <span>v1.0.0</span>
           </div>
         </div>
       </div>
 
       <style jsx>{`
         .admin-footer {
-          background-color: #1a1a1a;
-          color: #e0e0e0;
+          background-color: #ffffff;
+          border-top: 1px solid #dee2e6;
           padding: 1rem 1.5rem;
           font-size: 0.875rem;
-          border-top: 1px solid #333;
+          color: #6c757d;
+          box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.05);
         }
 
-        .admin-footer-content {
+        .footer-content {
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -50,40 +53,42 @@ const AdminFooter = () => {
           margin: 0 auto;
         }
 
-        .admin-footer-copyright {
+        .footer-left {
+          display: flex;
+          align-items: center;
+        }
+
+        .copyright {
           margin: 0;
         }
 
-        .admin-footer-links {
+        .footer-right {
           display: flex;
+          align-items: center;
           gap: 1.5rem;
         }
 
-        .admin-footer-link {
-          color: #e0e0e0;
-          text-decoration: none;
+        .footer-link {
           display: flex;
           align-items: center;
           gap: 0.5rem;
-          transition: color 0.2s ease;
+          color: #6c757d;
+          text-decoration: none;
+          transition: color 0.15s ease-in-out;
         }
 
-        .admin-footer-link:hover {
-          color: #4a9eff;
-        }
-
-        .admin-footer-link svg {
-          font-size: 0.875rem;
+        .footer-link:hover {
+          color: #495057;
         }
 
         @media (max-width: 768px) {
-          .admin-footer-content {
+          .footer-content {
             flex-direction: column;
             gap: 1rem;
             text-align: center;
           }
 
-          .admin-footer-links {
+          .footer-right {
             justify-content: center;
           }
         }

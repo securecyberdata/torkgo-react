@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
 import Link from 'next/link';
 import AdminLayout from '@/components/admin/AdminLayout';
+import AdminHead from '@/components/admin/AdminHead';
 
 const PagesManagement = () => {
   const router = useRouter();
@@ -50,35 +50,36 @@ const PagesManagement = () => {
       status: 'Published'
     }
   ]);
-  
-  // Check if user is authenticated
+  const [isClient, setIsClient] = useState(false);
+
   useEffect(() => {
+    setIsClient(true);
+    // Check if user is authenticated
     const adminToken = localStorage.getItem('adminToken');
     if (!adminToken) {
-      router.push('/admin');
+      router.push('/admin/login');
     }
   }, [router]);
-  
+
   const handleEditPage = (pageId) => {
     router.push(`/admin/pages/${pageId}`);
   };
-  
+
+  if (!isClient) {
+    return null;
+  }
+
   return (
     <AdminLayout>
-      <Head>
-        <title>Pages Management | Admin | Torkgo</title>
-        <meta name="description" content="Manage pages for Torkgo" />
-      </Head>
+      <AdminHead title="Pages Management" description="Manage your website pages" />
       
-      <div className="admin-pages">
-        <header className="admin-header">
-          <div className="admin-header-content">
-            <h1>Pages Management</h1>
-            <Link href="/admin/dashboard" className="admin-back-link">
-              Back to Dashboard
-            </Link>
-          </div>
-        </header>
+      <div className="admin-content">
+        <div className="admin-header">
+          <h1>Pages Management</h1>
+          <Link href="/admin/pages/new" className="add-button">
+            Add New Page
+          </Link>
+        </div>
         
         <div className="admin-container">
           <div className="admin-content">

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
 import Link from 'next/link';
 import AdminLayout from '@/components/admin/AdminLayout';
+import AdminHead from '@/components/admin/AdminHead';
 
 // Mock data for content
 const initialContent = [
@@ -38,6 +38,7 @@ const ContentManagement = () => {
   const [isAddingContent, setIsAddingContent] = useState(false);
   const [isEditingContent, setIsEditingContent] = useState(false);
   const [currentContent, setCurrentContent] = useState(null);
+  const [isClient, setIsClient] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     type: 'Text',
@@ -48,9 +49,10 @@ const ContentManagement = () => {
 
   // Check if user is authenticated
   useEffect(() => {
+    setIsClient(true);
     const adminToken = localStorage.getItem('adminToken');
     if (!adminToken) {
-      router.push('/admin');
+      router.push('/admin/login');
     }
   }, [router]);
 
@@ -118,22 +120,24 @@ const ContentManagement = () => {
     setCurrentContent(null);
   };
 
+  if (!isClient) {
+    return null;
+  }
+
   return (
     <AdminLayout>
-      <Head>
-        <title>Content Management | Admin | Torkgo</title>
-        <meta name="description" content="Manage content for Torkgo" />
-      </Head>
+      <AdminHead title="Content Management" description="Manage your website content" />
       
-      <div className="admin-page">
-        <header className="admin-header">
-          <div className="admin-header-content">
-            <h1>Content Management</h1>
-            <Link href="/admin/dashboard" className="admin-back-link">
-              Back to Dashboard
-            </Link>
-          </div>
-        </header>
+      <div className="admin-content">
+        <div className="admin-header">
+          <h1>Content Management</h1>
+          <button 
+            className="add-button"
+            onClick={() => setIsAddingContent(true)}
+          >
+            Add New Content
+          </button>
+        </div>
         
         <div className="admin-container">
           <div className="admin-content">

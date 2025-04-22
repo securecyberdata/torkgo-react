@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock, faUser, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import AdminHead from '@/components/admin/AdminHead';
 
 const AdminLogin = () => {
   const router = useRouter();
@@ -15,8 +15,8 @@ const AdminLogin = () => {
   useEffect(() => {
     setIsClient(true);
     // Check if already logged in
-    const token = localStorage.getItem('adminToken');
-    if (token) {
+    const adminToken = localStorage.getItem('adminToken');
+    if (adminToken) {
       router.push('/admin/dashboard');
     }
   }, [router]);
@@ -45,23 +45,21 @@ const AdminLogin = () => {
 
   return (
     <div className="admin-login-container">
-      <Head>
-        <title>Admin Login | Torkgo</title>
-        <meta name="description" content="Admin login for Torkgo" />
-      </Head>
+      <AdminHead title="Login" description="Admin login page" />
 
       <div className="admin-login-card">
         <div className="admin-login-header">
-          <h1>Torkgo Admin</h1>
+          <h1>Admin Login</h1>
           <p>Enter your credentials to access the admin panel</p>
         </div>
 
-        {error && <div className="admin-login-error">{error}</div>}
+        {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSubmit} className="admin-login-form">
-          <div className="admin-form-group">
+          <div className="form-group">
             <label htmlFor="username">
-              <FontAwesomeIcon icon={faUser} /> Username
+              <FontAwesomeIcon icon={faUser} />
+              <span>Username</span>
             </label>
             <input
               type="text"
@@ -73,9 +71,10 @@ const AdminLogin = () => {
             />
           </div>
 
-          <div className="admin-form-group">
+          <div className="form-group">
             <label htmlFor="password">
-              <FontAwesomeIcon icon={faLock} /> Password
+              <FontAwesomeIcon icon={faLock} />
+              <span>Password</span>
             </label>
             <input
               type="password"
@@ -87,17 +86,14 @@ const AdminLogin = () => {
             />
           </div>
 
-          <button 
-            type="submit" 
-            className="admin-login-button"
-            disabled={loading}
-          >
+          <button type="submit" className="login-button" disabled={loading}>
             {loading ? (
               <>
-                <FontAwesomeIcon icon={faSpinner} spin /> Logging in...
+                <FontAwesomeIcon icon={faSpinner} spin />
+                <span>Logging in...</span>
               </>
             ) : (
-              'Login'
+              <span>Login</span>
             )}
           </button>
         </form>
@@ -109,113 +105,119 @@ const AdminLogin = () => {
 
       <style jsx>{`
         .admin-login-container {
-          display: flex;
-          justify-content: center;
-          align-items: center;
           min-height: 100vh;
-          background-color: #f5f5f5;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #f8f9fa;
+          padding: 1rem;
         }
 
         .admin-login-card {
           width: 100%;
           max-width: 400px;
           background-color: white;
-          border-radius: 8px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-          padding: 2rem;
+          border-radius: 0.5rem;
+          box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+          overflow: hidden;
         }
 
         .admin-login-header {
+          padding: 1.5rem;
           text-align: center;
-          margin-bottom: 2rem;
+          background-color: #f8f9fa;
+          border-bottom: 1px solid #dee2e6;
         }
 
         .admin-login-header h1 {
-          color: #1a1a1a;
-          margin-bottom: 0.5rem;
-          font-size: 1.75rem;
+          font-size: 1.5rem;
+          color: #212529;
+          margin: 0 0 0.5rem 0;
         }
 
         .admin-login-header p {
-          color: #666;
+          color: #6c757d;
+          margin: 0;
           font-size: 0.875rem;
         }
 
-        .admin-login-error {
-          background-color: #ffebee;
-          color: #c62828;
+        .error-message {
+          background-color: #f8d7da;
+          color: #842029;
           padding: 0.75rem;
-          border-radius: 4px;
-          margin-bottom: 1.5rem;
+          margin: 1rem;
+          border-radius: 0.375rem;
           font-size: 0.875rem;
         }
 
         .admin-login-form {
-          display: flex;
-          flex-direction: column;
-          gap: 1.25rem;
+          padding: 1.5rem;
         }
 
-        .admin-form-group {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
+        .form-group {
+          margin-bottom: 1rem;
         }
 
-        .admin-form-group label {
-          font-size: 0.875rem;
-          font-weight: 500;
-          color: #333;
+        .form-group label {
           display: flex;
           align-items: center;
           gap: 0.5rem;
-        }
-
-        .admin-form-group input {
-          padding: 0.75rem;
-          border: 1px solid #ddd;
-          border-radius: 4px;
+          margin-bottom: 0.5rem;
+          color: #495057;
           font-size: 0.875rem;
-          transition: border-color 0.2s ease;
         }
 
-        .admin-form-group input:focus {
-          border-color: #4a9eff;
+        .form-group input {
+          width: 100%;
+          padding: 0.5rem 0.75rem;
+          font-size: 0.875rem;
+          border: 1px solid #dee2e6;
+          border-radius: 0.375rem;
+          transition: border-color 0.15s ease-in-out;
+        }
+
+        .form-group input:focus {
           outline: none;
+          border-color: #86b7fe;
+          box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
         }
 
-        .admin-login-button {
-          background-color: #4a9eff;
+        .login-button {
+          width: 100%;
+          padding: 0.5rem 1rem;
+          background-color: #0d6efd;
           color: white;
           border: none;
-          padding: 0.75rem;
-          border-radius: 4px;
+          border-radius: 0.375rem;
           font-size: 0.875rem;
-          font-weight: 500;
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 0.5rem;
-          transition: background-color 0.2s ease;
-          margin-top: 0.5rem;
+          transition: background-color 0.15s ease-in-out;
         }
 
-        .admin-login-button:hover {
-          background-color: #3a8eef;
+        .login-button:hover:not(:disabled) {
+          background-color: #0b5ed7;
         }
 
-        .admin-login-button:disabled {
-          background-color: #a0c7ff;
+        .login-button:disabled {
+          opacity: 0.65;
           cursor: not-allowed;
         }
 
         .admin-login-footer {
-          margin-top: 2rem;
+          padding: 1rem;
           text-align: center;
+          background-color: #f8f9fa;
+          border-top: 1px solid #dee2e6;
+        }
+
+        .admin-login-footer p {
+          color: #6c757d;
+          margin: 0;
           font-size: 0.75rem;
-          color: #999;
         }
       `}</style>
     </div>

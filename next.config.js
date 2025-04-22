@@ -12,12 +12,19 @@ const nextConfig = {
     unoptimized: true
   },
   env: {
-    BASE_API_URL: process.env.BASE_API_URL ? process.env.BASE_API_URL :'https://torktest.vercel.app/api'
+    BASE_API_URL: 'http://localhost:3000/api'
   },
   publicRuntimeConfig: {
-    BASE_API_URL: process.env.BASE_API_URL ? process.env.BASE_API_URL : 'https://torktest.vercel.app/api'
+    BASE_API_URL: 'http://localhost:3000/api'
   },
-
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: '/api/:path*',
+      },
+    ];
+  },
 }
 
 module.exports = nextConfig
