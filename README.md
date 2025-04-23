@@ -25,10 +25,10 @@ A modern crypto investment platform built with Next.js and MongoDB.
    ```
 3. Create a `.env.local` file in the root directory with the following content:
    ```
-   MONGODB_URI=mongodb://localhost:27017/crypto-platform
-   ```
-   For production, use a real MongoDB Atlas connection string:
-   ```
+   # API Configuration
+   NEXT_PUBLIC_API_URL=https://sayariglobal.com/api
+
+   # Database Configuration
    MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<database>?retryWrites=true&w=majority
    ```
 
@@ -42,8 +42,8 @@ A modern crypto investment platform built with Next.js and MongoDB.
    npm run dev
    ```
 
-6. Open [http://localhost:3000](http://localhost:3000) in your browser to see the public website.
-7. Open [http://localhost:3000/admin/login](http://localhost:3000/admin/login) to access the admin panel.
+6. Open [https://sayariglobal.com](https://sayariglobal.com) in your browser to see the public website.
+7. Open [https://sayariglobal.com/admin/login](https://sayariglobal.com/admin/login) to access the admin panel.
 
 ## Admin Panel
 
@@ -75,17 +75,7 @@ The application provides the following API endpoints:
 
 ## Deployment
 
-To deploy the application:
-
-1. Build the application:
-   ```bash
-   npm run build
-   ```
-
-2. Start the production server:
-   ```bash
-   npm start
-   ```
+The application is deployed at [https://sayariglobal.com](https://sayariglobal.com)
 
 ## License
 

@@ -12,9 +12,7 @@ const nextConfig = {
     unoptimized: true
   },
   env: {
-    BASE_API_URL: process.env.NODE_ENV === 'production' 
-      ? '/api' 
-      : 'http://localhost:3000/api'
+    BASE_API_URL: 'https://sayariglobal.com/api'
   },
   publicRuntimeConfig: {
     BASE_API_URL: 'http://localhost:3000/api'
