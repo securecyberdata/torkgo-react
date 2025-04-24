@@ -9,13 +9,16 @@ const nextConfig = {
   },
   
   images: {
-    unoptimized: true
+    unoptimized: true,
+    domains: ['www.sayariglobal.com', 'sayariglobal.com'],
   },
   env: {
-    BASE_API_URL: 'https://sayariglobal.com/api'
+    BASE_API_URL: 'https://www.sayariglobal.com/api'
   },
   publicRuntimeConfig: {
-    BASE_API_URL: 'http://localhost:3000/api'
+    BASE_API_URL: process.env.NODE_ENV === 'production' 
+      ? 'https://www.sayariglobal.com/api'
+      : 'http://localhost:3000/api'
   },
   async rewrites() {
     return [
@@ -31,8 +34,8 @@ const nextConfig = {
         source: '/api/:path*',
         headers: [
           { key: 'Access-Control-Allow-Credentials', value: 'true' },
-          { key: 'Access-Control-Allow-Origin', value: '*' },
-          { key: 'Access-Control-Allow-Methods', value: 'GET,DELETE,PATCH,POST,PUT' },
+          { key: 'Access-Control-Allow-Origin', value: 'https://www.sayariglobal.com' },
+          { key: 'Access-Control-Allow-Methods', value: 'GET,DELETE,PATCH,POST,PUT,OPTIONS' },
           { key: 'Access-Control-Allow-Headers', value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version' },
         ],
       },

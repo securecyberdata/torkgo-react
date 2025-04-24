@@ -3,7 +3,7 @@ export const fetchData = async (url, options = {}) => {
     // Get the base URL from environment variable
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || 
                    (process.env.NODE_ENV === 'production' 
-                     ? 'https://sayariglobal.com/api' 
+                     ? 'https://www.sayariglobal.com/api' 
                      : 'http://localhost:3000/api');
     
     const fullUrl = `${baseUrl}${url}`;
@@ -13,8 +13,10 @@ export const fetchData = async (url, options = {}) => {
       ...options,
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
         ...options.headers,
       },
+      credentials: 'include', // Include credentials for CORS
     });
     
     const contentType = response.headers.get('content-type');

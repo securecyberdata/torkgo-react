@@ -3,10 +3,23 @@ import Team from '@/models/Team';
 import { teamMembers as defaultTeamMembers } from '@/data/teamData';
 
 export default async function handler(req, res) {
-  // Enable CORS
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,DELETE,PATCH,POST,PUT');
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Origin', 'https://www.sayariglobal.com');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,DELETE,PATCH,POST,PUT,OPTIONS');
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    );
+    res.status(200).end();
+    return;
+  }
+
+  // Set CORS headers for actual requests
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Origin', 'https://www.sayariglobal.com');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,DELETE,PATCH,POST,PUT,OPTIONS');
   res.setHeader(
     'Access-Control-Allow-Headers',
     'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
@@ -56,7 +69,7 @@ export default async function handler(req, res) {
         }
 
       default:
-        res.setHeader('Allow', ['GET', 'POST']);
+        res.setHeader('Allow', ['GET', 'POST', 'OPTIONS']);
         return res.status(405).json({ 
           success: false,
           error: `Method ${req.method} not allowed` 
