@@ -10,6 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import AdminLayout from '@/components/admin/AdminLayout';
 import AdminHead from '@/components/admin/AdminHead';
+import { fetchData } from '@/apiConfig';
 
 const TeamManagement = () => {
   const router = useRouter();
@@ -21,7 +22,15 @@ const TeamManagement = () => {
     name: '',
     role: '',
     bio: '',
-    image: ''
+    img: '',
+    description: '',
+    expertise: [],
+    social: {
+      twitter: '',
+      linkedin: '',
+      facebook: '',
+      instagram: ''
+    }
   });
   const [isClient, setIsClient] = useState(false);
 
@@ -34,11 +43,11 @@ const TeamManagement = () => {
       return;
     }
 
-    // Load team members from localStorage
-    const loadTeamMembers = () => {
+    // Load team members from API
+    const loadTeamMembers = async () => {
       try {
-        const storedTeamMembers = JSON.parse(localStorage.getItem('teamMembers') || '[]');
-        setTeamMembers(storedTeamMembers);
+        const data = await fetchData('/team');
+        setTeamMembers(data);
       } catch (err) {
         console.error('Error loading team members:', err);
       } finally {
@@ -49,41 +58,72 @@ const TeamManagement = () => {
     loadTeamMembers();
   }, [router]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newTeamMember = {
-      id: Date.now().toString(),
-      ...formData
-    };
-
-    const updatedTeamMembers = [...teamMembers, newTeamMember];
-    setTeamMembers(updatedTeamMembers);
-    localStorage.setItem('teamMembers', JSON.stringify(updatedTeamMembers));
-    setShowForm(false);
-    setFormData({
-      name: '',
-      role: '',
-      bio: '',
-      image: ''
-    });
-  };
-
-  const handleDelete = (id) => {
-    if (window.confirm('Are you sure you want to delete this team member?')) {
-      const updatedTeamMembers = teamMembers.filter(member => member.id !== id);
-      setTeamMembers(updatedTeamMembers);
-      localStorage.setItem('teamMembers', JSON.stringify(updatedTeamMembers));
+    try {
+      const response = await fetchData('/team', {
+        method: 'POST',
+        body: JSON.stringify(formData)
+      });
+      setTeamMembers([...teamMembers, response]);
+      setShowForm(false);
+      setFormData({
+        name: '',
+        role: '',
+        bio: '',
+        img: '',
+        description: '',
+        expertise: [],
+        social: {
+          twitter: '',
+          linkedin: '',
+          facebook: '',
+          instagram: ''
+        }
+      });
+    } catch (error) {
+      console.error('Error adding team member:', error);
     }
   };
 
-  const handleEdit = (member) => {
-    setFormData({
-      name: member.name,
-      role: member.role,
-      bio: member.bio,
-      image: member.image
-    });
-    setShowForm(true);
+  const handleDelete = async (id) => {
+    if (window.confirm('Are you sure you want to delete this team member?')) {
+      try {
+        await fetchData(`/team/${id}`, {
+          method: 'DELETE'
+        });
+        setTeamMembers(teamMembers.filter(member => member._id !== id));
+      } catch (error) {
+        console.error('Error deleting team member:', error);
+      }
+    }
+  };
+
+  const handleEdit = async (member) => {
+    try {
+      const response = await fetchData(`/team/${member._id}`, {
+        method: 'PUT',
+        body: JSON.stringify(formData)
+      });
+      setTeamMembers(teamMembers.map(m => m._id === member._id ? response : m));
+      setShowForm(false);
+      setFormData({
+        name: '',
+        role: '',
+        bio: '',
+        img: '',
+        description: '',
+        expertise: [],
+        social: {
+          twitter: '',
+          linkedin: '',
+          facebook: '',
+          instagram: ''
+        }
+      });
+    } catch (error) {
+      console.error('Error updating team member:', error);
+    }
   };
 
   const filteredTeamMembers = teamMembers.filter(member => 
@@ -133,7 +173,7 @@ const TeamManagement = () => {
         {showForm && (
           <div className="form-container">
             <div className="form-header">
-              <h2>{formData.id ? 'Edit Team Member' : 'Add New Team Member'}</h2>
+              <h2>{formData._id ? 'Edit Team Member' : 'Add New Team Member'}</h2>
               <button 
                 className="close-button"
                 onClick={() => {
@@ -142,7 +182,15 @@ const TeamManagement = () => {
                     name: '',
                     role: '',
                     bio: '',
-                    image: ''
+                    img: '',
+                    description: '',
+                    expertise: [],
+                    social: {
+                      twitter: '',
+                      linkedin: '',
+                      facebook: '',
+                      instagram: ''
+                    }
                   });
                 }}
               >
@@ -186,22 +234,92 @@ const TeamManagement = () => {
                   required
                 />
               </div>
+
+              <div className="form-group">
+                <label htmlFor="description">Description</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  rows="4"
+                  required
+                />
+              </div>
               
               <div className="form-group">
-                <label htmlFor="image">Image URL</label>
+                <label htmlFor="img">Image URL</label>
                 <input
                   type="text"
-                  id="image"
-                  name="image"
-                  value={formData.image}
-                  onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                  id="img"
+                  name="img"
+                  value={formData.img}
+                  onChange={(e) => setFormData({ ...formData, img: e.target.value })}
                   placeholder="https://example.com/image.jpg"
+                  required
                 />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="expertise">Expertise (comma separated)</label>
+                <input
+                  type="text"
+                  id="expertise"
+                  name="expertise"
+                  value={formData.expertise.join(', ')}
+                  onChange={(e) => setFormData({ 
+                    ...formData, 
+                    expertise: e.target.value.split(',').map(item => item.trim())
+                  })}
+                  placeholder="Expertise 1, Expertise 2, Expertise 3"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Social Links</label>
+                <div className="social-inputs">
+                  <input
+                    type="text"
+                    placeholder="Twitter URL"
+                    value={formData.social.twitter}
+                    onChange={(e) => setFormData({ 
+                      ...formData, 
+                      social: { ...formData.social, twitter: e.target.value }
+                    })}
+                  />
+                  <input
+                    type="text"
+                    placeholder="LinkedIn URL"
+                    value={formData.social.linkedin}
+                    onChange={(e) => setFormData({ 
+                      ...formData, 
+                      social: { ...formData.social, linkedin: e.target.value }
+                    })}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Facebook URL"
+                    value={formData.social.facebook}
+                    onChange={(e) => setFormData({ 
+                      ...formData, 
+                      social: { ...formData.social, facebook: e.target.value }
+                    })}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Instagram URL"
+                    value={formData.social.instagram}
+                    onChange={(e) => setFormData({ 
+                      ...formData, 
+                      social: { ...formData.social, instagram: e.target.value }
+                    })}
+                  />
+                </div>
               </div>
               
               <div className="form-actions">
                 <button type="submit" className="submit-button">
-                  {formData.id ? 'Update Team Member' : 'Add Team Member'}
+                  {formData._id ? 'Update Team Member' : 'Add Team Member'}
                 </button>
                 <button 
                   type="button" 
@@ -212,7 +330,15 @@ const TeamManagement = () => {
                       name: '',
                       role: '',
                       bio: '',
-                      image: ''
+                      img: '',
+                      description: '',
+                      expertise: [],
+                      social: {
+                        twitter: '',
+                        linkedin: '',
+                        facebook: '',
+                        instagram: ''
+                      }
                     });
                   }}
                 >
@@ -227,38 +353,55 @@ const TeamManagement = () => {
           <div className="loading">Loading team members...</div>
         ) : (
           <div className="team-grid">
-            {filteredTeamMembers.map((member) => (
-              <div key={member.id} className="team-card">
-                <div className="team-card-image">
-                  {member.image ? (
-                    <img src={member.image} alt={member.name} />
-                  ) : (
-                    <div className="placeholder-image">
-                      {member.name.charAt(0)}
-                    </div>
-                  )}
+            {filteredTeamMembers.length > 0 ? (
+              filteredTeamMembers.map((member) => (
+                <div key={member._id} className="team-card">
+                  <div className="team-card-image">
+                    {member.img ? (
+                      <img src={member.img} alt={member.name} />
+                    ) : (
+                      <div className="placeholder-image">
+                        {member.name.charAt(0)}
+                      </div>
+                    )}
+                  </div>
+                  <div className="team-card-content">
+                    <h3>{member.name}</h3>
+                    <p className="role">{member.role}</p>
+                    <p className="bio">{member.bio}</p>
+                  </div>
+                  <div className="team-card-actions">
+                    <button 
+                      className="edit-button"
+                      onClick={() => {
+                        setFormData(member);
+                        setShowForm(true);
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faEdit} /> Edit
+                    </button>
+                    <button 
+                      className="delete-button"
+                      onClick={() => handleDelete(member._id)}
+                    >
+                      <FontAwesomeIcon icon={faTrash} /> Delete
+                    </button>
+                  </div>
                 </div>
-                <div className="team-card-content">
-                  <h3>{member.name}</h3>
-                  <p className="role">{member.role}</p>
-                  <p className="bio">{member.bio}</p>
-                </div>
-                <div className="team-card-actions">
+              ))
+            ) : (
+              <div className="no-results">
+                <p>No team members found. {searchTerm && 'Try a different search term.'}</p>
+                {!searchTerm && (
                   <button 
-                    className="edit-button"
-                    onClick={() => handleEdit(member)}
+                    className="add-button"
+                    onClick={() => setShowForm(true)}
                   >
-                    <FontAwesomeIcon icon={faEdit} /> Edit
+                    <FontAwesomeIcon icon={faPlus} /> Add Your First Team Member
                   </button>
-                  <button 
-                    className="delete-button"
-                    onClick={() => handleDelete(member.id)}
-                  >
-                    <FontAwesomeIcon icon={faTrash} /> Delete
-                  </button>
-                </div>
+                )}
               </div>
-            ))}
+            )}
           </div>
         )}
       </div>
@@ -370,6 +513,12 @@ const TeamManagement = () => {
           border: 1px solid #ddd;
           border-radius: 4px;
           font-size: 1rem;
+        }
+        
+        .social-inputs {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1rem;
         }
         
         .form-actions {
@@ -515,6 +664,16 @@ const TeamManagement = () => {
         
         .delete-button:hover {
           background-color: #d32f2f;
+        }
+        
+        .no-results {
+          text-align: center;
+          padding: 2rem;
+          color: #666;
+        }
+        
+        .no-results p {
+          margin-bottom: 1rem;
         }
       `}</style>
     </AdminLayout>
