@@ -7,6 +7,7 @@ import { fetchData } from '@/apiConfig';
 import PageHeader from "@/components/base/PageHeader";
 import NewsLetterTwo from "@/components/partials/NewsLetterTwo";
 import Image from "next/image";
+import Simple from "@/components/base/Simple";
 
 const Team = () => {
   const [team, setTeam] = useState([]);
@@ -86,45 +87,73 @@ const Team = () => {
 
       <PageHeader title="Our Team" />
 
-      <section className="team-section">
+      <section className="team padding-bottom shape-1r" id="team">
         <div className="container">
-          <div className="team-grid">
-            {team.map((member) => (
-              <div key={member._id} className="team-member">
-                <div className="member-image">
-                  <Image
-                    src={member.img}
-                    alt={member.name}
-                    width={300}
-                    height={300}
-                    quality={90}
-                  />
+          <div className="section-header-wrapper">
+            <div className="section-header section-header--middle">
+              <div className="section-header__content">
+                <div className="section-header__titlebar">
+                  <Simple subTitle="Team" title="Meet the crew" />
                 </div>
-                <div className="member-info">
-                  <h3>{member.name}</h3>
-                  <p className="role">{member.role}</p>
-                  <p className="bio">{member.bio}</p>
-                  <div className="social-links">
-                    {member.social.twitter && (
-                      <a href={member.social.twitter} target="_blank" rel="noopener noreferrer">
-                        <FontAwesomeIcon icon={faTwitter} />
-                      </a>
-                    )}
-                    {member.social.linkedin && (
-                      <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer">
-                        <FontAwesomeIcon icon={faLinkedin} />
-                      </a>
-                    )}
-                    {member.social.facebook && (
-                      <a href={member.social.facebook} target="_blank" rel="noopener noreferrer">
-                        <FontAwesomeIcon icon={faFacebook} />
-                      </a>
-                    )}
-                    {member.social.instagram && (
-                      <a href={member.social.instagram} target="_blank" rel="noopener noreferrer">
-                        <FontAwesomeIcon icon={faInstagram} />
-                      </a>
-                    )}
+              </div>
+            </div>
+          </div>
+          
+          <div className="row justify-content-center g-4">
+            {team.map((member) => (
+              <div key={member._id} className="col-lg-4 col-sm-6">
+                <div
+                  className="team__item aos-init aos-animate"
+                  data-aos="fade-up"
+                  data-aos-duration={800}
+                >
+                  <div className="team__thumb">
+                    <Image
+                      src={member.img}
+                      alt={`${member.name} - Team Member`}
+                      width={800}
+                      height={1000}
+                      quality={90}
+                      priority={member._id <= 3}
+                      className="team__image"
+                    />
+                  </div>
+                  <div className="team__content">
+                    <h4>
+                      <Link href={`/team-member?id=${member._id}`}>{member.name}</Link>
+                    </h4>
+                    <p>{member.role}</p>
+                    <p className="team__bio">{member.bio}</p>
+                    <ul className="social">
+                      {member.social.twitter && (
+                        <li className="social__item">
+                          <Link href={member.social.twitter} className="social__link">
+                            <FontAwesomeIcon icon={faTwitter} />
+                          </Link>
+                        </li>
+                      )}
+                      {member.social.linkedin && (
+                        <li className="social__item">
+                          <Link href={member.social.linkedin} className="social__link">
+                            <FontAwesomeIcon icon={faLinkedin} />
+                          </Link>
+                        </li>
+                      )}
+                      {member.social.facebook && (
+                        <li className="social__item">
+                          <Link href={member.social.facebook} className="social__link">
+                            <FontAwesomeIcon icon={faFacebook} />
+                          </Link>
+                        </li>
+                      )}
+                      {member.social.instagram && (
+                        <li className="social__item">
+                          <Link href={member.social.instagram} className="social__link">
+                            <FontAwesomeIcon icon={faInstagram} />
+                          </Link>
+                        </li>
+                      )}
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -136,74 +165,72 @@ const Team = () => {
       <NewsLetterTwo />
 
       <style jsx>{`
-        .team-section {
+        .team {
           padding: 4rem 0;
         }
 
-        .container {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 0 1rem;
-        }
-
-        .team-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-          gap: 2rem;
-        }
-
-        .team-member {
-          background: #fff;
-          border-radius: 8px;
+        .team__item {
+          background: var(--color-background-secondary);
+          border-radius: 10px;
           overflow: hidden;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
           transition: transform 0.3s ease;
+          margin-bottom: 30px;
         }
 
-        .team-member:hover {
+        .team__item:hover {
           transform: translateY(-5px);
         }
 
-        .member-image {
+        .team__thumb {
           position: relative;
           height: 300px;
+          overflow: hidden;
         }
 
-        .member-info {
-          padding: 1.5rem;
+        .team__image {
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
         }
 
-        .member-info h3 {
+        .team__content {
+          padding: 20px;
+        }
+
+        .team__content h4 {
           font-size: 1.5rem;
-          margin: 0 0 0.5rem 0;
-          color: #333;
+          margin-bottom: 10px;
+          color: var(--color-primary);
         }
 
-        .role {
-          color: #666;
-          font-size: 1rem;
-          margin: 0 0 1rem 0;
+        .team__content p {
+          color: var(--color-text-secondary);
+          margin-bottom: 15px;
         }
 
-        .bio {
-          color: #333;
+        .team__bio {
+          font-size: 0.9rem;
           line-height: 1.6;
-          margin-bottom: 1.5rem;
         }
 
-        .social-links {
+        .social {
           display: flex;
-          gap: 1rem;
+          gap: 15px;
+          margin-top: 15px;
         }
 
-        .social-links a {
-          color: #666;
+        .social__item {
+          list-style: none;
+        }
+
+        .social__link {
+          color: var(--color-text-secondary);
           font-size: 1.2rem;
           transition: color 0.3s ease;
         }
 
-        .social-links a:hover {
-          color: #333;
+        .social__link:hover {
+          color: var(--color-primary);
         }
 
         .loading-container,

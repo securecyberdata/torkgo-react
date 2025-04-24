@@ -1,7 +1,10 @@
 export const fetchData = async (url, options = {}) => {
   try {
     // Get the base URL from environment variable
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 
+                   (process.env.NODE_ENV === 'production' 
+                     ? 'https://sayariglobal.com/api' 
+                     : 'http://localhost:3000/api');
     
     const fullUrl = `${baseUrl}${url}`;
     console.log(`[Client] Fetching from: ${fullUrl}`);
