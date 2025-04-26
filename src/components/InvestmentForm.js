@@ -14,9 +14,11 @@ const InvestmentForm = ({ projectPrice }) => {
   useEffect(() => {
     const initWeb3 = async () => {
       try {
-        // Check if window is defined (for SSR)
-        if (typeof window !== 'undefined' && window.ethereum) {
-          const web3Instance = new Web3(window.ethereum);
+        // Check for ethereum provider from MetaMask mobile
+        const ethereum = window.ethereum || (window.web3 && window.web3.currentProvider);
+        
+        if (typeof window !== 'undefined' && ethereum) {
+          const web3Instance = new Web3(ethereum);
           setWeb3(web3Instance);
 
           // Handle account and chain changes

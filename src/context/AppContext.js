@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 
 export const AppContext = createContext();
 
-const { ethereum } = typeof window !== "undefined" ? window : {};
+const ethereum = typeof window !== "undefined" ? (window.ethereum || (window.web3 && window.web3.currentProvider)) : null;
 
 const AppProvider = ({ children }) => {
    const [visibility, setVisibility] = useState(false);
