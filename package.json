@@ -17,6 +17,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@uniswap/sdk": "^3.0.3",
     "aos": "^2.3.4",
     "babel-plugin-macros": "^3.1.0",
     "bootstrap": "^5.2.3",
@@ -36,7 +37,8 @@
     "react-scroll-to-top": "^3.0.0",
     "sass-loader": "^13.2.2",
     "swiper": "^9.1.0",
-    "uuid": "^11.1.0"
+    "uuid": "^11.1.0",
+    "web3": "^4.16.0"
   },
   "devDependencies": {
     "sass": "^1.60.0"

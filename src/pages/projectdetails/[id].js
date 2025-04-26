@@ -144,12 +144,7 @@ const ProjectDetails = () => {
                     <span className="text-lg">Current Price:</span>
                     <span className="text-xl font-bold">{project.idoPrice}</span>
                   </div>
-                  <button 
-                    className="default-btn w-full py-3 text-center" 
-                    onClick={() => alert('Investment feature coming soon!')}
-                  >
-                    Invest Now
-                  </button>
+                  <InvestmentForm projectPrice={project.idoPrice} />
                 </div>
               </div>
             </div>
