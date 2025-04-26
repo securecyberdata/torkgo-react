@@ -42,7 +42,7 @@ const AdminProjects = () => {
       try {
         setLoading(true);
         setError('');
-        
+
         console.log('Fetching projects...');
         const response = await fetch('/api/projects', {
           method: 'GET',
@@ -54,7 +54,7 @@ const AdminProjects = () => {
         if (!response.ok) {
           const errorText = await response.text();
           console.error('Error response:', errorText);
-          
+
           try {
             const errorData = JSON.parse(errorText);
             throw new Error(errorData.error || 'Failed to fetch projects');
@@ -65,11 +65,11 @@ const AdminProjects = () => {
 
         const result = await response.json();
         console.log('Projects fetched:', result);
-        
+
         if (!result.success) {
           throw new Error(result.error || 'Failed to fetch projects');
         }
-        
+
         setProjects(result.data || []);
         setError('');
       } catch (err) {
@@ -126,9 +126,9 @@ const AdminProjects = () => {
       const url = formData.id 
         ? `/api/projects/${formData.id}`
         : '/api/projects';
-      
+
       const method = formData.id ? 'PUT' : 'POST';
-      
+
       const response = await fetch(url, {
         method,
         headers: {
@@ -143,7 +143,7 @@ const AdminProjects = () => {
       }
 
       const result = await response.json();
-      
+
       // Refresh projects list
       const projectsResponse = await fetch('/api/projects', {
         method: 'GET',
@@ -161,7 +161,7 @@ const AdminProjects = () => {
       setProjects(projectsResult.data || []);
       setSuccess(formData.id ? 'Project updated successfully!' : 'Project created successfully!');
       setError('');
-      
+
       // Reset form
       setFormData({
         id: '',
@@ -250,7 +250,7 @@ const AdminProjects = () => {
   return (
     <AdminLayout>
       <AdminHead title="Projects" description="Manage your projects" />
-      
+
       <div className="admin-content">
         <div className="admin-header">
           <h1>Manage Projects</h1>
@@ -263,19 +263,19 @@ const AdminProjects = () => {
                     method: 'POST',
                   });
                   const result = await response.json();
-                  
+
                   if (!result.success) {
                     throw new Error(result.error || 'Failed to seed database');
                   }
-                  
+
                   // Refresh projects list
                   const projectsResponse = await fetch('/api/projects');
                   const projectsResult = await projectsResponse.json();
-                  
+
                   if (!projectsResult.success) {
                     throw new Error(projectsResult.error || 'Failed to refresh projects');
                   }
-                  
+
                   setProjects(projectsResult.data);
                   setSuccess(`Database seeded successfully with ${result.count} projects`);
                   setError('');
@@ -538,43 +538,42 @@ const AdminProjects = () => {
             gap: 10px;
             align-items: center;
           }
+          .project-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          }
+          .project-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+          }
+          .project-card p {
+            color: #666;
+            margin-bottom: 15px;
+          }
+          .loading, .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #333;
+          }
+          .modal-content {
+            color: #333;
+          }
+          .modal-content label {
+            color: #444;
+          }
+          .form-group label {
+            color: #333;
+            font-weight: 500;
+          }
+          .form-control {
+            color: #333;
+          }
         `}</style>
       </div>
     </AdminLayout>
   );
 };
 
-export default AdminProjects; 
-
-        .project-card {
-          background: white;
-          border-radius: 8px;
-          padding: 20px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .project-card h3 {
-          color: #333;
-          margin-bottom: 10px;
-        }
-        .project-card p {
-          color: #666;
-          margin-bottom: 15px;
-        }
-        .loading, .no-data {
-          text-align: center;
-          padding: 40px;
-          color: #333;
-        }
-        .modal-content {
-          color: #333;
-        }
-        .modal-content label {
-          color: #444;
-        }
-        .form-group label {
-          color: #333;
-          font-weight: 500;
-        }
-        .form-control {
-          color: #333;
-        }
+export default AdminProjects;
