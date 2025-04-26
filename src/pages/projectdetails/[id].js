@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
-import PageHeader from '@/components/base/PageHeader';
 import Layout from '@/components/layout/Layout';
 
 const ProjectDetails = () => {
@@ -65,8 +64,6 @@ const ProjectDetails = () => {
         <title>{project.title} - Project Details</title>
         <meta name="description" content={project.shortDescription} />
       </Head>
-
-      <PageHeader title={project.title} text={project.shortDescription} />
 
       <section className="project-details-section padding-top padding-bottom">
         <div className="container">
