@@ -253,41 +253,8 @@ const AdminProjects = () => {
 
       <div className="admin-content">
         <div className="admin-header">
-          <h1>Manage Projects</h1>
+          <h1 className="admin-title">Manage Projects</h1>
           <div className="admin-actions">
-            <button 
-              className="btn btn-secondary me-2" 
-              onClick={async () => {
-                try {
-                  const response = await fetch('/api/seed', {
-                    method: 'POST',
-                  });
-                  const result = await response.json();
-
-                  if (!result.success) {
-                    throw new Error(result.error || 'Failed to seed database');
-                  }
-
-                  // Refresh projects list
-                  const projectsResponse = await fetch('/api/projects');
-                  const projectsResult = await projectsResponse.json();
-
-                  if (!projectsResult.success) {
-                    throw new Error(projectsResult.error || 'Failed to refresh projects');
-                  }
-
-                  setProjects(projectsResult.data);
-                  setSuccess(`Database seeded successfully with ${result.count} projects`);
-                  setError('');
-                } catch (err) {
-                  console.error('Error seeding database:', err);
-                  setError('Failed to seed database. Please try again.');
-                  setSuccess('');
-                }
-              }}
-            >
-              Initialize Sample Data
-            </button>
             <button 
               className="btn btn-primary" 
               onClick={() => setShowForm(true)}
@@ -433,13 +400,24 @@ const AdminProjects = () => {
 
         <style jsx>{`
           .admin-content {
-            padding: 20px;
+            padding: 24px;
+            background-color: #f8fafc;
           }
           .admin-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            padding: 16px;
+            background: #1e293b;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          }
+          .admin-title {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
           }
           .search-bar {
             position: relative;
@@ -541,16 +519,32 @@ const AdminProjects = () => {
           .project-card {
             background: white;
             border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 24px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+          }
+          .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
           }
           .project-card h3 {
-            color: #333;
-            margin-bottom: 10px;
+            color: #1e293b;
+            margin-bottom: 12px;
+            font-weight: 600;
           }
           .project-card p {
-            color: #666;
-            margin-bottom: 15px;
+            color: #475569;
+            margin-bottom: 16px;
+          }
+          .btn-primary {
+            background-color: #3b82f6;
+            border: none;
+            padding: 8px 16px;
+            transition: all 0.3s ease;
+          }
+          .btn-primary:hover {
+            background-color: #2563eb;
           }
           .loading, .no-data {
             text-align: center;
