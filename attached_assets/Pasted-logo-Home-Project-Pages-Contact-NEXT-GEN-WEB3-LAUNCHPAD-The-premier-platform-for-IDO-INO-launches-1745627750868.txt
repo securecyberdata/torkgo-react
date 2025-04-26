@@ -1,0 +1,230 @@
+logo
+Home
+Project
+Pages
+Contact
+
+NEXT-GEN
+WEB3
+LAUNCHPAD
+The premier platform for IDO & INO launches in the Web3 ecosystem. Access exclusive token sales, participate in fair distributions, and invest in the future of blockchain innovation.
+
+Explore Projects
+Getting Started
+
+Simple as 1, 2, 3
+work Step 1 Image
+1. Submit KYC
+Complete our secure KYC verification process to ensure compliance and protect our community. This step helps maintain the integrity of our platform and safeguards all participants.
+
+work Step 2 Image
+2. Connect Wallet
+Link your cryptocurrency wallet to our platform. We support multiple blockchain networks, allowing you to participate in IDOs across different ecosystems with ease and convenience.
+
+work Step 3 Image
+3. Participate in IDOs
+Browse upcoming IDO projects, stake tokens for allocation, and invest in promising blockchain ventures. Our platform provides transparent information and fair distribution mechanisms.
+
+Verify KYC
+IGO coverchain logo
+author image
+Cyber Car
+Raised Ammount
+
+5000 / 15000 BUSD
+View Details
+IGO coverchain logo
+author image
+Cyber Car
+Raised Ammount
+
+5000 / 15000 BUSD
+View Details
+IGO coverchain logo
+author image
+Cyber Car
+Raised Ammount
+
+5000 / 15000 BUSD
+View Details
+IGO coverchain logo
+author image
+Tork DEX
+Raised Amount
+
+15000 / 15000 BUSD
+View Details
+IGO coverchain logo
+author image
+DeFi Sol
+Raised Amount
+
+15000 / 15000 BUSD
+View Details
+IGO coverchain logo
+author image
+Deep Learning
+Raised Amount
+
+15000 / 15000 BUSD
+View Details
+Benefits
+
+What we offer
+Benifit image
+Cross Chain
+Access IDO opportunities across multiple blockchain networks including Ethereum, Binance Smart Chain, Polygon, and more. Our platform eliminates the need to switch between different launchpads.
+
+Benifit image
+Staking Rewards
+Earn additional rewards by staking your tokens on our platform. Higher staking tiers unlock greater allocation percentages and exclusive access to premium IDO projects.
+
+Benifit image
+Multi Layer Security
+Our platform implements advanced security measures including smart contract audits, multi-signature wallets, and real-time monitoring to protect your investments and personal information.
+
+Benifit image
+Elite Projects
+Gain access to carefully vetted blockchain projects with strong fundamentals, experienced teams, and innovative technology. Our due diligence process ensures only high-quality opportunities.
+
+Explore
+
+Our Roadmap
+Platform Development
+01
+
+Initial development of our core platform infrastructure, including smart contracts, security protocols, and user interface. Comprehensive testing and auditing to ensure a secure and reliable launchpad experience for all users.
+
+Community Building
+02
+
+Launch of our website and social media channels to build a strong community. Implementation of KYC verification system and wallet integration to prepare for the first IDO launches on our platform.
+
+Token Launch
+03
+
+Public token sale with fair distribution mechanisms to ensure equal opportunity for all participants. Implementation of vesting schedules and token utility features to support long-term platform sustainability.
+
+Staking Program
+04
+
+Introduction of our token staking program with multiple tiers offering different benefits. Stakers earn rewards while contributing to the platform's security and governance, creating a sustainable ecosystem for all participants.
+
+IDO Platform Launch
+05
+
+Official launch of our IDO platform with the first projects going live. Implementation of fair distribution mechanisms, tiered allocation systems, and comprehensive project information to ensure transparent and equitable participation.
+
+Multi-Chain Expansion
+06
+
+Expansion to multiple blockchain networks including Ethereum, Binance Smart Chain, Polygon, and more. Integration of cross-chain functionality to provide users with access to IDO opportunities across the entire blockchain ecosystem.
+
+Team
+
+Meet the crew
+Michele Cucchierato - Team Member
+Michele Cucchierato
+Co-Founder, Chairman & CEO, Planet Sayari Group
+
+Michele Cucchierato is the Co-Founder, Chairman, and CEO of Planet Sayari Group, a pioneering force in the evolution of crypto banking and digital finance.
+
+Dr. Shermaine Nicholas - Team Member
+Dr. Shermaine Nicholas
+Founder & President of Social Responsibility, COO, Planet Sayari Group
+
+Dr. Shermaine Nicholas is the founder of Planet Sayari, a company at the forefront of revolutionizing crypto banking.
+
+Brad Moore - Team Member
+Brad Moore
+Co-Founder, Vice Chairman & Co-CEO, Planet Sayari
+
+Brad Moore is a seasoned finance professional with over 20 years of experience in the financial services industry.
+
+Zaahir Ibrahim Pooloo - Team Member
+Zaahir Ibrahim Pooloo
+CFO & Board member
+
+Zaahir Ibrahim Pooloo is a key member of the Board of Directors at Planet Sayari Group.
+
+Martha Reyes - Team Member
+Martha Reyes
+Board Member & Vice President of Human Resources, Planet Sayari Group
+
+Martha Reyes serves as a Board Member and the Vice President of Human Resources at Planet Sayari Group.
+
+Michael Wilkinson - Team Member
+Michael Wilkinson
+Chief Sales Officer & Head of Banking
+
+Michael is an accomplished financial services professional with a strong track record in retail banking, customer relationship management, and team leadership.
+
+Duncan Oduor Otieno - Team Member
+Duncan Oduor Otieno
+Director of Business Development
+
+Duncan Oduor Otieno is the Director of Business Development at Planet Sayari group, responsible for driving client acquisition, expanding the bank&apos;s market presence, and shaping its growth in digital financial markets.
+
+Have any projects?
+
+Apply For IDO/INO
+Apply To Launch
+Logo
+PS bank IT Department © 2025 | All Rights Reserved |Terms & Conditions |Privacy Policy |AML/KYC Policy
+
+
+ 1 of 4 unhandled errors
+
+Unhandled Runtime Error
+TypeError: Failed to fetch
+
+Source
+window.fetch
+/__replco/static/devtools/eruda/3.2.3/eruda.js (2:218642)
+src/apiConfig.js (12:27) @ fetch
+
+  10 | console.log(`[Client] Fetching from: ${fullUrl}`);
+  11 | 
+> 12 | const response = await fetch(fullUrl, {
+     |                       ^
+  13 |   ...options,
+  14 |   headers: {
+  15 |     'Content-Type': 'application/json',
+Call Stack
+getAllData
+src/pages/index.js (28:41)
+getAllData
+src/pages/index.js (34:4)
+commitHookEffectListMount
+node_modules/react-dom/cjs/react-dom.development.js (23150:0)
+commitPassiveMountOnFiber
+node_modules/react-dom/cjs/react-dom.development.js (24926:0)
+commitPassiveMountEffects_complete
+node_modules/react-dom/cjs/react-dom.development.js (24891:0)
+commitPassiveMountEffects_begin
+node_modules/react-dom/cjs/react-dom.development.js (24878:0)
+commitPassiveMountEffects
+node_modules/react-dom/cjs/react-dom.development.js (24866:0)
+flushPassiveEffectsImpl
+node_modules/react-dom/cjs/react-dom.development.js (27039:0)
+flushPassiveEffects
+node_modules/react-dom/cjs/react-dom.development.js (26984:0)
+performSyncWorkOnRoot
+node_modules/react-dom/cjs/react-dom.development.js (26076:0)
+flushSyncCallbacks
+node_modules/react-dom/cjs/react-dom.development.js (12042:0)
+commitRootImpl
+node_modules/react-dom/cjs/react-dom.development.js (26959:0)
+commitRoot
+node_modules/react-dom/cjs/react-dom.development.js (26682:0)
+finishConcurrentRender
+node_modules/react-dom/cjs/react-dom.development.js (25981:0)
+performConcurrentWorkOnRoot
+node_modules/react-dom/cjs/react-dom.development.js (25809:0)
+workLoop
+node_modules/scheduler/cjs/scheduler.development.js (266:0)
+flushWork
+node_modules/scheduler/cjs/scheduler.development.js (239:0)
+MessagePort.performWorkUntilDeadline
+node_modules/scheduler/cjs/scheduler.development.js (533:0)
+Hide collapsed frames
