@@ -3,8 +3,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import Layout from '@/components/layout/Layout';
-import PageHeader from '@/components/base/PageHeader';
-
 const Project = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,8 +34,6 @@ const Project = () => {
         <title>Projects - Planet Sayari Bank</title>
         <meta name="description" content="Explore our current and upcoming projects" />
       </Head>
-
-      <PageHeader title="Projects" text="Discover our current and upcoming projects" />
 
       <section className="project-section padding-top padding-bottom">
         <div className="container">
