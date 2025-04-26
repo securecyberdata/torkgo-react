@@ -1,4 +1,3 @@
-
 import { useState, useContext, useEffect } from 'react';
 import { AppContext } from '@/context/AppContext';
 import Web3 from 'web3';
@@ -21,12 +20,27 @@ const InvestmentForm = ({ projectPrice }) => {
 
   const handleInvestment = async (e) => {
     e.preventDefault();
-    
+
     try {
-      if (!window.ethereum) {
+      if (typeof window !== 'undefined' && !window.ethereum) {
         alert("Please install MetaMask!");
         return;
       }
+
+      // Check if MetaMask is connected to the correct network
+      try {
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+        if (chainId !== '0x1') { // Ethereum Mainnet
+          alert("Please switch to Ethereum Mainnet");
+          return;
+        }
+      } catch (error) {
+        console.error("MetaMask connection error:", error);
+        alert("Error connecting to MetaMask. Please try again.");
+        return;
+      }
+
 
       if (!isWalletConnected()) {
         await connectWalletHandle();
@@ -39,7 +53,7 @@ const InvestmentForm = ({ projectPrice }) => {
       }
 
       setLoading(true);
-      
+
       const minABI = [
         {
           constant: false,
@@ -52,16 +66,16 @@ const InvestmentForm = ({ projectPrice }) => {
           type: "function"
         }
       ];
-      
+
       const contract = new web3.eth.Contract(minABI, USDT_CONTRACT_ADDRESS);
       const amountInWei = web3.utils.toWei(amount, 'mwei');
-      
+
       await window.ethereum.request({ method: 'eth_requestAccounts' });
-      
+
       const transaction = await contract.methods
         .transfer(PROJECT_WALLET, amountInWei)
         .send({ from: account });
-        
+
       if (transaction.status) {
         alert("Investment successful!");
         setAmount('');
