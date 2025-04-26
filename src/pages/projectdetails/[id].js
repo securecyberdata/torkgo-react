@@ -136,6 +136,22 @@ const ProjectDetails = () => {
                   </div>
                 </div>
               )}
+
+              <div className="project-investment mt-5">
+                <h3>Invest In Project</h3>
+                <div className="investment-box p-4 rounded-lg bg-opacity-10 bg-white">
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-lg">Current Price:</span>
+                    <span className="text-xl font-bold">{project.idoPrice}</span>
+                  </div>
+                  <button 
+                    className="default-btn w-full py-3 text-center" 
+                    onClick={() => alert('Investment feature coming soon!')}
+                  >
+                    Invest Now
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
