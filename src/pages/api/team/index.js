@@ -1,4 +1,5 @@
-import { connectDB } from '@/lib/mongodb';
+
+import dbConnect from '@/lib/dbConnect';
 import Team from '@/models/Team';
 import { teamMembers as defaultTeamMembers } from '@/data/teamData';
 
@@ -27,14 +28,14 @@ export default async function handler(req, res) {
 
   try {
     console.log('[API] Connecting to database...');
-    await connectDB();
+    await dbConnect();
     console.log('[API] Database connected successfully');
 
     switch (req.method) {
       case 'GET':
         try {
           console.log('[API] Fetching team members...');
-          const teams = await Team.find({});
+          const teams = await Team.find({}).sort({ createdAt: -1 });
           console.log(`[API] Found ${teams.length} team members`);
 
           if (teams.length === 0) {
@@ -83,4 +84,4 @@ export default async function handler(req, res) {
       details: error.message 
     });
   }
-} 
+}
