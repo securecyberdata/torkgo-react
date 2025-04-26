@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -62,7 +63,7 @@ const Project = () => {
                     <div className="project-card__content">
                       <h3>{project.title}</h3>
                       <p className="project-description">
-                        {project.shortDescription || project.description.substring(0, 150)}...
+                        {project.shortDescription || project.description?.substring(0, 150)}...
                       </p>
                       <div className="project-stats">
                         {project.tokenomics?.distribution?.length > 0 && (
