@@ -22,8 +22,8 @@ const InvestmentForm = ({ projectPrice }) => {
     e.preventDefault();
 
     try {
-      if (!isWalletConnected()) {
-        await connectWalletHandle();
+      if (!account) {
+        connectWalletHandle();
         return;
       }
 
@@ -99,7 +99,7 @@ const InvestmentForm = ({ projectPrice }) => {
           className={`default-btn w-full py-3 ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90'}`}
           disabled={loading}
         >
-          {!isWalletConnected() ? 'Connect Wallet' : loading ? 'Processing...' : 'Confirm Investment'}
+          {!account ? 'Connect Wallet' : loading ? 'Processing...' : 'Confirm Investment'}
         </button>
       </form>
     </div>
