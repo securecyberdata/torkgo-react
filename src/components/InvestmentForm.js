@@ -15,7 +15,7 @@ const InvestmentForm = ({ projectPrice }) => {
     }
   }, []);
 
-  const USDT_CONTRACT_ADDRESS = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
+  const USDC_CONTRACT_ADDRESS = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"; // USDC on Ethereum Mainnet
   const PROJECT_WALLET = "0x6ec4D269DbBA21Ac943adCBE601E060fbbe6c7E5";
 
   const handleInvestment = async (e) => {
@@ -78,7 +78,7 @@ const InvestmentForm = ({ projectPrice }) => {
     <div className="investment-form mt-4">
       <form onSubmit={handleInvestment}>
         <div className="form-group mb-3">
-          <label>Investment Amount (USDT)</label>
+          <label>Investment Amount (USDC)</label>
           <input
             type="number"
             className="form-control w-full p-2 rounded border"
