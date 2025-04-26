@@ -7,7 +7,7 @@ const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },
-  
+
   images: {
     unoptimized: true,
     domains: ['www.sayariglobal.com', 'sayariglobal.com'],
@@ -20,11 +20,18 @@ const nextConfig = {
       ? 'https://www.sayariglobal.com/api'
       : 'http://localhost:3000/api'
   },
+  webpack: (config) => {
+    config.watchOptions = {
+      poll: 1000,
+      aggregateTimeout: 300,
+    }
+    return config
+  },
   async rewrites() {
     return [
       {
         source: '/api/:path*',
-        destination: '/api/:path*',
+        destination: 'http://0.0.0.0:3000/api/:path*', // This might not solve the "Failed to fetch" error completely.  The Next.js server needs to be configured to listen on 0.0.0.0.
       },
     ];
   },
