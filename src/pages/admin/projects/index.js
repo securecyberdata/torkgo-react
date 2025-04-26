@@ -321,9 +321,9 @@ const AdminProjects = () => {
         </div>
 
         {loading ? (
-          <div className="loading">Loading projects...</div>
+          <div className="loading" style={{ color: '#333' }}>Loading projects...</div>
         ) : projects.length === 0 ? (
-          <div className="no-data">No projects found. Add your first project.</div>
+          <div className="no-data" style={{ color: '#333' }}>No projects found. Add your first project.</div>
         ) : (
           <div className="projects-grid">
             {filteredProjects.map(project => (
@@ -545,3 +545,36 @@ const AdminProjects = () => {
 };
 
 export default AdminProjects; 
+
+        .project-card {
+          background: white;
+          border-radius: 8px;
+          padding: 20px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .project-card h3 {
+          color: #333;
+          margin-bottom: 10px;
+        }
+        .project-card p {
+          color: #666;
+          margin-bottom: 15px;
+        }
+        .loading, .no-data {
+          text-align: center;
+          padding: 40px;
+          color: #333;
+        }
+        .modal-content {
+          color: #333;
+        }
+        .modal-content label {
+          color: #444;
+        }
+        .form-group label {
+          color: #333;
+          font-weight: 500;
+        }
+        .form-control {
+          color: #333;
+        }
