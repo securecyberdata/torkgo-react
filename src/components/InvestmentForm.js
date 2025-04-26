@@ -1,4 +1,3 @@
-
 import { useState, useContext, useEffect } from 'react';
 import { AppContext } from '@/context/AppContext';
 import Web3 from 'web3';
@@ -14,10 +13,13 @@ const InvestmentForm = ({ projectPrice }) => {
 
   useEffect(() => {
     const initWeb3 = async () => {
-      if (window.ethereum) {
-        try {
+      try {
+        // Check if window is defined (for SSR)
+        if (typeof window !== 'undefined' && window.ethereum) {
           const web3Instance = new Web3(window.ethereum);
           setWeb3(web3Instance);
+
+          // Handle account and chain changes
           window.ethereum.on('accountsChanged', (accounts) => {
             if (accounts.length === 0) {
               setWeb3(null);
@@ -25,10 +27,12 @@ const InvestmentForm = ({ projectPrice }) => {
             }
           });
           window.ethereum.on('chainChanged', () => window.location.reload());
-        } catch (error) {
-          console.error("Web3 initialization error:", error);
-          alert("Failed to initialize Web3. Please ensure MetaMask is installed.");
+        } else {
+          console.log("No ethereum object found - please install MetaMask");
+          window.open('https://metamask.io/download/', '_blank');
         }
+      } catch (error) {
+        console.error("Web3 initialization error:", error);
       }
     };
     initWeb3();
