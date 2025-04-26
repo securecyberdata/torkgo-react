@@ -50,28 +50,38 @@ const AppProvider = ({ children }) => {
    };
 
    const connectWallet = async () => {
-      if (isMetaMaskInstalled()) {
+      if (typeof window !== 'undefined' && window.ethereum) {
          try {
-            const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-            return accounts[0]; // Return only the first account
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
+            const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+            return accounts[0];
          } catch (error) {
             console.error("Error connecting wallet:", error);
             return null;
          }
+      } else {
+         console.log("Please install MetaMask");
+         return null;
       }
-      return null;
    };
 
    const connectWalletHandle = async () => {
-      if (isMetaMaskInstalled()) {
+      if (typeof window !== 'undefined' && window.ethereum) {
          try {
-            const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-            setAccount(accounts[0]); // Set only the first account
-            localStorage.setItem('isWalletConnected', 'true');
-            setModalvisibility(false);
+            await window.ethereum.enable();
+            const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+            if (accounts.length > 0) {
+               setAccount(accounts[0]);
+               localStorage.setItem('isWalletConnected', 'true');
+               setModalvisibility(false);
+            }
          } catch (error) {
             console.error("Error connecting wallet:", error);
+            localStorage.setItem('isWalletConnected', 'false');
          }
+      } else {
+         console.log("Please install MetaMask");
+         window.open('https://metamask.io/download/', '_blank');
       }
    };
 
