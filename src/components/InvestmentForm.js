@@ -17,25 +17,29 @@ const InvestmentForm = ({ projectPrice }) => {
   }, []);
 
   const USDT_CONTRACT_ADDRESS = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
-  const PROJECT_WALLET = "YOUR_PROJECT_WALLET_ADDRESS"; // Replace with your project wallet
+  const PROJECT_WALLET = "0x6ec4D269DbBA21Ac943adCBE601E060fbbe6c7E5";
 
   const handleInvestment = async (e) => {
     e.preventDefault();
     
-    if (!isWalletConnected()) {
-      await connectWalletHandle();
-      return;
-    }
-
-    if (!amount || amount <= 0) {
-      alert("Please enter a valid amount");
-      return;
-    }
-
     try {
+      if (!window.ethereum) {
+        alert("Please install MetaMask!");
+        return;
+      }
+
+      if (!isWalletConnected()) {
+        await connectWalletHandle();
+        return;
+      }
+
+      if (!amount || amount <= 0) {
+        alert("Please enter a valid amount");
+        return;
+      }
+
       setLoading(true);
       
-      // Create contract instance
       const minABI = [
         {
           constant: false,
@@ -51,6 +55,8 @@ const InvestmentForm = ({ projectPrice }) => {
       
       const contract = new web3.eth.Contract(minABI, USDT_CONTRACT_ADDRESS);
       const amountInWei = web3.utils.toWei(amount, 'mwei');
+      
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
       
       const transaction = await contract.methods
         .transfer(PROJECT_WALLET, amountInWei)
@@ -90,7 +96,7 @@ const InvestmentForm = ({ projectPrice }) => {
         </div>
         <button 
           type="submit" 
-          className={`default-btn w-full py-3 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`default-btn w-full py-3 ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90'}`}
           disabled={loading}
         >
           {!isWalletConnected() ? 'Connect Wallet' : loading ? 'Processing...' : 'Confirm Investment'}
