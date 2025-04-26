@@ -16,12 +16,7 @@ const nextConfig = {
     BASE_API_URL: 'https://www.sayariglobal.com/api'
   },
   async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: '/api/:path*',
-      },
-    ];
+    return [];
   },
   webpackDevMiddleware: config => {
     config.watchOptions = {
