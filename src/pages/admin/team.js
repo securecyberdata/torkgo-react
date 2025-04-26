@@ -46,7 +46,18 @@ const TeamManagement = () => {
     // Load team members from API
     const loadTeamMembers = async () => {
       try {
-        const data = await fetchData('/team');
+        const response = await fetch('/api/team', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch team members');
+        }
+
+        const data = await response.json();
         setTeamMembers(data);
       } catch (err) {
         console.error('Error loading team members:', err);

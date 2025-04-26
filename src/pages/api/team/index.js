@@ -1,7 +1,5 @@
-
 import dbConnect from '@/lib/dbConnect';
 import Team from '@/models/Team';
-import { teamMembers as defaultTeamMembers } from '@/data/teamData';
 
 export default async function handler(req, res) {
   // Handle preflight requests
@@ -37,21 +35,10 @@ export default async function handler(req, res) {
           console.log('[API] Fetching team members...');
           const teams = await Team.find({}).sort({ createdAt: -1 });
           console.log(`[API] Found ${teams.length} team members`);
-
-          if (teams.length === 0) {
-            console.log('[API] No team members found, inserting default data...');
-            await Team.insertMany(defaultTeamMembers);
-            return res.status(200).json(defaultTeamMembers);
-          }
-
           return res.status(200).json(teams);
         } catch (error) {
           console.error('[API] Error fetching team members:', error);
-          return res.status(500).json({ 
-            success: false,
-            error: 'Error fetching team members',
-            details: error.message 
-          });
+          return res.status(500).json({ success: false, error: 'Error fetching team members', details: error.message });
         }
 
       case 'POST':
@@ -62,26 +49,15 @@ export default async function handler(req, res) {
           return res.status(201).json(team);
         } catch (error) {
           console.error('[API] Error creating team member:', error);
-          return res.status(500).json({ 
-            success: false,
-            error: 'Error creating team member',
-            details: error.message 
-          });
+          return res.status(500).json({ success: false, error: 'Error creating team member', details: error.message });
         }
 
       default:
         res.setHeader('Allow', ['GET', 'POST', 'OPTIONS']);
-        return res.status(405).json({ 
-          success: false,
-          error: `Method ${req.method} not allowed` 
-        });
+        return res.status(405).json({ success: false, error: `Method ${req.method} not allowed` });
     }
   } catch (error) {
     console.error('[API] Database connection error:', error);
-    return res.status(500).json({ 
-      success: false,
-      error: 'Database connection error',
-      details: error.message 
-    });
+    return res.status(500).json({ success: false, error: 'Database connection error', details: error.message });
   }
 }
