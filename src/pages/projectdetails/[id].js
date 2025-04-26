@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Layout from '@/components/layout/Layout';
 import PageHeader from '@/components/base/PageHeader';
+import InvestmentForm from '@/components/InvestmentForm';
 
 const ProjectDetails = () => {
   const router = useRouter();
