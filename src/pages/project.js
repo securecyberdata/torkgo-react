@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import PageHeader from '@/components/base/PageHeader';
+import Image from 'next/image';
 import Layout from '@/components/layout/Layout';
+import PageHeader from '@/components/base/PageHeader';
 
 const Project = () => {
   const [projects, setProjects] = useState([]);
@@ -20,10 +21,10 @@ const Project = () => {
         } else {
           setError('Failed to fetch projects');
         }
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching projects:', error);
+      } catch (err) {
+        console.error('Error fetching projects:', err);
         setError('Error loading projects');
+      } finally {
         setLoading(false);
       }
     };
@@ -40,46 +41,50 @@ const Project = () => {
 
       <PageHeader title="Projects" text="Discover our current and upcoming projects" />
 
-      <section className="projects-section padding-top padding-bottom">
+      <section className="project-section padding-top padding-bottom">
         <div className="container">
           {loading ? (
             <div className="loading-message">Loading projects...</div>
           ) : error ? (
             <div className="error-message">{error}</div>
           ) : projects.length === 0 ? (
-            <div className="no-projects">No projects available</div>
+            <div className="no-projects">No projects found</div>
           ) : (
-            <div className="row g-4">
-              {projects.map((project) => (
-                <div key={project._id} className="col-lg-4 col-md-6">
-                  <div className="project-card">
-                    <div className="project-card__image">
-                      <img 
-                        src={project.image || '/images/igo/item/01.jpg'} 
-                        alt={project.title} 
-                        style={{ width: '100%', height: '200px', objectFit: 'cover' }}
-                      />
-                    </div>
-                    <div className="project-card__content">
-                      <h3>{project.title}</h3>
-                      <p className="project-description">
-                        {project.shortDescription || project.description?.substring(0, 150)}...
-                      </p>
-                      <div className="project-stats">
-                        {project.tokenomics?.distribution?.length > 0 && (
-                          <div className="stat-item">
-                            <span className="stat-label">Distribution</span>
-                            <span className="stat-value">{project.tokenomics.distribution.length} phases</span>
-                          </div>
-                        )}
+            <div className="project-wrapper">
+              <div className="row g-4">
+                {projects.map((project) => (
+                  <div key={project._id} className="col-12 col-lg-4 col-md-6">
+                    <div className="project-card">
+                      <div className="project-card__thumb">
+                        <Image
+                          src={project.image || '/images/igo/item/01.jpg'}
+                          alt={project.title}
+                          width={400}
+                          height={300}
+                          className="project-image"
+                        />
                       </div>
-                      <Link href={`/projectdetails/${project._id}`} className="default-btn">
-                        <span>View Details</span>
-                      </Link>
+                      <div className="project-card__content">
+                        <h3>{project.title}</h3>
+                        <p className="project-description">
+                          {project.shortDescription || project.description?.substring(0, 150)}...
+                        </p>
+                        <div className="project-stats">
+                          {project.tokenomics?.distribution?.map((item, index) => (
+                            <div key={index} className="stat-item">
+                              <span className="stat-label">{item.category}</span>
+                              <span className="stat-value">{item.percentage}%</span>
+                            </div>
+                          ))}
+                        </div>
+                        <Link href={`/projectdetails/${project._id}`} className="default-btn small-btn">
+                          View Details
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           )}
         </div>
@@ -116,6 +121,9 @@ const Project = () => {
           line-height: 1.6;
         }
         .project-stats {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+          gap: 10px;
           margin-bottom: 1.5rem;
         }
         .stat-item {
