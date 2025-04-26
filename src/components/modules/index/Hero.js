@@ -4,7 +4,7 @@ import { ThemeContext } from "@/context/ThemeContext";
 
 const Hero = () => {
   const { isDarkMode } = useContext(ThemeContext);
-  
+
   return (
     <section
       className={`banner ${isDarkMode ? 'dark-theme' : 'light-theme'}`}
@@ -30,7 +30,7 @@ const Hero = () => {
                   Access exclusive token sales, participate in fair distributions, and 
                   invest in the future of blockchain innovation.
                 </p>
-                <DefaultButton text="Explore Projects" link="/project2" />
+                <DefaultButton text="Explore Projects" link="/project" />
               </div>
             </div>
           </div>

@@ -22,22 +22,8 @@ const InvestmentForm = ({ projectPrice }) => {
     e.preventDefault();
 
     try {
-      if (typeof window !== 'undefined' && !window.ethereum) {
-        alert("Please install MetaMask!");
-        return;
-      }
-
-      // Check if MetaMask is connected to the correct network
-      try {
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-        if (chainId !== '0x1') { // Ethereum Mainnet
-          alert("Please switch to Ethereum Mainnet");
-          return;
-        }
-      } catch (error) {
-        console.error("MetaMask connection error:", error);
-        alert("Error connecting to MetaMask. Please try again.");
+      if (!isWalletConnected()) {
+        await connectWalletHandle();
         return;
       }
 
