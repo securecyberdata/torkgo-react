@@ -132,8 +132,8 @@ function Header() {
                     <li id="pr-2" className="menu-item-has-children">
                       <Link href="#" onClick={toggleActive}>Project</Link>
                       <ul className="submenu">
-                        <li  >
-                          <Link href="/project2">Project 2</Link>
+                        <li>
+                          <Link href="/project">Projects</Link>
                         </li>
                         <li  >
                           <Link href="/projectdetails">Project Details</Link>
