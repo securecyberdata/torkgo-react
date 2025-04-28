@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import Head from 'next/head';
-import Link from 'next/link';
-import Image from 'next/image';
-import Layout from '@/components/layout/Layout';
-import PageHeader from '@/components/base/PageHeader';
-import InvestmentForm from '@/components/InvestmentForm';
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import Head from "next/head";
+import Link from "next/link";
+import Image from "next/image";
+import Layout from "@/components/layout/Layout";
+import PageHeader from "@/components/base/PageHeader";
+import InvestmentForm from "@/components/InvestmentForm";
 
 const ProjectDetails = () => {
   const router = useRouter();
@@ -21,13 +21,13 @@ const ProjectDetails = () => {
       try {
         const response = await fetch(`/api/projects/${id}`);
         if (!response.ok) {
-          throw new Error('Failed to fetch project');
+          throw new Error("Failed to fetch project");
         }
         const data = await response.json();
         setProject(data.data);
       } catch (err) {
-        console.error('Error fetching project:', err);
-        setError('Error loading project details');
+        console.error("Error fetching project:", err);
+        setError("Error loading project details");
       } finally {
         setLoading(false);
       }
@@ -51,7 +51,9 @@ const ProjectDetails = () => {
       <Layout>
         <div className="error-container">
           <h1>Project Not Found</h1>
-          <p>The project you're looking for doesn't exist or has been removed.</p>
+          <p>
+            The project you\'re looking for doesn\'t exist or has been removed.
+          </p>
           <Link href="/project" className="default-btn">
             Back to Projects
           </Link>
@@ -72,7 +74,7 @@ const ProjectDetails = () => {
           <div className="project-details-wrapper">
             <div className="project-thumb">
               <Image
-                src={project.image || '/images/igo/item/01.jpg'}
+                src={project.image || "/images/igo/item/01.jpg"}
                 alt={project.title}
                 width={600}
                 height={400}
@@ -130,8 +132,12 @@ const ProjectDetails = () => {
                   <div className="tokenomics-grid">
                     {project.tokenomics.distribution.map((item, index) => (
                       <div key={index} className="tokenomics-item">
-                        <span className="tokenomics-category">{item.category}</span>
-                        <span className="tokenomics-percentage">{item.percentage}%</span>
+                        <span className="tokenomics-category">
+                          {item.category}
+                        </span>
+                        <span className="tokenomics-percentage">
+                          {item.percentage}%
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -143,7 +149,9 @@ const ProjectDetails = () => {
                 <div className="investment-box p-4 rounded-lg bg-opacity-10 bg-white">
                   <div className="flex justify-between items-center mb-4">
                     <span className="text-lg">Current Price:</span>
-                    <span className="text-xl font-bold">{project.idoPrice}</span>
+                    <span className="text-xl font-bold">
+                      {project.idoPrice}
+                    </span>
                   </div>
                   <InvestmentForm projectPrice={project.idoPrice} />
                 </div>
