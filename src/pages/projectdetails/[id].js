@@ -52,7 +52,8 @@ const ProjectDetails = () => {
         <div className="error-container">
           <h1>Project Not Found</h1>
           <p>
-            The project you\'re looking for doesn\'t exist or has been removed.
+            The project you&apos;re looking for doesn&apos;t exist or has been
+            removed.
           </p>
           <Link href="/project" className="default-btn">
             Back to Projects
