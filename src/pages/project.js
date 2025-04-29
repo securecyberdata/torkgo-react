@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
-import Layout from '@/components/layout/Layout';
 
 const Project = () => {
   const [projects, setProjects] = useState([]);
@@ -31,7 +30,7 @@ const Project = () => {
   }, []);
 
   return (
-    <Layout>
+    <>
       <Head>
         <title>Projects - Planet Sayari Bank</title>
         <meta name="description" content="Explore our current and upcoming projects" />
@@ -83,7 +82,7 @@ const Project = () => {
           )}
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 
