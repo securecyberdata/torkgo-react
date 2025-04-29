@@ -1,8 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import Layout from '@/components/layout/Layout';
+
 const Project = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
