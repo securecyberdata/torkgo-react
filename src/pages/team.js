@@ -66,7 +66,10 @@ const Team = () => {
     );
   }
 
-  if (!team || team.length === 0) {
+  const excludedMembers = ['Michele Cucchierato', 'Dr. Shermaine Nicholas', 'Brad Moore'];
+  const filteredTeam = team.filter(member => !excludedMembers.includes(member.name));
+
+  if (!filteredTeam || filteredTeam.length === 0) {
     return (
       <div className="error-container">
         <h2>No Team Members Found</h2>
@@ -100,7 +103,7 @@ const Team = () => {
           </div>
           
           <div className="row justify-content-center g-4">
-            {team.map((member) => (
+            {filteredTeam.map((member) => (
               <div key={member._id} className="col-lg-4 col-sm-6">
                 <div
                   className="team__item aos-init aos-animate"

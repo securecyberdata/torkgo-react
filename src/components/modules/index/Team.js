@@ -14,8 +14,10 @@ import { teamMembers } from "@/data/teamData";
 function Team({ team }) {
   // If no team data is provided, use default team members from teamData.js
   const defaultTeam = teamMembers;
+  const excludedMembers = ['Michele Cucchierato', 'Dr. Shermaine Nicholas', 'Brad Moore'];
 
-  const teamMembersToDisplay = team && team.length > 0 ? team : defaultTeam;
+  const teamMembersToDisplay = (team && team.length > 0 ? team : defaultTeam)
+    .filter(member => !excludedMembers.includes(member.name));
 
   return (
     <section className="team padding-bottom shape-1r" id="team">
