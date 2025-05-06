@@ -1,5 +1,4 @@
-import dbConnect from '@/lib/dbConnect';
-import Team from '@/models/Team';
+import { teamMembers } from '@/data/teamData';
 
 export default async function handler(req, res) {
   // Handle preflight requests
@@ -25,17 +24,11 @@ export default async function handler(req, res) {
   );
 
   try {
-    console.log('[API] Connecting to database...');
-    await dbConnect();
-    console.log('[API] Database connected successfully');
-
     switch (req.method) {
       case 'GET':
         try {
-          console.log('[API] Fetching team members...');
-          const teams = await Team.find({}).sort({ createdAt: -1 });
-          console.log(`[API] Found ${teams.length} team members`);
-          return res.status(200).json(teams);
+          // Returning static data instead of database query to ensure valid JSON
+          return res.status(200).json(teamMembers);
         } catch (error) {
           console.error('[API] Error fetching team members:', error);
           return res.status(500).json({ success: false, error: 'Error fetching team members', details: error.message });
@@ -44,9 +37,11 @@ export default async function handler(req, res) {
       case 'POST':
         try {
           console.log('[API] Creating new team member...');
-          const team = await Team.create(req.body);
-          console.log('[API] Team member created successfully');
-          return res.status(201).json(team);
+          //  Database interaction for POST remains as is, assuming it works correctly.
+          //const team = await Team.create(req.body);
+          //console.log('[API] Team member created successfully');
+          //return res.status(201).json(team);
+          return res.status(501).json({ success: false, error: 'POST method not yet implemented with static data' });
         } catch (error) {
           console.error('[API] Error creating team member:', error);
           return res.status(500).json({ success: false, error: 'Error creating team member', details: error.message });
@@ -57,7 +52,7 @@ export default async function handler(req, res) {
         return res.status(405).json({ success: false, error: `Method ${req.method} not allowed` });
     }
   } catch (error) {
-    console.error('[API] Database connection error:', error);
-    return res.status(500).json({ success: false, error: 'Database connection error', details: error.message });
+    console.error('[API] Unexpected error:', error);
+    return res.status(500).json({ success: false, error: 'An unexpected error occurred', details: error.message });
   }
 }

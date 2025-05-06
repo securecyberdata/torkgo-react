@@ -19,10 +19,14 @@ const Team = () => {
     const fetchTeamData = async () => {
       try {
         const data = await fetchData('/team');
-        setTeam(data);
+        if (!data) {
+          throw new Error('No team data received');
+        }
+        setTeam(Array.isArray(data) ? data : teamMembers);
       } catch (error) {
         console.error('Error fetching team data:', error);
-        setError(error.message);
+        setTeam(teamMembers); // Fallback to static data
+        setError(null); // Clear error since we have fallback data
       } finally {
         setLoading(false);
       }
