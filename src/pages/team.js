@@ -8,6 +8,7 @@ import PageHeader from "@/components/base/PageHeader";
 import NewsLetterTwo from "@/components/partials/NewsLetterTwo";
 import Image from "next/image";
 import Simple from "@/components/base/Simple";
+import { teamMembers } from '@/data/teamData';
 
 const Team = () => {
   const [team, setTeam] = useState([]);
